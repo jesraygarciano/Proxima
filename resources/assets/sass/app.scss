@@ -1,0 +1,798 @@
+$color-orange: #f89c0e;
+$color-blue: #1377a1;
+$color-skyblue: #26b7ee;
+$font-primary: 'Raleway', sans-serif;
+$font-secondary: 'Montserrat', sans-serif;
+
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+	#navigation-bar{
+		.container{
+			width: 800px!important;
+			.navbar-header{
+			}
+			.navbar-collapse{
+				.navbar-right{
+					margin-right: 0px!important;
+				}
+			}
+		}
+	}
+}
+
+body{
+	.navbar{
+		.container{
+			.navbar-header{
+				button{
+					border: 1px solid #eda637;
+					background-color: $color-orange;
+					color: #fff;
+				}
+				a{
+					img{
+						width:100%;
+					}
+				}
+			}
+			.navbar-collapse{
+				ul{
+					li{
+					font-family: $font-primary;
+					font-weight: 600;
+					font-size: 1.1em;
+					padding-top: 1rem;
+						a:hover{
+							color: $color-orange;
+						}
+					}
+				}
+			}
+		}
+	}
+	footer{
+		#footer{
+			padding-top: 1rem;
+			.row{
+				.col-md-4{
+
+				}
+				.col-md-3{
+					h4{
+						border-bottom: 1px solid $color-orange;
+					}
+					ul{
+						padding: 0;
+						li{
+							list-style:none;
+							padding: 5px 0;
+						}						
+					}
+				}
+				.col-md-3{
+					h4{
+						border-bottom: 1px solid $color-orange;
+						padding-bottom: 10px;						
+					}					
+					ul{
+						padding: 0;						
+						li{
+							list-style:none;
+							padding: 5px 0;							
+						}
+					}
+				}
+				.col-md-2{
+					h4{
+						border-bottom: 1px solid $color-orange;
+						padding-bottom: 10px;
+					}
+					ul{
+						padding: 0;						
+						li{
+							list-style:none;
+							padding: 5px 0;							
+						}
+					}
+				}
+			}
+		}
+	}
+	.general-hero{
+		.landing-cover{
+		}
+	}
+	#body-container{
+		#followed-company_lists{
+				.col-md-12{
+						#first-comp-list{
+								.media{
+									  font-family: $font-secondary;
+								      letter-spacing: 1px;									
+									  border-color: $color-orange;
+									  box-shadow: 0 10px 4px 0 rgba(0,0,0,0.18),0 2px 3px 0 rgba(0,0,0,0.2)!important;
+									  display: -webkit-box;
+									  display: -webkit-flex;
+									  display: -ms-flexbox;
+									  display: flex;
+									  -webkit-box-align: start;
+									  -webkit-align-items: flex-start;
+								      -ms-flex-align: start;
+							          align-items: flex-start;
+
+									.media-body{
+									  -webkit-box-flex: 1;
+									  -webkit-flex: 1 1 0%;
+									      -ms-flex: 1 1 0%;
+									          flex: 1 1 0%;
+							          	h3{
+							          		overflow: hidden;
+							          		text-overflow: ellipsis;
+							          		white-space: nowrap;							          		
+							          		font-family: $font-primary;
+							          		font-weight: 900;
+							          		.mt-0{
+							          			  margin-top: 0 !important;
+							          		}
+							          		.mb-1{
+												  margin-bottom: 0.25rem !important;
+							          		}
+							          	}
+							          	ul{
+							          		margin: 0;
+							          		padding: 0;
+							          		li{
+								          		overflow: hidden;
+								          		text-overflow: ellipsis;
+								          		white-space: nowrap;							          			
+							          			list-style:none;
+									          	i{
+									          		padding-right: 1rem;
+									          	}
+							          		}
+							          	}
+									} /* Media body */
+									img{
+										.d-flex{
+										  display: -webkit-box !important;
+										  display: -webkit-flex !important;
+										  display: -ms-flexbox !important;
+										  display: flex !important;
+										}
+										.ml-3{
+											  margin-left: 1rem !important;
+										}
+									}
+									#company-bookmark{
+									    position: absolute;
+									    right: 25px;
+									    bottom: 42px;
+										a{
+										    i{
+										    	padding:0;
+										    }
+										}
+										a:hover{
+											text-decoration: none;
+											color: $color-orange;
+											cursor: pointer;
+										}										
+									}
+									.class-hr{
+									    display: block;
+									    height: 1px;
+									    border: 0;
+									    border-top: 1px solid $color-blue;
+									    margin: 1em 0;
+									    padding: 0; 										
+									}
+								} /* Media */
+							} /* First comp list */
+				}
+		}
+		#company-list{
+			h2{
+
+			}
+			hr{
+			}
+			#company-search{
+				.row{
+					.col-md-3{
+					} /* md3 */
+					.col-md-6{
+						.input-group{
+							.form-control{
+								z-index: 1;
+							}
+						}
+					} /* Custom select */
+				} /* End row */
+			} /* End company search */
+			#company-single-lists{
+				.row{
+					.col-md-10{
+						.row{
+							#first-comp-list{
+								.media{
+									  font-family: $font-secondary;
+								      letter-spacing: 1px;
+									  border-color: $color-orange;
+									  box-shadow: 0 10px 4px 0 rgba(0,0,0,0.18),0 2px 3px 0 rgba(0,0,0,0.2)!important;
+									  display: -webkit-box;
+									  display: -webkit-flex;
+									  display: -ms-flexbox;
+									  display: flex;
+									  -webkit-box-align: start;
+									  -webkit-align-items: flex-start;
+								      -ms-flex-align: start;
+							          align-items: flex-start;
+									.media-body{
+									  -webkit-box-flex: 1;
+									  -webkit-flex: 1 1 0%;
+									      -ms-flex: 1 1 0%;
+									          flex: 1 1 0%;
+							          	h3{
+							          		overflow: hidden;
+							          		text-overflow: ellipsis;
+							          		white-space: nowrap;
+							          		font-family: $font-primary;
+							          		font-weight: 900;
+							          		.mt-0{
+							          			  margin-top: 0 !important;
+							          		}
+							          		.mb-1{
+												  margin-bottom: 0.25rem !important;
+							          		}
+							          	}
+							          	ul{
+							          		margin: 0;
+							          		padding: 0;
+							          		li{
+								          		overflow: hidden;
+								          		text-overflow: ellipsis;
+								          		white-space: nowrap;							          			
+							          			list-style:none;
+									          	i{
+									          		padding-right: 1rem;
+									          	}
+							          		}
+							          	}
+									} /* Media body */
+									img{
+										.d-flex{
+										  display: -webkit-box !important;
+										  display: -webkit-flex !important;
+										  display: -ms-flexbox !important;
+										  display: flex !important;
+										}
+										.ml-3{
+											  margin-left: 1rem !important;
+										}
+									}
+									#company-bookmark{
+									    position: absolute;
+									    right: 25px;
+									    bottom: 42px;
+										a{
+										    i{
+										    	padding:0;
+										    }
+										}
+										a:hover{
+											text-decoration: none;
+											color: $color-orange;
+											cursor: pointer;
+										}										
+									}
+									.class-hr{
+									    display: block;
+									    height: 1px;
+									    border: 0;
+									    border-top: 1px solid $color-blue;
+									    margin: 1em 0;
+									    padding: 0; 										
+									}
+								} /* Media */
+							} /* First comp list */
+						}
+					}
+					#comp-advertisement{
+						.well{
+							  border-color: $color-orange;
+						}
+					}
+				}
+
+			} /* End company-single lists */
+		} /* End company list  */
+			.row{
+				.col-md-3{
+					img{
+						width:100%;
+					}
+				}
+			}
+		.general_portal{
+			#carousel{
+				padding: 0;
+				margin: 0 ;
+				img{
+					width:100%;
+				}				
+			}
+			hr.job-hr{
+				padding:1rem;
+				margin: 0;
+			}
+			#or-search{
+				font-size: 1.5em;
+				text-transform: uppercase;
+			}
+			#all-jobs{
+				margin: 0 auto;
+				// border: 1px solid gray;
+				// margin: .5rem;
+						#port-opening{
+							display: flex;
+							flex-wrap: wrap;
+							// width: 100%;
+							.col-xs-2{
+								flex-direction: column;
+								border: 1px solid #f3c91c;
+								margin: 1rem;
+								border-radius: 0;
+								.row{
+									.list-opening-comp-logo{
+										margin: 1rem;
+									}
+									.list-opening-comp-body{
+										margin: 1rem;
+									}									
+								}
+								#full-open-list{
+										vertical-align: middle;									
+									div{
+										position: relative;
+										float: left;
+										top: 50%;
+										left: 50%;
+										transform: translate(-50%, -50%);
+									}
+								}
+							}
+
+							.col-xs-2:hover{
+								border: 1px solid red;
+							}														
+						}
+
+						h2{
+							color:#000;
+						}
+			}
+			.row{
+				margin-bottom: 2rem;
+				.col-md-6{
+					.row{
+						.col-xs-4{
+							h4{
+								color: #0f739b;
+								// background-color: #0f739b;
+							}
+							hr.hr{
+								color: #f3c91c;
+								background-color: #f3c91c;
+								height: 3px;
+							}
+						}
+					}
+					.general_companies{
+						.row{
+							.col-xs-5{
+								border: 1px solid #f3c91c;
+								margin: 1rem;
+								border-radius: 0;
+								.row{
+									.col-xs-4{
+										margin: 1rem;
+										img{
+											width: 100%;
+										}
+									}
+									.col-xs-6{
+										margin: 1rem;
+									}
+								}
+							}
+							.col-xs-5:hover{
+								border: 1px solid red;								
+							}
+						}
+					}
+					#all-companies{
+						margin: 0 1rem;
+					}
+					#prog-lang{
+						text-align: center;
+						.col-xs-2{
+							border: 1px solid #f3c91c;
+							margin: 1rem 2rem;
+							img{
+								width:80%;
+							}
+						}
+						.col-xs-2:hover{
+							border: 1px solid red;
+							margin: 1rem 2rem;
+
+							img{
+								width:80%;
+							}
+						}						
+					}			
+				}
+				.col-md-12{
+					button{
+						margin: 1rem;
+					}
+					.row{
+						.col-xs-5{
+							h4{
+								color: #0f739b;
+								// background-color: #0f739b;
+							}
+							hr.hr{
+								color: #f3c91c;
+								background-color: #f3c91c;
+								height: 3px;
+							}
+						}
+						.col-xs-2{
+							h4{
+								color: #0f739b;
+								// background-color: #0f739b;
+							}
+						}	
+						.archipelago{
+							h4{
+								color: #f3c91c;
+								// background-color: #0f739b;
+							}
+						}												
+					}
+				}
+			}
+		}		
+		#opening{
+			.row{
+				#opening-search{
+				}
+				.col-md-9{
+					.media-list{
+						.well{
+							.row{
+								.col-xs-5{
+
+								}
+								.col-xs-3{
+									img{
+										width: 100%;
+									}
+								}
+								.col-xs-2{
+
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		.single-page{
+			.tab-content{
+				// border: 1px solid #0f739b;
+			 //    border-top-color: transparent;
+					#jobinfo{
+						h3{
+							// margin:0;
+						}
+					#show_opening{
+						.row{
+							.col-md-12{
+								img{
+									width: 100%;
+									border-top: solid #f3c91c 7px; 								
+								}
+							}
+						}
+						#openings-title{
+							padding-top: 2em;
+							.col-md-2{
+								img{
+									width: 100%;
+								}
+							}
+						}
+						#openings-body{
+							padding: 3em 0 0 2em;
+							.col-md-7{
+								.job-description{
+									padding-bottom: 2em;
+									h4{
+										i{
+											color: #0f739b;
+										}
+									}
+									.hr-desc{
+										height: 5px;
+										color: #f3c91c;
+									}
+								}
+								.job-qualify{
+									h4{
+										i{
+											color: #0f739b;
+										}
+									}
+									hr{
+										color: #f3c91c;
+									}						
+								}					
+							}
+							.col-md-5{
+								h4{
+									i{
+										color: #0f739b;
+									}
+								}
+								hr{
+									color: #f3c91c;
+								}
+							} /* COL-MD-5 ENDS */
+						} /* OPENINGS BODY ENDS */
+					} /* SHOW OPENING ENDS */
+				} /* JOB INFO ENDS*/
+
+				#companyinfo{ /* OPENING COMPANY INFORMATION */
+					.row{
+						margin: 0;
+						.col-md-3{
+							padding: 0;
+							img{
+								border: 1px solid #ddd;
+								width: 70%;
+							}
+						}
+						.col-md-7{
+							h1{
+								text-transform: capitalize;
+								font-family:$font-primary;
+								font-weight: bold;
+							}
+							.employee_number{
+								font-weight: 900;
+								i{
+									color: $color-orange;									
+									font-size: 2rem;
+								}
+							}
+							.company-email{
+								font-weight: 900;
+								.fa-envelope-open-o{
+									font-size: 2rem;
+									color: $color-blue;
+								}								
+							}
+						}
+						.col-md-2{
+							padding-top: 3rem;
+							i{
+								font-size: 2rem;
+								color: red;
+							}
+							span{
+								font-size: 1.7em;
+								font-weight: bold;
+								font-family: $font-primary;
+							}
+
+						}
+					}
+				} /* END OPENING COMPANY INFORMATION */
+
+				#compinfo{
+					h3{
+
+					}
+					.row{
+						.col-md-4{
+							img{
+								width: 100%;
+							}
+						}
+					}
+				} /* COMPANY INFO ENDS */
+
+				#joblists{
+					h3{
+
+					}
+					.row{
+						.col-md-10{
+							.media-list{
+								.well{
+									.row{
+										.col-xs-5{
+
+										}
+										.col-xs-3{
+											img{
+												width:100%;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			} /* TAB-CONTENT ENDS */
+
+		} /*SINGLE OPENINGS END */
+
+		.manage-portal{
+			.nav-pills>.active>a, .nav-pills>.active>a:hover, .nav-pills>.active>a:focus {
+				    border-color: $color-blue;
+				    border-bottom-color: transparent;
+				    background-color: $color-blue;
+				    color: #fff;
+				    // font-size: 1.5em;
+				}
+			.nav-pills > li > a {
+			  border-radius: 0;
+			  color: $color-blue;
+			}
+			.nav-pills > li{
+			  border: 1px solid $color-blue;
+			  margin: 0;
+			}
+			.nav-pills {
+			   border-bottom: 3px solid $color-blue;
+			}
+			.tab-content{
+				border: 1px solid $color-blue;
+			 	border-top-color: transparent;
+			 	padding: 2em;
+			 	.tab-pane{
+			 		h3{
+					 	color: $color-orange;			 			
+			 		}
+			 		table{
+			 			thead{
+			 				tr{
+			 					th{
+			 						color: $color-blue;
+			 					}
+			 				}
+			 			}
+			 		}
+			 	}
+			} /* TAB-CONTENT ENDS */
+
+		} /*MANAGE PORTAL END */
+
+		.applicant-desc{
+			#applicant-desc-info{
+				.col-md-12{
+					.well-lg{
+						padding: 0 0 1em 0;
+						border-radius: 0;
+						border: 1px solid #0f739b;
+						box-shadow: 0 3px 4px rgba(15,115,155, .4);
+						h4{
+							text-align: center;
+							margin: 0 0 10px 0;
+							color: #fff;
+							background-color: #0f739b;
+							line-height: 35px;
+						}
+						p{
+							padding-left: 1em;
+						}
+					}
+					.well-lg:hover{
+						border-radius: 0;
+						box-shadow: 0 5px 10px rgba(15, 115, 155, .4);
+					}
+				}
+			}
+		   #applicant-resume-info{
+		   		padding-top: 2em;
+		   		@extend #applicant-desc-info;
+		   		.col-md-12{
+		   			.well-lg{
+		   				.row{
+		   					margin: 2em;
+		   					.col-md-3{
+		   						.well-lg{
+		   							// background-color: red;
+		   							padding: 1em;
+		   							margin-top: 10px;
+		   						}
+		   					}
+		   				}
+		   			}
+		   		}
+		   }	/* applicant-resume-info */
+		}
+		#company_letter{
+			.well{
+				padding:0 0 1em 0;
+				border-radius: 0;
+				border: 1px solid #0f739b;
+				h3{
+					padding-left: .5em;
+					margin: 0;
+					line-height: 30px;
+					background-color: #0f739b;
+					color: #fff;
+				}
+				h5{
+					padding-left: .5em;
+					margin: 0;
+					line-height: 30px;
+				}				
+			}
+		}
+		.resume-info{
+			border: 1px solid #0f739b;
+			.row{
+				.col-md-12{
+					#resume-info-title{
+						padding-left: .5em;
+						margin: 0;
+						line-height: 30px;
+						background-color: #0f739b;
+						color: #fff;						
+					}
+					.row{
+						margin: 1em 0;
+						.col-md-12{
+							.resume-info-sub-title{
+								border-bottom: 1px solid #0f739b;
+								margin: 0;
+								line-height: 30px;
+								// background-color: #0f739b;
+								color: #0f739b;								
+							}
+						}
+					}
+				}
+			}
+		} /* RESUME-INFO */
+		.user_index_show{
+			// border: 1px solid #0f739b;
+			.col-md-12{
+					border: 1px solid #0f739b;				
+				.row{
+					.col-md-8{
+						background-color: #0f739b;
+						color: #fff;
+						h3{
+							margin: .5em;
+						}
+					}
+					.col-md-4{
+						background-color: #0f739b;
+						color: #fff;
+						h3{
+							margin: .5em;
+						}						
+					}
+				}
+			}
+		}
+		
+	} /* body-container */
+}

@@ -1,0 +1,21 @@
+/**/
+
+.error-label{
+    color: #de2c2c;
+    font-size: 10px;
+    font-weight: normal;
+    display: none;
+}
+
+.has-error .error-label{
+    display: block;
+}
+
+.has-error-seman-dropdown{
+    border-color:red!important;
+}
+
+.error-border
+{
+    border-color:#a94442!important;
+}

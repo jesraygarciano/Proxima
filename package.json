@@ -1,0 +1,31 @@
+{
+  "name": "beagle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "gulp": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NexSeed/Beagle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NexSeed/Beagle/issues"
+  },
+  "homepage": "https://github.com/NexSeed/Beagle#readme",
+  "dependencies": {
+    "bootstrap-sass": "^3.3.7",
+    "browser-sync": "^2.23.5",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "node-sass": "^4.7.2",
+    "semantic-ui": "^2.2.13",
+    "semantic-ui-popup": "^2.2.12"
+  }
+}
