@@ -30,60 +30,35 @@ class OpeningsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-//     public function index()
-//     {
-//         // dd(Auth::user());
-//         // $openings = Opening::latest('created_at')->where('is_active', 1)->get();
-// /*
-//         $companies = Company::find(1);
-//         // $companies = Company::where('id', $openings->company_id)->get();
-//
-//         $openings = Opening::latest('created_at')->where('company_id', $companies->id)->where('is_active', 1)->paginate(6);
-//         // dd($openings);
-// */
-//         $openings = Opening::latest('created_at')->where('is_active', 1)->paginate(6);
-//
-//         return view('openings.index', compact('openings'));
-//         // return view('openings.index', compact('openings','companies'));
-//     }
 
     public function searched_index_general(Request $request)
     {
         return view('openings.index', compact('openings'));
-
     }
 
-    public function search_opening_with_language(Request $request){
-        $openings = collect();
-        $language = ucfirst($request->language);
-        $openings_skills = \App\Opening_skill::where('language',$request->language)->get();
-
-        foreach ($openings_skills as $skill) {
-            $openings = $openings->merge($skill->openings);
-        }
-
-        return view('openings.language-search',compact('openings','language'));
-    }
 
     public function index(Request $request)
     {
 
         // revise
-        $openings_lang = collect();
-        $language_opeindex = ucfirst($request->languagesearch);
-        // dd($language_opeindex);
-        $openings_skills = \App\Opening_skill::where('language',$request->language)->get();
-
-        foreach ($openings_skills as $skill) {
-            $openings_lang = $openings_lang->merge($skill->openings);
-        }
 
         $openings = Opening::query()->where('is_active', 1)->orderBy('created_at','desc');
         $provinces = \DB::table('provinces')->get();
 
-/*        $skill_ids = array();
-        $skill_ids = Common::resume_skill_ids_get($resume);
-*/        
+        /*$language_lang = strtoupper($request->language);
+
+        if($language_lang){
+
+            $openings = collect();
+            $openings_skills = \App\Opening_skill::where('language',$request->language)->get();
+
+            foreach ($openings_skills as $skill) {
+                $openings = $openings->merge($skill->openings);
+            }
+
+        return view('openings.index',compact('provinces','openings'));
+
+        }*/
 
         if($request->languages && strlen($request->languages[0]) > 0)
         {
@@ -94,14 +69,7 @@ class OpeningsController extends Controller
             $openings->whereIn('id',$pivot_opening_skills);
         }
 
-        if($request->languages && strlen($request->languages[0]) > 0)
-        {
-            $resume_skills = \App\Opening_skill::whereIn('language',$request->languages)->lists('id');
-
-            $pivot_opening_skills = \DB::table('joining_opening_skills')->whereIn('opening_skill_id',$resume_skills)->lists('opening_id');
-
-            $openings->whereIn('id',$pivot_opening_skills);
-        }
+        
 
         if($request->opening_search){
             $company_search_ids = Company::where('company_name','like','%'.$request->opening_search.'%')->lists('id');
