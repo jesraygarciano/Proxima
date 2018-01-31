@@ -10,6 +10,7 @@ use App\Libs\Common;
 use App\Company;
 use App\Opening;
 use Auth;
+use Mapper;
 
 class CompaniesController extends Controller
 {
@@ -156,6 +157,8 @@ class CompaniesController extends Controller
 
         //getting ids of companies that auth user created.
         $companies_ids = Common::company_ids_that_user_have();
+
+        Mapper::map(53.381128999999990000, -1.470085000000040000);
 
         // dd($company);
         // dd($openings);
