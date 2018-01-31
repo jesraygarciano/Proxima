@@ -97,6 +97,11 @@
             padding-right: 110px;
             white-space:normal;
             position: relative;
+            margin-top: 4px;
+        }
+
+        .info-container .feature-info-list li:last-child{
+            height :25px;
         }
 
         .li-code{
@@ -111,7 +116,8 @@
 
         .job-title{
             font-size: 20px;
-            margin-top: 40px;
+            margin-top: 32px;
+            margin-bottom: 1px;
         }
 
         .company-name{
@@ -155,13 +161,13 @@
             -webkit-box-shadow: inset 0px -30px 20px 0px rgba(0, 0, 0, 0.64);
         }
 
-        .landing-cover:hover .image{
+/*        .landing-cover:hover .image{
             transform: translateY(-50%) translateX(-50%) scale(1.1);
         }
 
         .landing-cover:hover .landing-page-search{
             -webkit-backface-visibility: hidden;
-        }
+        }*/
 
         .xtext12{
             position: relative;
@@ -196,56 +202,14 @@
     <div class="general-hero" style="margin-top:-30px;">
         <div class="landing-cover">
             <div style="position: relative; overflow: hidden; min-height: 250px;">
-                <img class="bg-image" src="{{asset('img/bg-banner.png')}}">
-                <img class="image" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1500&q=80">
-                <div class="shadow"></div>
+                <div class="tab-content-wrapper"></div>
             </div>
 
-           <!--  <div id="general_search" style="padding:0px 10px; display: none;">
-                <div class="input-group" id="adv-search">
-                    <input type="text" id="general_search_placeholder" class="form-control"  placeholder="Search for jobs" />
-                    <div class="input-group-btn">
-                        <div class="btn-group" role="group">
-                            <div class="dropdown dropdown-lg">
-                                <button type="button" class="btn btn-default dropdown-toggle"       data-toggle="dropdown" aria-expanded="false">
-                                    Filter by &nbsp <span class="caret"></span>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <form class="form-horizontal" role="form">
-                                      <div class="form-group">
-                                        <label for="filter">Filter by </label>
-                                        <select class="form-control">
-                                            <option value="0" selected>Intern</option>
-                                            <option value="1">Featured</option>
-                                            <option value="2">Most popular</option>
-                                            <option value="3">Top rated</option>
-                                            <option value="4">Most applied</option>
-                                        </select>
-                                      </div>
-                                      <div class="form-group">
-                                        <label for="contain">Company</label>
-                                        <input class="form-control" type="text" />
-                                      </div>
-                                      <div class="form-group">
-                                        <label for="contain">Contains the words</label>
-                                        <input class="form-control" type="text" />
-                                      </div>
-                                      <button type="submit" class="btn btn-primary">
-                                        Advanced search
-                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            <div class="general_heading">
+                <h2>Quality job search for programmers</h2>
+                <h5>Build your professional identity online and stay connected with opportunities.</h5>
+            </div>
 
-                                      </button>
-                                    </form>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-primary">
-                                Search 
-                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
             <div class="landing-page-search">
                 <div style="border:5px solid white; display: table; height: 50px; width: 100%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 3px 0 rgba(0,0,0,0.12)!important;">
                     <div class="btn-group unick-drop-down">
@@ -373,7 +337,7 @@
                                         <span>
                                             {{ $opening->details }}
                                         </span> 
-                                    </li>
+                                    </div>
                                 </li>
                                 <li>
                                     <div class="ellipsis">
@@ -382,7 +346,7 @@
                                         <span>
                                             {{ $opening->company->address1 }}
                                         </span> 
-                                    </li>
+                                    </div>
                                 </li>
                                 <li>
                                     <div class="ellipsis">
@@ -391,7 +355,7 @@
                                         <span>
                                             {!! salary_ranges()[$opening->salary_range] !!}
                                         </span> 
-                                    </li>
+                                    </div>
                                 </li>
                                 <li class="li-code">
                                     <i class="fa fa-code info-icon" aria-hidden="true"></i>
@@ -400,7 +364,7 @@
                                         @if($match_array = array_intersect($opening->has_skill->lists('id')->toArray(), get_language_ids($main_language)))
                                             @if($x < 3)
                                                 {{-- have to take away original key from $match_array --}}
-                                                <?php $x++; $match_array = array_values($match_array); ?>
+                                                <?php $match_array = array_values($match_array); ?>
 
                                                 @for($i=0; $i < count($match_array) ; $i++)
                                                     @if($i == 0)
@@ -418,20 +382,28 @@
                                                     </a>
                                                 @endfor
                                             @endif
+                                            <?php $x++; ?>
                                         @endif
                                     @endforeach
+
+                                    @if($x > 3)
+                                        <a href="#!" role="button" class="btn label label-default">
+                                            ...
+                                        </a>
+                                    @endif
                                 </li>
                             </ul>
                             <hr class="opening-top-date-hr" style="margin-top: 7px; margin-bottom: 7px;">
-                            <div class="footer">
-                                <div class="pull-left">
+                            <div class="footer" >
+                                <div class="pull-left" style="margin-top: 11px;">
                                     <div class="foggy-text"> {{ date(' M. j, Y ',strtotime($opening->created_at)) }} </div>
                                 </div>
-                                <div class="pull-right">
+                                <div class="pull-right" style="margin-top: 11px;">
                                     <div class="foggy-text">
                                         @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
                                     </div>
                                 </div>
+                                <div class="clear" style="clear: both;"></div>
                             </div>
                         </div>
                     </div>
@@ -465,14 +437,14 @@
     </script>
 
 
-	<div class="general_portal container" style="margin-bottom:100px;">
+    <div class="general_portal container" style="margin-bottom:100px;">
 
         <h3 id="or-search">Programming Languages</h3>
         <hr>
         <ul class="ud-list">
             <li>
-                <a href="{{ route('openings.index').'?languagesearch=php'.'&show_advance_search=open'}}">
-        {{--<a href="{{ url('openings?languages%5B%5D=php&show_advance_search=open') }}">--}}
+                    <a href="{{ url('openings?languages%5B%5D=php&show_advance_search=open') }}">
+                    {{--<a href="{{ url('openings?languages%5B%5D=php&show_advance_search=open') }}">--}}
                     <div class="round-icon medium-round-icon php">
                         <img src="http://www.rnm.solutions/wp-content/uploads/2018/01/icon-php1-1.png">
                     </div>
@@ -498,7 +470,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('search_opening_with_language').'?language='.urlencode('c++')}}">
+                    <a href="{{ url('openings?languages%5B%5D=c%2B%2B&show_advance_search=open') }}">
                     <div class="round-icon medium-round-icon cplus2" style="background: #28aeff;">
                         <img src="https://png.icons8.com/color/1600/c-plus-plus-logo.png">
                     </div>
@@ -506,7 +478,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('search_opening_with_language').'?language=python'}}">
+                <a href="{{ url('openings?languages%5B%5D=python&show_advance_search=open') }}">
                     <div class="round-icon medium-round-icon python" style="background: #fff1cc;">
                         <img src="http://www.iconarchive.com/download/i73027/cornmanthe3rd/plex/Other-python.ico">
                     </div>
@@ -517,7 +489,7 @@
         <ul class="ud-list" style="margin-top:-50px;">
             
             <li>
-                <a href="{{route('search_opening_with_language').'?language=swift'}}">
+                <a href="{{ url('openings?languages%5B%5D=swift&show_advance_search=open') }}">
                     <div class="round-icon medium-round-icon">
                         <div class="swift-round">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Swift_logo.svg/2000px-Swift_logo.svg.png">
@@ -527,7 +499,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('search_opening_with_language').'?language=go'}}">
+                <a href="{{ url('openings?languages%5B%5D=go&show_advance_search=open') }}">
                     <div class="round-icon medium-round-icon go">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Gogophercolor.png/1024px-Gogophercolor.png">
                     </div>
@@ -535,7 +507,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('search_opening_with_language').'?language='.urlencode('c#')}}">
+                <a href="{{ url('openings?languages%5B%5D=c%23&show_advance_search=open') }}">
                     <div class="round-icon medium-round-icon csharp" style="background: #ba85fe;">
                         <img src="https://developer.fedoraproject.org/static/logo/csharp.png">
                     </div>
@@ -543,7 +515,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('search_opening_with_language').'?language=javascript'}}">
+                <a href="{{ url('openings?languages%5B%5D=javascript&show_advance_search=open') }}">
                     <div class="round-icon medium-round-icon {{-- javascript --}}" {{-- style="background: #9cffff; --}}">
                         <img src="http://www.northeastjsconference.com/wp-content/uploads/2015/11/learn-javascript.png"  id="javascript-imgsize">
                     </div>
@@ -551,7 +523,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('search_opening_with_language').'?language=r'}}">
+                <a href="{{ url('openings?languages%5B%5D=node&show_advance_search=open') }}">
                     <div class="round-icon medium-round-icon r-language">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/2000px-R_logo.svg.png">
                     </div>
@@ -701,7 +673,7 @@
                 <hr>
                 <h3 class="unick-header">
                     <div class="text">
-                        Luzon
+                        <a href="{{route('portal_ph_division_search','Luzon')}}/">Luzon</a>
                     </div>
                 </h3>
                 @foreach($provinces as $province)
@@ -713,7 +685,7 @@
                 @endforeach
                 <h3 class="unick-header">
                     <div class="text">
-                        Visayas
+                        <a href="{{route('portal_ph_division_search','Visayas')}}/">Visayas</a>
                     </div>
                 </h3>
                 @foreach($provinces as $province)
@@ -725,7 +697,7 @@
                 @endforeach
                 <h3 class="unick-header">
                     <div class="text">
-                        Mindanao
+                        <a href="{{route('portal_ph_division_search','Mindanao')}}/">Mindanao</a>
                     </div>
                 </h3>
                 @foreach($provinces as $province)
