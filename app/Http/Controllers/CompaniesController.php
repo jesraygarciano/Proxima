@@ -18,7 +18,7 @@ class CompaniesController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show']]);
-        $this->middleware('onlyhiring', ['except' => ['index', 'show','follow_companies_index','unfollow_companies_index','follow_company_lists']]);
+        $this->middleware('onlyhiring', ['except' => ['edit_company_follow', 'index', 'show','follow_companies_index','unfollow_companies_index','follow_company_lists']]);
         $this->middleware('navbar');
     }
     /**
@@ -78,25 +78,33 @@ class CompaniesController extends Controller
         $rules = [    // ②
             'company_name' => 'required',
             'email' => 'required|unique:companies',
-            'url' => 'required',
+            // 'url' => 'required',
             'company_logo' => 'required',
+            // 'background_photo' => 'required',
             'tel' => 'required',
         ];
         // $request->user_id = Auth::user()->id;
 
-        // Handle file upload
-        if($request->hasFile('company_logo')){
-            //  Get filename with the extension
-            $filenameWithExt = $request->file('company_logo')->getClientOriginalName();
-            //  Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just text
-            $extension = $request->file('company_logo')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('company_logo')->move(public_path(). '/storage' , $fileNameToStore);
+        if($request->company_logo){
+            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->company_logo));
+            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->background_photo));
+            $fileNameToStore = time().'.png';
+            file_put_contents(public_path('/storage/').$fileNameToStore, $data);
         }
+
+        // Handle file upload
+        // if($request->hasFile('company_logo')){
+        //     //  Get filename with the extension
+        //     $filenameWithExt = $request->file('company_logo')->getClientOriginalName();
+        //     //  Get just filename
+        //     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        //     // Get just text
+        //     $extension = $request->file('company_logo')->getClientOriginalExtension();
+        //     // Filename to store
+        //     $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        //     // Upload Image
+        //     $path = $request->file('company_logo')->move(public_path(). '/storage' , $fileNameToStore);
+        // }
 
         $this->validate($request, $rules);  // ③
 
@@ -105,8 +113,9 @@ class CompaniesController extends Controller
             'company_name' => $request->company_name,
             'email' => $request->email,
             'is_active' => '1',
-            'url' => $request->url,
-            'company_logo' => $fileNameToStore,            
+            // 'url' => $request->url,
+            'company_logo' => $fileNameToStore,
+            // 'background_photo' => $fileNameToStoreCover,
             'tel' => $request->tel,
         ]);
 
@@ -123,6 +132,21 @@ class CompaniesController extends Controller
 
         Auth::user()->follow($company_id);
         return redirect()->back();
+
+    }
+
+    // uelmar's
+    public function edit_company_follow(Request $request){
+
+        if(Auth::user()->is_following($request->company_id)){
+            Auth::user()->unfollow($request->company_id);
+            return 'unfollowed';
+        }
+        else
+        {
+            Auth::user()->follow($request->company_id);
+            return 'followed';
+        }
 
     }
 
@@ -153,12 +177,26 @@ class CompaniesController extends Controller
     public function show($id)
     {
         $company = Company::findOrFail($id);
+
         $openings = Opening::where('company_id', $company->id)->get();
 
         //getting ids of companies that auth user created.
         $companies_ids = Common::company_ids_that_user_have();
 
-        Mapper::map(53.381128999999990000, -1.470085000000040000);
+        /*Mapper::map(53.381128999999990000, -1.470085000000040000, ['zoom' => 10, 'markers' => ['title' => 'My Location', 'animation' => 'DROP']]);*/
+        /*Mapper::map(53.381128999999990000, -1.470085000000040000, ['zoom' => 10, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'cluster' => false]);*/
+        /*Mapper::map(10.3186862, 123.9031675, ['zoom' => 15, "draggable" => true, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'clusters' => ['size' => 10, 'center' => true, 'zoom' => 30]]);
+        */
+
+        /*$company_location = Company::select('id', \DB::raw('CONCAT(address1, " ", city, " ", country) AS company_google_map'))
+            ->orderBy('address1')
+            ->lists('company_google_map', 'id');*/
+        // dd($company_location);
+
+        // Mapper::location($company->city, $company->country); //company_location
+        Mapper::location($company->address1. " ". $company->city. " ". $company->country)->map(['zoom' => 17, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'clusters' => ['size' => 10, 'center' => true, 'zoom' => 30]]);
+
+        /*Mapper::map(53.381128999999990000, -1.470085000000040000, ['eventBeforeLoad' => 'console.log("before load");']);*/
 
         // dd($company);
         // dd($openings);
