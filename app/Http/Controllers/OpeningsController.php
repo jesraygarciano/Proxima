@@ -12,7 +12,7 @@ use App\Resume;
 use App\Libs\Common;
 use Auth;
 use App\User;
-
+use Mapper;
 // use Common;
 
 
@@ -21,7 +21,7 @@ class OpeningsController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'searched_index_general','search_opening_with_language', 'searched_index_advance', 'show']]);
-        $this->middleware('onlyhiring', ['except' => ['index', 'search_opening_with_language', 'searched_index_general', 'searched_index_advance', 'show', 'bookmark_openings_index','bookmark_lists', 'unbookmark_openings_index']]);
+        $this->middleware('onlyhiring', ['except' => ['index', 'edit_opening_bookmark', 'search_opening_with_language', 'searched_index_general', 'searched_index_advance', 'show', 'bookmark_openings_index','bookmark_lists', 'unbookmark_openings_index']]);
         $this->middleware('navbar');
     }
 
@@ -34,6 +34,20 @@ class OpeningsController extends Controller
     public function searched_index_general(Request $request)
     {
         return view('openings.index', compact('openings'));
+    }
+
+
+    // uelmar's
+    public function edit_opening_bookmark(Request $request){
+
+        if(Auth::user()->is_bookmarking($request->opening_id)){
+            Auth::user()->unbookmark($request->opening_id);
+            return ['result'=>'unbookmarked','bookmarks'=>Opening::find($request->opening_id)->bookmark_count()];
+        }
+        else{
+            Auth::user()->bookmark($request->opening_id);
+            return ['result'=>'bookmarked','bookmarks'=>Opening::find($request->opening_id)->bookmark_count()];
+        }
     }
 
 
@@ -68,8 +82,6 @@ class OpeningsController extends Controller
 
             $openings->whereIn('id',$pivot_opening_skills);
         }
-
-        
 
         if($request->opening_search){
             $company_search_ids = Company::where('company_name','like','%'.$request->opening_search.'%')->lists('id');
@@ -153,19 +165,25 @@ class OpeningsController extends Controller
 
         ]);
 
-        // Handle file upload
-        if($request->hasFile('picture')){
-            //  Get filename with the extension
-            $filenameWithExt = $request->file('picture')->getClientOriginalName();
-            //  Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just text
-            $extension = $request->file('picture')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('picture')->move(public_path(). '/storage' , $fileNameToStore);
+
+        if($request->picture){
+            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->picture));
+            $fileNameToStore = time().'.png';
+            file_put_contents(public_path('/storage/').$fileNameToStore, $data);
         }
+        // Handle file upload
+        // if($request->hasFile('picture')){
+        //     //  Get filename with the extension
+        //     $filenameWithExt = $request->file('picture')->getClientOriginalName();
+        //     //  Get just filename
+        //     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        //     // Get just text
+        //     $extension = $request->file('picture')->getClientOriginalExtension();
+        //     // Filename to store
+        //     $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        //     // Upload Image
+        //     $path = $request->file('picture')->move(public_path(). '/storage' , $fileNameToStore);
+        // }
 
 /*        foreach ($openings_skills as $skill) {
             $openings = $openings->merge($skill->openings);
@@ -176,7 +194,8 @@ class OpeningsController extends Controller
         $opening->title = $request->input('title');
         $opening->company_id = $request->input('company_id');
         $opening->requirements = $request->input('requirements');
-        if($request->hasFile('picture')){
+        $opening->salary_range = 1;
+        if($request->picture){
             $opening->picture = $fileNameToStore;
         }
         $opening->save();
@@ -212,6 +231,8 @@ class OpeningsController extends Controller
         }
         // dd($resume);
 
+        /*Mapper::location($opening->$company->address1. " ". $opening->$company->city. " ". $opening->$company->country)->map(['zoom' => 18, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'clusters' => ['size' => 10, 'center' => true, 'zoom' => 30]]);*/
+        
         return view('openings.show', compact('opening','company', 'resume', 'more_openings'));
     }
 
