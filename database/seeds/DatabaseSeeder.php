@@ -185,6 +185,7 @@ class CompaniesTableSeeder extends Seeder  // ③
                 'in_charge' => $faker->name(),
                 'ceo_name' => $faker->name(),
                 'address1' => $faker->streetAddress(),
+                'spoken_language' => $faker->lexify('spoken_language_???????'),
                 'address2' => $faker->streetName(),
                 'city' => $faker->city(),
                 'country' => $faker->country(),
