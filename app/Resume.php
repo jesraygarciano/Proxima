@@ -22,6 +22,13 @@ class Resume extends Model
         return $this->belongsToMany('App\Resume_skill', 'joining_resume_skills', 'resume_id', 'resume_skill_id');
     }
 
+    public function getPhotoAttribute(){
+        if(!file_exists('storage/'.$this->attributes['photo']) || str_replace(' ','',$this->attributes['photo']) == ''){
+            return asset('img/member-placeholder.png');
+        }
+        return asset('storage/'.$this->attributes['photo']);
+    }
+
     public function educations()
     {
         return $this->hasMany(Education::class);
