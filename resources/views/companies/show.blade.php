@@ -58,11 +58,10 @@
                     border:none!important;
                 }
             </style>
-
             <div class="row text-center">
                 <div class="col-md-12 cover-info">
                     <div class="cover-image">
-                        <img src="{{ $company->company_logo }}" alt="{{ $company->company_name}}" />
+                        <img src="{{ $company->background_photo }}" alt="{{ $company->company_name}}" />
                     </div>
                     <div class="row cover-info" id="openings-title" style="margin:0px; margin-top:-100px;">
                         <div class="col-sm-2">
@@ -86,11 +85,11 @@
                                 <div class="col-sm-6">
                                     <h5>
                                         <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
-                                        &nbsp; {{ $company->city }}, {{ $company->country }}
+                                        &nbsp; {{ $company->address1 }}, {{ $company->city }}, {{ $company->country }}
                                     </h5>
                                     <h5>
                                         <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
-                                        &nbsp; {{ $company->created_at }}
+                                        &nbsp; {{ $company->established_at }}
                                     </h5>
                                 </div>
                             </div>
@@ -102,8 +101,17 @@
             <hr>
             <div class="row">
                 <div class="col-md-8">
+
                     <h3>About us:</h3>
-                    {{ $company->what }}
+                    <p>
+                        {{ $company->what }}
+                    </p>
+                    <h3>Why join us?:</h3>
+                        <img src="{{ $company->what_photo1 }}" alt="{{ $company->company_name}}" />
+                    <p>
+                        {{ $company->what_photo1_explanation }}
+                    </p>
+
                 </div>
                 <div class="col-md-4">
                     <h3>Company details:</h3>
@@ -117,37 +125,48 @@
                             <div class="field-value">{{ $company->ceo_name }}</div>
                         </li>
                         <li>
-                            <div class="field-name">COO</div>
-                            <div class="field-value">{{ $company->in_charge }}</div>
-                        </li>
-                        <li>
-                            <div class="field-name">Address(s)</div>
-                            <div class="field-value">{{ $company->address1 }}</div>
-                            <div class="field-value">{{ $company->address2 }}</div>
-                        </li>
-                        <li>
-                            <div class="field-name">City</div>
-                            <div class="field-value">{{ $company->city }}</div>
-                        </li>
-                        <li>
-                            <div class="field-name">Country</div>
-                            <div class="field-value">{{ $company->country }}</div>
-                        </li>
-                        <li>
-                            <div class="field-name">Website</div>
+                            <div class="field-name">Company website URL</div>
                             <div class="field-value">{{ $company->url }}</div>
                         </li>
                         <li>
-                            <div class="field-name">Contact</div>
+                            <div class="field-name">Company size</div>
+                            <div class="field-value">{{ $company->company_size }}</div>
+                        </li>
+                        <li>
+                            <div class="field-name">Company Tel#</div>
                             <div class="field-value">{{ $company->tel }} (Tel)</div>
                         </li>
                         <li>
-                            <div class="field-name">Employees</div>
-                            <div class="field-value">{{ $company->number_of_employee }}</div>
+                            <div class="field-name">Company address</div>
+                            <div class="field-value">{{ $company->address1 }}, {{ $company->city }}, {{ $company->country }}</div>
+                        </li>
+                        <li>
+                            <div class="field-name">Language spoken</div>
+                            <div class="field-value">{{ $company->language }}</div>
                         </li>
                     </ul>
                 </div>
             </div>
+
+            @if(!empty($company->address1))
+                <div class="container text-center" style="padding-top:3rem;height:500px;width:100%;">
+                        {!! Mapper::render() !!}
+                </div>
+            @endif
+<!--             <style>
+              #map { position:absolute; top:0; bottom:0; width:100%; height: 500px; }
+            </style>
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <div id='map'></div>
+                    <script>
+                    L.mapbox.accessToken = 'pk.eyJ1IjoibGFib25ldHdvcmsiLCJhIjoiY2pkMnFzcXN6MmNnYzJ5cW9kN2FwYXBrdiJ9.yIp-cDl8ipzrnO_9NGtXVA';
+                    var map = L.mapbox.map('map', 'mapbox.streets')
+                        .setView([40, -74.50], 9);
+                    </script>                
+                </div>
+            </div>  -->
+
 
             @if (!Auth::guest())
                 @if (Auth::user()->role == 1)
@@ -161,6 +180,7 @@
                     @endif
                 @endif
             @endif
+
         </div> {{-- END COMPANY INFO --}}
 
         <div id="joblists" class="tab-pane fade">

@@ -22,7 +22,21 @@
         <div class="form-row">
             <div class="form-group col-md-12">
                 {!!Form::label('picture', 'Opening Photo Cover:')!!}
-                {!!Form::file('picture', null, ['class' => 'form-control'])!!}
+                <div class="crop-control" style="height: 200px; width: 200px;">
+                  <div class="image-container">
+                    <img src="https://grangeprint.com/image/cache/placeholder-750x750-nofill-255255255.png">
+                    <label for="picture" class="input-trigger hover-div">
+                      <p>
+                        <i class="fa fa-file-image-o fa-5x" aria-hidden="true"></i>
+                        <br>
+                        Upload
+                      </p>
+                    </label>
+                  </div>
+                  <div class="input-container">
+                    <input type="file" id="picture" name="picture" accept="image/*" />
+                  </div>
+                </div>
             </div>
         </div>
 

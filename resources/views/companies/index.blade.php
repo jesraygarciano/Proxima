@@ -74,7 +74,7 @@
                                             </li> 
                                           </ul>
                                         <div id="company-bookmark">
-                                          <div class="d-flex align-self-end ml-3">
+                                          <div class="d-flex align-self-end ml-3" style="transform:translateY(15px);">
                                             @include('companies.follow_company.follow_button', ['company' => $company])                                            
                                           </div>
                                         </div>

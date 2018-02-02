@@ -60,15 +60,15 @@ unickwizard = function($this,options){
 
 		$this.find('.prev-step').click(function(){
 
-			var index = $this.find('.nav-tabs li').index($this.find('.nav-tabs li.active'));
+			var index = $this.find('.progress-nav-tabs li').index($this.find('.progress-nav-tabs li.active'));
 
 			displayPane(index-1);
 		});
 
-		$this.find('.nav-tabs li a').click(function(){
+		$this.find('.progress-nav-tabs li a').click(function(){
 
-			var li_index = $this.find('.nav-tabs li').index($(this).parent());
-			var active_li_index = $this.find('.nav-tabs li').index($this.find('.nav-tabs .active'));
+			var li_index = $this.find('.progress-nav-tabs li').index($(this).parent());
+			var active_li_index = $this.find('.progress-nav-tabs li').index($this.find('.progress-nav-tabs .active'));
 
 			if(li_index > active_li_index)
 			{
@@ -160,13 +160,13 @@ unickwizard = function($this,options){
 	function displayPane(index){
 		$(window).scrollTop(0);
 		$this.find('.active').removeClass('active');
-		$this.find('.nav-tabs li').eq(index).addClass('active');
+		$this.find('.progress-nav-tabs li').eq(index).addClass('active');
 		$this.find('.tab-pane').eq(index).addClass('active');
 
-		$this.find('.nav-tabs li').removeClass('disabled');
+		$this.find('.progress-nav-tabs li').removeClass('disabled');
 
-		for(var i = index+1; i < $this.find('.nav-tabs li').length; i++){
-			$this.find('.nav-tabs li').eq(i).addClass('disabled');
+		for(var i = index+1; i < $this.find('.progress-nav-tabs li').length; i++){
+			$this.find('.progress-nav-tabs li').eq(i).addClass('disabled');
 		}
 	}
 

@@ -188,7 +188,6 @@
 
         <div class="row" id="company-opening-body">
             <div class="col-md-7">
-
                 <div class="row">
                     <div class="col-md-12">
                         <h3>
@@ -200,7 +199,6 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12">
                         
@@ -260,6 +258,10 @@
                 <div>number_of_employee : {{ $company->number_of_employee }}</div>                
             </div>
         </div>
+
+        <!--div class="container text-center" style="padding-top:3rem;height:500px;width:100%;">
+                {{-- {!! Mapper::render() !!} --}}
+        </div> -->
 
     </div>
 

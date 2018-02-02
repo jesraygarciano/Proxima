@@ -135,16 +135,18 @@
                     @foreach ($openings as $opening)
                         <div class="job-tile">
                             <div>
+                                <ul class="ribbon_style_list">
                                 @if($opening->featured_status == 1)
-                                    <span class="job-position featured">Featured</span>
+                                    <li class="job-position featured">Featured</li>
                                 @endif
                                 @if($opening->hiring_type == 0)
-                                    <span class="job-position intern">Intern</span>
+                                    <li class="job-position intern">Intern</li>
                                 @elseif($opening->hiring_type == 1)
-                                    <span class="job-position regular">Regular</span>
+                                    <li class="job-position regular">Regular</li>
                                 @elseif($opening->hiring_type == 2)
-                                    <span class="job-position intern">Temporary</span>
+                                    <li class="job-position intern">Temporary</li>
                                 @endif
+                                </ul>
                             </div>
                             <div class="job-title">
                                 <a href="{{ url('openings', $opening->id) }}" class="ellipsis padding-right-110" style="display: block;"> {{ $opening->title }} </a>
@@ -163,28 +165,37 @@
                                 </li>
                                 <li>
                                     <i class="fa fa-code" aria-hidden="true"></i>
+                                    <?php $x = 0; ?>
                                     @foreach(main_languages() as $main_language)
                                         @if($match_array = array_intersect($opening->has_skill->lists('id')->toArray(), get_language_ids($main_language)))
-                                            {{-- have to take away original key from $match_array --}}
-                                            <?php $match_array = array_values($match_array); ?>
+                                            @if($x < 3)
+                                                {{-- have to take away original key from $match_array --}}
+                                                <?php $match_array = array_values($match_array); ?>
 
-                                            @for($i=0; $i < count($match_array) ; $i++)
-                                                @if($i == 0)
-                                                    <a href="#!" role="button" class="btn label label-warning {{main_languages_class_convert()[$main_language]}}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
-                                                    <ul>
-                                                        <li>{{return_category($match_array[$i])}}</li>                    
-                                                @else
-                                                    <li>{{return_category($match_array[$i])}}</li> 
-                                                @endif
+                                                @for($i=0; $i < count($match_array) ; $i++)
+                                                    @if($i == 0)
+                                                        <a href="#!" role="button" class="btn label label-warning {{main_languages_class_convert()[$main_language]}}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
+                                                        <div>{{return_category($match_array[$i])}}</div>                    
+                                                    @else
+                                                        <div>{{return_category($match_array[$i])}}</div> 
+                                                    @endif
 
-                                                @if($i == count($match_array) - 1)
-                                                    </ul>">
-                                                    {{$main_language}}<span class="caret"></span>
-                                                @endif
-                                                </a>
-                                            @endfor
+                                                    @if($i == count($match_array) - 1)
+                                                        ">
+                                                        {{$main_language}}<span class="caret"></span>
+                                                    @endif
+                                                    </a>
+                                                @endfor
+                                            @endif
+                                            <?php $x++; ?>
                                         @endif
                                     @endforeach
+
+                                    @if($x > 3)
+                                        <a href="#!" role="button" onclick="display_skills('{{addslashes(json_encode($opening->load("skill_requirements")))}}',this)" class="btn label label-default">
+                                            ...
+                                        </a>
+                                    @endif
                                 </li>
                             </ul>
                             <hr class="opening-top-date-hr" style="margin-top: 7px; margin-bottom: 7px;">
@@ -200,6 +211,7 @@
                             </div>
                         </div>
                     @endforeach
+
                     @include('layouts.pagination', ['paginator' => $openings->appends($_GET)])
                     {{-- {!!$openings->appends(['company_name'=>$company_name])->render()!!} --}}
                     {{-- {!! $openings->render() !!} --}}

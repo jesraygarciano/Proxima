@@ -41,7 +41,7 @@
                 <div class="connecting-line"></div>
                 <ul class="nav progress-nav-tabs" role="tablist">
 
-                    <li role="presentation" class="active">
+                    <li role="presentation" class="active application">
                         <a href="#step0" data-toggle="tab" aria-controls="step0" role="tab" title="Step 0">
                             <span class="round-tab">
                                 <i class="fa fa-file"  aria-hidden="true"></i>
@@ -49,7 +49,7 @@
                         </a>
                     </li>
 
-                    <li role="presentation" class="disabled">
+                    <li role="presentation" class="disabled application">
                         <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
                             <span class="round-tab">
                                 <i class="fa fa-id-card"  aria-hidden="true"></i>
@@ -57,7 +57,7 @@
                         </a>
                     </li>
 
-                    <li role="presentation" class="disabled">
+                    <li role="presentation" class="disabled application">
                         <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
                             <span class="round-tab">
                                 <i class="fa fa-code"  aria-hidden="true"></i>
@@ -65,7 +65,7 @@
                         </a>
                     </li>
 
-                    <li role="presentation" class="disabled">
+                    <li role="presentation" class="disabled application">
                         <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
                             <span class="round-tab">
                                 <i class="fa fa-file-text-o"  aria-hidden="true"></i>
@@ -73,7 +73,7 @@
                         </a>
                     </li>
 
-                    <li role="presentation" class="disabled">
+                    <li role="presentation" class="disabled application">
                         <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
                             <span class="round-tab">
                                 <i class="fa fa-check"  aria-hidden="true"></i>

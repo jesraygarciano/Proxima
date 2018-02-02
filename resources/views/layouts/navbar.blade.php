@@ -31,17 +31,28 @@
                     <li><a href="/auth/register/student">Student Register</a></li>
                     <li><a href="/auth/register/hiring">Hiring Register</a></li>
                 @else
+
                     {{-- ログインしている時 --}}
 
                     <!-- ドロップダウンメニュー -->
 
                     <li class="dropdown dropdown-auto-hover">
+                        @if (Auth::user()->role == 1)
+                           @if(Session::get('company'))
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{-- {{ Session::company_ids_that_user_have()->company_name }} --}}
+                                {{ Auth::user()->email }}
+                                <span class="caret"></span>
+                            </a>
+                            @endif
+                        @else
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{ Auth::user()->f_name }}
+                                {{ Auth::user()->l_name }}
+                                <span class="caret"></span>
+                            </a>
+                        @endif
 
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->f_name }}
-                            {{ Auth::user()->l_name }}
-                            <span class="caret"></span>
-                        </a>
                         <ul class="dropdown-menu dropdown-auto-hover" role="menu">
                             @if (Auth::user()->role == 0)
 

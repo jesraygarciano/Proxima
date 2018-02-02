@@ -9,30 +9,6 @@
             white-space: initial;
             /*position: relative;*/
         }
-        .job-position{
-            padding: 5px;
-            background: white;
-            border-radius: 3px;
-            font-weight: bold;
-            position: relative;
-            left: 0px;
-            top: 15px;
-        }
-
-        .featured{
-            color: #eda637;
-            border: 1px solid #eda637;
-        }
-
-        .regular{
-            color: #3c763d;
-            border: 1px solid #3c763d;
-        }
-
-        .intern{
-            color: #79ace9;
-            border: 1px solid #79ace9;
-        }
 
         /*.job-position-list{
             margin:10px;
@@ -116,7 +92,6 @@
 
         .job-title{
             font-size: 20px;
-            margin-top: 32px;
             margin-bottom: 1px;
         }
 
@@ -211,7 +186,7 @@
             </div>
 
             <div class="landing-page-search">
-                <div style="border:5px solid white; display: table; height: 50px; width: 100%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 3px 0 rgba(0,0,0,0.12)!important;">
+                <div style="border:5px solid white; display: table; height: 50px; width: 100%; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 3px 0 rgba(0,0,0,0.12)!important; border-radius: 4px;">
                     <div class="btn-group unick-drop-down">
                       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Openings
@@ -243,6 +218,7 @@
                                                 <div class="dropdown-menu dropdown-menu-right" role="menu">
                                                   <div class="form-group dropdown-allow-click">
                                                     <label for="languages">Programming Language </label>
+                                                    <input name="show_advance_search" type="hidden" value="open">
                                                     <select multiple="" id="languages" name="languages[]" class="ui fluid normal dropdown multi-select">
                                                         <option value="">Select Languages</option>
                                                         <option value="php">PHP</option>
@@ -306,19 +282,24 @@
 
         <div class="feature-post-carosel" id="feature-post-carosel">
             <div class="xtext12"> Featured Jobs </div>
-            <div class="post-container">
+            <div class="post-container" style="overflow: hidden;">
                 <div class="wing">
                     @foreach( $featured_openings as $opening)
                     <div class="post-item">
                         <div class="info-container">
-                            <div class="job-position-list">
-                                @if($opening->hiring_type == 0)
-                                    <span class="job-position intern">Intern</span>
-                                @elseif($opening->hiring_type == 1)
-                                    <span class="job-position regular">Regular</span>
-                                @elseif($opening->hiring_type == 2)
-                                    <span class="job-position intern">temporary/partime</span>
+                            <div>
+                                <ul class="ribbon_style_list">
+                                @if($opening->featured_status == 1)
+                                    <li class="job-position featured">Featured</li>
                                 @endif
+                                @if($opening->hiring_type == 0)
+                                    <li class="job-position intern">Intern</li>
+                                @elseif($opening->hiring_type == 1)
+                                    <li class="job-position regular">Regular</li>
+                                @elseif($opening->hiring_type == 2)
+                                    <li class="job-position intern">Temporary</li>
+                                @endif
+                                </ul>
                             </div>
                             <div class="job-title ellipsis">
                                 <a href="{{ url('openings', $opening->id) }}"> {{ $opening->title }} </a>
@@ -369,14 +350,13 @@
                                                 @for($i=0; $i < count($match_array) ; $i++)
                                                     @if($i == 0)
                                                         <a href="#!" role="button" class="btn label label-warning {{main_languages_class_convert()[$main_language]}}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
-                                                        <ul>
-                                                            <li>{{return_category($match_array[$i])}}</li>                    
+                                                        <div>{{return_category($match_array[$i])}}</div>                    
                                                     @else
-                                                        <li>{{return_category($match_array[$i])}}</li> 
+                                                        <div>{{return_category($match_array[$i])}}</div> 
                                                     @endif
 
                                                     @if($i == count($match_array) - 1)
-                                                        </ul>">
+                                                        ">
                                                         {{$main_language}}<span class="caret"></span>
                                                     @endif
                                                     </a>
@@ -387,7 +367,7 @@
                                     @endforeach
 
                                     @if($x > 3)
-                                        <a href="#!" role="button" class="btn label label-default">
+                                        <a href="#!" role="button" onclick="display_skills('{{addslashes(json_encode($opening->load("skill_requirements")))}}',this)" class="btn label label-default">
                                             ...
                                         </a>
                                     @endif
@@ -437,7 +417,7 @@
     </script>
 
 
-    <div class="general_portal container" style="margin-bottom:100px;">
+	<div class="general_portal container" style="margin-bottom:100px;">
 
         <h3 id="or-search">Programming Languages</h3>
         <hr>
@@ -678,7 +658,7 @@
                 </h3>
                 @foreach($provinces as $province)
                     @if($province->division == 'Luzon')
-                    <a href="{{url('portals/search_ph_region/').'/'.$province->iso_code}}" style="display: inline-block; margin: 5px;" role="button" class="btn label label-primary">
+                    <a href="{{url('openings').'/?show_advance_search=open&province='.$province->iso_code}}" style="display: inline-block; margin: 5px;" role="button" class="btn label label-primary">
                         {{$province->name.' ('.$province->hirings}})
                     </a>
                     @endif
@@ -690,7 +670,7 @@
                 </h3>
                 @foreach($provinces as $province)
                     @if($province->division == 'Visayas')
-                    <a href="{{url('portals/search_ph_region/').'/'.$province->iso_code}}" style="display: inline-block; margin: 5px;" role="button" class="btn label label-primary">
+                    <a href="{{url('openings').'/?show_advance_search=open&province='.$province->iso_code}}" style="display: inline-block; margin: 5px;" role="button" class="btn label label-primary">
                         {{$province->name.' ('.$province->hirings}})
                     </a>
                     @endif
@@ -702,7 +682,7 @@
                 </h3>
                 @foreach($provinces as $province)
                     @if($province->division == 'Mindanao')
-                    <a href="{{url('portals/search_ph_region/').'/'.$province->iso_code}}" style="display: inline-block; margin: 5px;" role="button" class="btn label label-primary">
+                    <a href="{{url('openings').'/?show_advance_search=open&province='.$province->iso_code}}" style="display: inline-block; margin: 5px;" role="button" class="btn label label-primary">
                         {{$province->name.' ('.$province->hirings}})
                     </a>
                     @endif

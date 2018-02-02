@@ -149,6 +149,9 @@ return [
         // Data tables
         yajra\Datatables\DatatablesServiceProvider::class,
 
+        // Google maps
+        Cornford\Googlmapper\MapperServiceProvider::class,
+
 
     ],
 
@@ -202,6 +205,9 @@ return [
         'Form' => Collective\Html\FormFacade::class,  // 追加
         'Html' => Collective\Html\HtmlFacade::class,  // 追加
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+
+        // Google maps
+        'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
 
         // Data tables
         'Datatables' => Yajra\Datatables\Datatables::class

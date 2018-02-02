@@ -8,9 +8,9 @@
 
 
 
-        {{-- @if( Request::path() == 'resumes/create' || Request::path() == 'openings' || Request::url('/resumes/{id}/edit')) --}}
+        @if( Request::path() == 'resumes/create' || Request::path() == 'openings' || Request::url('/resumes/{id}/edit'))
 
-        @if( Request::path() == 'resumes/create' || Request::path() == 'openings' || Request::path() == 'portals/general_portal')
+        {{--@if( Request::path() == 'resumes/create' || Request::path() == 'openings' || Request::path() == 'portals/general_portal')--}}
             <link rel="stylesheet" type="text/css" href="{{ asset('semantic/out/semantic.css') }}">
         @endif
 
@@ -35,8 +35,10 @@
         <link rel="stylesheet" href="{{ asset('css/components/general-component.css') }}">
         <link rel="stylesheet" href="{{ asset('css/components/layout-component.css') }}">
         <link rel="stylesheet" href="{{ asset('css/components/input-validation-component.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/components/image-cropper-component.css') }}">
         <link rel="stylesheet" href="{{ asset('css/progress_bar.css') }}">
         <link rel="stylesheet" href="{{ asset('css/main_tabs.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/croppie.css') }}">
         @if(Request::path() == 'resumes/show' || Request::path() == 'openings')
             <link rel="stylesheet" href="{{ asset('css/resume_show.css') }}">
         @endif
@@ -52,6 +54,10 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
+        {{-- Google --}}        
+<!--         <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+        <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+ -->
         <!-- TABS -->
         <link rel='stylesheet prefetch' href='https://www.jqueryscript.net/demo/jQuery-Plugin-To-Create-Responsive-Scrolling-Bootstrap-Tabs/jquery.scrolling-tabs.css'>
         <link rel='stylesheet prefetch' href='https://www.bts.com/fonts/digital-icons/style.css'>
@@ -143,6 +149,7 @@
 
         <script type="text/javascript" src="{{asset('js/progress_bar.js')}}"></script>
         <script type="text/javascript" src="{{asset('js/photo_update.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/croppie.min.js')}}"></script>
 
 
         @if(Request::path() == 'resumes/create' || Request::path() == 'openings' || Request::url('/resumes/{id}/edit'))
@@ -152,6 +159,8 @@
             <script src="{{asset('semantic/out/semantic.js')}}"></script>
             <script type="text/javascript" src="{{asset('js/for_semantic.js')}}"></script>
         @endif
-
+        @include('inc.image-cropper')
+        @include('inc.marker')
+        @include('inc.programming-skills-modal')
     </body>
 </html>
