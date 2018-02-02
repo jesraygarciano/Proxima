@@ -34,6 +34,11 @@ class Company extends Model
         return $this->scout_users()->attach($user_id);
     }
 
+    /*public function company_google_mapper()
+    {
+        return $this->attributes['address1']. " ". $this->attributes['city']. " ". $this->attributes['country'];
+    }*/
+
     public function getCompanyLogoAttribute(){
         if(!file_exists('storage/'.$this->attributes['company_logo']) || str_replace(' ','',$this->attributes['company_logo']) == ''){
             return asset('img/default-company.png');
@@ -42,4 +47,11 @@ class Company extends Model
         return asset('storage/'.$this->attributes['company_logo']);
     }
 
+    public function getCompanyCoverAttribute(){
+        if(!file_exists('storage/'.$this->attributes['background_photo']) || str_replace(' ','',$this->attributes['background_photo']) == ''){
+            return asset('img/default-opening.jpg');
+        }
+
+        return asset('storage/'.$this->attributes['background_photo']);
+    }
 }
