@@ -13,8 +13,8 @@
             <div class="wizard" id="resume-wizard">
                 <div class="wizard-inner">
                     <div class="connecting-line"></div>
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active">
+                        <ul class="nav progress-nav-tabs" role="tablist">
+                            <li role="presentation" class="active resume">
                                 <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
                                     <span class="round-tab">
                                         <i class="fa fa-id-card"  aria-hidden="true"></i>
@@ -22,14 +22,14 @@
                                 </a>
                             </li>
 
-                            <li role="presentation" class="disabled">
+                            <li role="presentation" class="disabled resume">
                                 <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
                                     <span class="round-tab">
                                         <i class="fa fa-code"  aria-hidden="true"></i>
                                     </span>
                                 </a>
                             </li>
-                            <li role="presentation" class="disabled">
+                            <li role="presentation" class="disabled resume">
                                 <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
                                     <span class="round-tab">
                                         <i class="fa fa-file-text-o"  aria-hidden="true"></i>
@@ -37,7 +37,7 @@
                                 </a>
                             </li>
 
-                            <li role="presentation" class="disabled">
+                            <li role="presentation" class="disabled resume">
                                 <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
                                     <span class="round-tab">
                                         <i class="fa fa-check"  aria-hidden="true"></i>
@@ -236,9 +236,9 @@
                                     {{-- <div class="page-header"> --}}
                                         <div class="col-md-offset-1 col-md-11">
                                             <div class="col-md-6">
-                                                <div class="form-group">
+                                                <!-- <div class="form-group"> -->
                                                     {{-- {!!Form::file('photo')!!} --}}
-                                                    <div class="imagePreview"></div>
+                                                    <!-- <div class="imagePreview"></div>
                                                     <div class="input-group">
                                                         <label class="input-group-btn">
                                                             <span class="btn btn-primary">
@@ -247,6 +247,21 @@
                                                         </label>
                                                         <input type="text" class="form-control" readonly="">
                                                     </div>
+                                                </div> -->
+                                                <div class="crop-control" style="height: 200px; width: 200px;">
+                                                  <div class="image-container">
+                                                    <img src="https://grangeprint.com/image/cache/placeholder-750x750-nofill-255255255.png">
+                                                    <label for="photo" class="input-trigger hover-div">
+                                                      <p>
+                                                        <i class="fa fa-file-image-o fa-5x" aria-hidden="true"></i>
+                                                        <br>
+                                                        Upload
+                                                      </p>
+                                                    </label>
+                                                  </div>
+                                                  <div class="input-container">
+                                                    <input type="file" id="photo" name="photo" accept="image/*" />
+                                                  </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -874,7 +889,7 @@
                         identifier:'photo',
                         rules: [
                             {
-                                type:'file',
+                                type:'empty',
                                 prompt:'Photo required'
                             }
                         ]

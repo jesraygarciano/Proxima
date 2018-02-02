@@ -10,14 +10,16 @@
         <div class="mainDetails col-md-5">
             <div id="photo_name" class="row">
                 <div class="row">
-                    <div id="headshot" class="quickFade">
-                        <img class="_image" src="/storage/{{ $resume->photo }}">
+                    <div class="col-md-12">
+                        <div id="headshot" class="quickFade">
+                            <img style="width:100%; max-width: 150px; -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3); border-radius: 4px;" class="_image" src="{{ $resume->photo }}">
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div id="name">
-                        <h2 class="">{{$resume->f_name}}&nbsp;{{$resume->m_name}}&nbsp;{{$resume->l_name}}</h2>
-                        <h3 class="">{{$resume->job_title}}</h3>
+                        <h2 class="" style="color:#838383;">{{$resume->f_name}} {{$resume->m_name}} {{$resume->l_name}}</h2>
+                        <h3 class="" style="color:#838383;">{{$resume->job_title}}</h3>
                     </div>
                 </div>
             </div>
