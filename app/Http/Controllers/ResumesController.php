@@ -64,25 +64,32 @@ class ResumesController extends Controller
         ]);
 
 
-        // Handle file upload
-        if($request->hasFile('photo')){
-            //  Get filename with the extension
-            $filenameWithExt = $request->file('photo')->getClientOriginalName();
-            //  Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just text
-            $extension = $request->file('photo')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('photo')->move(public_path(). '/storage' , $fileNameToStore);
+        if($request->photo){
+            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->photo));
+            $fileNameToStore = time().'.png';
+            file_put_contents(public_path('/storage/').$fileNameToStore, $data);
         }
+
+
+        // // Handle file upload
+        // if($request->hasFile('photo')){
+        //     //  Get filename with the extension
+        //     $filenameWithExt = $request->file('photo')->getClientOriginalName();
+        //     //  Get just filename
+        //     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        //     // Get just text
+        //     $extension = $request->file('photo')->getClientOriginalExtension();
+        //     // Filename to store
+        //     $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        //     // Upload Image
+        //     $path = $request->file('photo')->move(public_path(). '/storage' , $fileNameToStore);
+        // }
         
         // dd($request);
         $input = $request->except('photo','skills', '_token');
         // dd($input);
         // Resume::create($input);
-        $resume = new Resume;
+        $resume = Resume::where('user_id',\Auth::user()->id)->first() ?? new Resume;
         // dd($resume);
 
         $resume->photo = $fileNameToStore;
