@@ -1,13 +1,13 @@
 <?php
 
 
-
 Route::get('/', 'PortalController@diverge');
 Route::get('portals/general_portal', ['as' => 'portals.general_portal', 'uses' => 'PortalController@general_portal']);
 
 
 // uelmar map region search route
 Route::get('portals/search_ph_region/{code}', ['as' => 'portal_ph_region_search', 'uses' => 'PortalController@portal_ph_region_search']);
+Route::get('portals/search_ph_division/{code}', ['as' => 'portal_ph_division_search', 'uses' => 'PortalController@portal_ph_division_search']);
 Route::get('portals/search_international/{code}', ['as' => 'portal_international_search', 'uses' => 'PortalController@portal_international_search']);
 
 // Management Portal
@@ -17,7 +17,6 @@ Route::get('management/openings','ManagementController@opening')->name('datatabl
 Route::get('management/userdata','ManagementController@userData')->name('datatables.users');
 Route::get('management/companydata','ManagementController@companyData')->name('datatables.companies');
 Route::get('management/openingdata','ManagementController@openingData')->name('datatables.openings');
-
 
 
 Route::get('hiring_portal/user_index', 'HiringPortalController@user_index');
@@ -89,6 +88,17 @@ Route::get('search/opening/use/language',['as'=>'search_opening_with_language', 
 Route::post('openings_bookmark/{opening_id}', ['as' => 'openings.bookmark_openings_index', 'uses' => 'OpeningsController@bookmark_openings_index']);
 
 Route::delete('openings_unbookmark/{opening_id}', ['as' => 'openings.unbookmark_openings_index', 'uses' => 'OpeningsController@unbookmark_openings_index']);
+
+
+
+
+// ajax functions (Uelmar)
+Route::post('edit_opening_bookmark', ['as' => 'edit_opening_bookmark', 'uses' => 'OpeningsController@edit_opening_bookmark']);
+Route::post('edit_company_follow', ['as' => 'edit_company_follow', 'uses' => 'CompaniesController@edit_company_follow']);
+
+
+
+
 // Route::post('openings_unbookmark/{opening_id}', ['as' => 'openings.unbookmark_openings_index', 'uses' => 'OpeningsController@unbookmark_openings_index']);
 // Route::post('openings_unbookmark/{opening_id}', ['as' => 'openings.unbookmark_openings_index', 'uses' => 'OpeningsController@unbookmark_openings_index']);
 Route::get('openings/create/{company_id}','OpeningsController@create');
