@@ -39,7 +39,9 @@
                     border:none!important;
                 }
             </style>
+            {!!Form::open(['action' => 'CompaniesController@update', 'method' => 'PATCH', 'files' => true, 'enctype' => 'multipart/form-data']) !!}            
             <div class="row text-center">
+
                 <div class="col-md-12 cover-info">
                     <div class="cover-image">
                         <img src="{{ $company->company_logo }}" alt="{{ $company->company_name}}" />
@@ -64,14 +66,23 @@
                                     </h1>
                                 </div>
                                 <div class="col-sm-6">
-                                    <h5>
-                                        <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
-                                        &nbsp; {{ $company->city }}, {{ $company->country }}
-                                    </h5>
-                                    <h5>
-                                        <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
-                                        &nbsp; {{ $company->created_at }}
-                                    </h5>
+                                      <div class="row">
+                                          <div class="form-group">
+                                              {!! Form::label('address1', 'Primary address:', ['class' => 'col-sm-3 control-label']) !!}
+                                              <div class = "col-sm-7">
+                                                {!! Form::text('address1', old('address1'), ['class' => 'form-control', 'placeholder'=>$company->address1]) !!}
+                                              </div>
+                                          </div>                                    
+                                      </div>
+
+                                      <div class="row" style="padding-top: 1rem;">
+                                          <div class="form-group">
+                                              {!! Form::label('established_at', 'Established date:', ['class' => 'col-sm-3 control-label']) !!}
+                                              <div class = "col-sm-7">
+                                                {!! Form::date('established_at', old('established_at'), ['class' => 'form-control', 'placeholder'=>$company->established_at, 'onfocus' => "(this.type='established_at')", 'onblur' => "(this.type='established_at')"]) !!}
+                                              </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -81,58 +92,180 @@
 
             <hr>
             <div class="row">
-                <div class="col-md-8">
-                    <h3>About us:</h3>
-                    {{ $company->what }}
+                <div class="col-md-6">
+                      <div class="form-group">
+                        <h3>About Us:</h3>
+                            <div class="form-group">
+                                {!!Form::textarea('what', old('what'), ['class' => 'form-control'])!!}
+                            </div>
+                      </div>
+
+                      <div class="form-group">
+                            <h3>Why join us?:</h3>
+
+                            <div class = "row">
+                                  <div class="form-group">
+                                      <div class = "col-md-7">
+                                        <div class="crop-control" style="height: 200px; width: 200px;">
+                                          <div class="image-container">
+                                            <img src="https://grangeprint.com/image/cache/placeholder-750x750-nofill-255255255.png">
+                                            <label for="what_photo1" class="input-trigger hover-div">
+                                              <p>
+                                                <i class="fa fa-file-image-o fa-5x" aria-hidden="true"></i>
+                                                <br>
+                                                Upload
+                                              </p>
+                                            </label>
+                                          </div>
+                                          <div class="input-container">
+                                            <input type="file" id="what_photo1" name="what_photo1" accept="image/*" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                  </div>
+                            </div>
+                            
+                            <div class="row" style="padding-top: 1rem;">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {!!Form::textarea('what_photo1_explanation', old('what_photo1_explanation'), ['class' => 'form-control'])!!}
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+
+
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <h3>Company details:</h3>
                     <ul class="company-list-info">
                         <li>
-                            <div class="field-name">Email</div>
-                            <div class="field-value">{{ $company->email }}</div>
+  
+                          <div class="row">
+                            <div class="col-sm-4">
+                              {!! Form::label('email', 'E-Mail Address') !!}                                
+                            </div>
+
+                            <div class="col-sm-7">
+                                {!! Form::email('email', old('email'), ['class' => 'form-control', 'placeholder'=>$company->email]) !!}
+                            </div>
+                          </div>
+
                         </li>
                         <li>
-                            <div class="field-name">CEO</div>
-                            <div class="field-value">{{ $company->ceo_name }}</div>
+
+                          <div class="row">
+                            <div class="col-sm-4">
+                              {!! Form::label('ceo_name', 'CEO name:') !!}
+                            </div>
+
+                            <div class="col-sm-7">
+                                {!! Form::text('ceo_name', old('ceo_name'), ['class' => 'form-control', 'placeholder'=>$company->ceo_name]) !!}
+                            </div>
+                          </div>
+
+
                         </li>
                         <li>
-                            <div class="field-name">COO</div>
-                            <div class="field-value">{{ $company->in_charge }}</div>
+
+                          <div class="row">
+                            <div class="col-sm-4">
+                              {!! Form::label('url', 'Company website URL') !!}
+                            </div>
+
+                            <div class="col-sm-7">
+                               {!! Form::text('url', old('url'), ['class' => 'form-control', 'placeholder'=>$company->url]) !!}
+                            </div>
+                          </div>
+
                         </li>
                         <li>
-                            <div class="field-name">Address(s)</div>
-                            <div class="field-value">{{ $company->address1 }}</div>
-                            <div class="field-value">{{ $company->address2 }}</div>
+
+                          <div class="row">
+                            <div class="col-sm-4">
+                              {!! Form::label('company_size', 'Company size') !!}
+                            </div>
+
+                            <div class="col-sm-7">
+                                {!! Form::text('company_size', old('company_size'), ['class' => 'form-control', 'placeholder'=>$company->company_size]) !!}
+                            </div>
+                          </div>
+
+
                         </li>
                         <li>
-                            <div class="field-name">City</div>
-                            <div class="field-value">{{ $company->city }}</div>
+
+                          <div class="row">
+                            <div class="col-sm-4">
+                              {!! Form::label('tel', 'Company Tel#') !!}
+                            </div>
+
+                            <div class="col-sm-7">
+                               {!! Form::text('tel', old('tel'), ['class' => 'form-control', 'placeholder'=>$company->tel]) !!}
+                            </div>
+                          </div>
+
                         </li>
                         <li>
-                            <div class="field-name">Country</div>
-                            <div class="field-value">{{ $company->country }}</div>
+
+                          <div class="row">
+                            <div class="col-sm-4">
+                              {!! Form::label('address1', 'Company address') !!}
+                            </div>
+                            <div class="col-sm-7">
+                                {!! Form::text('address1', old('address1'), ['class' => 'form-control', 'placeholder'=> 'Street, Unit, Floor']) !!}
+                            </div>
+                          </div>
+
+
                         </li>
                         <li>
-                            <div class="field-name">Website</div>
-                            <div class="field-value">{{ $company->url }}</div>
+
+                          <div class="row">
+                            <div class="col-sm-4">
+                              {!! Form::label(null, null) !!}
+                            </div>
+                            <div class="col-sm-7">
+                                {!! Form::text('city', old('city'), ['class' => 'form-control', 'placeholder'=>$company->city]) !!}
+                            </div>
+                          </div>
+
                         </li>
+
                         <li>
-                            <div class="field-name">Contact</div>
-                            <div class="field-value">{{ $company->tel }} (Tel)</div>
+
+                          <div class="row">
+                            <div class="col-sm-4">
+                              {!! Form::label(null, null) !!}
+                            </div>
+                            <div class="col-sm-7">
+                                {!! Form::text('country', old('country'), ['class' => 'form-control', 'placeholder'=>$company->country]) !!}
+                            </div>
+                          </div>
+
                         </li>
+
                         <li>
-                            <div class="field-name">Employees</div>
-                            <div class="field-value">{{ $company->number_of_employee }}</div>
+
+                          <div class="row">
+                            <div class="col-sm-4">
+                              {!! Form::label('language', 'Spoken language') !!}
+                            </div>
+                            <div class="col-sm-7">
+                                {!! Form::text('language', old('language'), ['class' => 'form-control', 'placeholder'=> 'e.g. English']) !!}
+                            </div>
+                          </div>
+
                         </li>
+
                     </ul>
                 </div>
             </div>
 
-
-            <div class="container text-center" style="padding-top:3rem;height:500px;width:100%;">
+            <div class="container"></div>
+<!--             <div class="container text-center" style="padding-top:3rem;height:500px;width:100%;">
                     {!! Mapper::render() !!}
-            </div>
+            </div> -->
 
             {{--@if (!Auth::guest())
                 @if (Auth::user()->role == 1)
@@ -147,7 +280,12 @@
                 @endif
             @endif
             --}}
-
+        <div class="row text-center">
+            <div class="form-group">
+                {!!Form::submit('Update Company', ['class' => 'btn btn-primary'])!!}
+            </div>
+        </div>
+    {!!Form::close()!!}
         </div> {{-- END COMPANY INFO --}}
 </div>
 @endsection

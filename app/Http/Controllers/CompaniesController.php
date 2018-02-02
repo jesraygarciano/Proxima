@@ -87,7 +87,6 @@ class CompaniesController extends Controller
 
         if($request->company_logo){
             $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->company_logo));
-            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->background_photo));
             $fileNameToStore = time().'.png';
             file_put_contents(public_path('/storage/').$fileNameToStore, $data);
         }
@@ -193,8 +192,10 @@ class CompaniesController extends Controller
             ->lists('company_google_map', 'id');*/
         // dd($company_location);
 
+        if (!empty($company->address1)){
         // Mapper::location($company->city, $company->country); //company_location
         Mapper::location($company->address1. " ". $company->city. " ". $company->country)->map(['zoom' => 17, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'clusters' => ['size' => 10, 'center' => true, 'zoom' => 30]]);
+        }
 
         /*Mapper::map(53.381128999999990000, -1.470085000000040000, ['eventBeforeLoad' => 'console.log("before load");']);*/
 
@@ -226,14 +227,26 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $this->validate($request, [
+            'what' => 'required',
+            'url' => 'required',
+            'tel' => 'required',
+            'address1' => 'required',
+        ]);
+
+        // $input = $request->except('photo', 'skills', '_token');
+
         $company = Company::findOrFail($id);
 
         $company->update($request->all());
 
-        \Session::flash('flash_message', 'edited company information' );
+        // \Session::flash('flash_message', 'edited company information' );
 
         // return redirect(url('companies', [$company->id]));
-        return redirect()->route('companies.show', [$company->id]);
+        // return redirect()->route('companies.show', [$company->id]);
+        return redirect('companies/show')->with('success', 'Updated your resume');
+
     }
 
     /**
