@@ -283,7 +283,7 @@
 .feature-post-carosel .post-container{
   position: relative;
   height: 300px;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .feature-post-carosel .post-container .wing{
@@ -314,9 +314,13 @@
 }
 
 .feature-post-carosel .post-container .post-item .info-container{
-  border:1px solid #f3c91c;
+  border:1px solid #dddddd;
   background: white;
   border-radius: 10px;
+}
+
+.feature-post-carosel .post-container .active .info-container{
+  border-color: #f3c91c;
 }
 
 .feature-post-carosel .post-container .post-item .info-container{
