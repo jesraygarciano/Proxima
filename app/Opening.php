@@ -33,8 +33,13 @@ class Opening extends Model
     //$opening_skill_ids should be array
     public function register_skill($opening_skill_ids)
     {
+        $existing_skills = $this->skill_requirements()->lists('opening_skills.id')->toArray();
+
         foreach ($opening_skill_ids as $opening_skill_id) {
-            $this->has_skill()->attach($opening_skill_id);
+            if(!in_array($opening_skill_id, $existing_skills))
+            {
+                $this->has_skill()->attach($opening_skill_id);
+            }
         }
         return true;
     }
