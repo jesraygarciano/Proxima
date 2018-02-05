@@ -8,7 +8,6 @@
 
     @include('errors.form_errors')
 
-
     {!!Form::open(['route' => 'companies.store', 'method' => 'POST', 'enctype' => 'multipart/form-data'])!!}
         <div class="row">
             <div class="form-group">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@include('errors.form_errors')
 <div class="container">
             <div id="compinfo"> {{--START COMPANYINFO --}}
                 <style type="text/css">
@@ -26,6 +26,7 @@
                     background: white;
                     border: 1px solid #cecece;
                     position: relative;
+                    width: 200px;
                 }
 
                 .cover-info .picture img{
@@ -38,48 +39,91 @@
                 .cover-info img{
                     border:none!important;
                 }
+                .ui.form{
+                  font-size: 16px;
+                }
             </style>
-            {!!Form::open(['action' => 'CompaniesController@update', 'method' => 'PATCH', 'files' => true, 'enctype' => 'multipart/form-data']) !!}            
+
+            {!!Form::open(['route' => 'companies.update', 'method' => 'PATCH', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+
+            {!! csrf_field() !!}
             <div class="row text-center">
 
                 <div class="col-md-12 cover-info">
                     <div class="cover-image">
-                        <img src="{{ $company->company_logo }}" alt="{{ $company->company_name}}" />
+                        {{-- <img src="{{ $company->company_logo }}" alt="{{ $company->company_name}}" /> --}}
+                                      <div class="crop-control">
+                                        <div class="image-container-cover">
+                                          @if(!empty($company->background_photo))
+                                               <img src="{{ $company->background_photo }}" alt="{{ $company->company_name}} Cover photo" />
+                                          @else
+                                              <img src="{{ asset('img/default-opening.jpg') }}" class="bg-img">
+                                          @endif
+                                            <label for="background_photo" class="input-trigger hover-div">
+                                            <p>
+                                              <i class="fa fa-file-image-o fa-5x" aria-hidden="true"></i>
+                                              <br>
+                                              Upload Cover photo
+                                            </p>
+                                          </label>
+                                        </div>
+                                        <div class="input-container">
+                                          <input type="file" id="background_photo" name="background_photo" accept="image/*" />
+                                        </div>
+                                      </div>
                     </div>
                     <div class="row cover-info" id="openings-title" style="margin:0px; margin-top:-100px;">
                         <div class="col-sm-2">
                             <div class="picture">
                                 <div class="photo-wrapper">
-                                    <img src="{{asset('img/bg-img.png')}}" class="bg-img">
-                                    <img class="_image" src="{{ $company->company_logo }}">
+                                      <div class="crop-control" style="height: 200px; width: 200px;">
+                                        <div class="image-container">
+                                          <img src="{{ $company->company_logo }}" alt="{{ $company->company_name}}" />
+                                          <label for="company_logo" class="input-trigger hover-div">
+                                            <p>
+                                              <i class="fa fa-file-image-o fa-5x" aria-hidden="true"></i>
+                                              <br>
+                                              Upload Logo
+                                            </p>
+                                          </label>
+                                        </div>
+                                        <div class="input-container">
+                                          <input type="file" id="company_logo" name="company_logo" accept="image/*" />
+                                        </div>
+                                      </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="row" style="text-align:left;">
-                                <div class="col-sm-6">
-                                    <h1>
+                                <div class="col-sm-7">
+                                    <h2 style="padding-top: 1rem;font-weight: 600;">
                                         <a href="{{ url('companies', $company['id']) }}">
                                             {{ $company->company_name }}
                                             <br>
                                         </a>
-                                    </h1>
+                                    </h2>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-5">
                                       <div class="row">
                                           <div class="form-group">
-                                              {!! Form::label('address1', 'Primary address:', ['class' => 'col-sm-3 control-label']) !!}
+
+                                              {!! Form::label('address1', 'Primary address:', ['class' => 'col-sm-4 control-label']) !!}
                                               <div class = "col-sm-7">
+                                              <div class="ui form">
+
                                                 {!! Form::text('address1', old('address1'), ['class' => 'form-control', 'placeholder'=>$company->address1]) !!}
+                                              </div>
                                               </div>
                                           </div>                                    
                                       </div>
 
                                       <div class="row" style="padding-top: 1rem;">
                                           <div class="form-group">
-                                              {!! Form::label('established_at', 'Established date:', ['class' => 'col-sm-3 control-label']) !!}
+                                              {!! Form::label('established_at', 'Established date:', ['class' => 'col-sm-4 control-label']) !!}
                                               <div class = "col-sm-7">
-                                                {!! Form::date('established_at', old('established_at'), ['class' => 'form-control', 'placeholder'=>$company->established_at, 'onfocus' => "(this.type='established_at')", 'onblur' => "(this.type='established_at')"]) !!}
+                                                    {{-- {!!Form::label('birth_date', 'Birth Date:')!!} --}}
+                                                    {!!Form::date('established_at', old('established_at'), ['class' => 'form-control', 'placeholder'=>$company->established_at])!!}
                                               </div>
                                         </div>
                                     </div>
@@ -92,23 +136,25 @@
 
             <hr>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-7">
                       <div class="form-group">
                         <h3>About Us:</h3>
                             <div class="form-group">
-                                {!!Form::textarea('what', old('what'), ['class' => 'form-control'])!!}
+                                <div class="ui form">
+                                {!!Form::textarea('what', old('what'), ['class' => 'form-control', 'placeholder' => $company->what  ])!!}
+                                </div>
                             </div>
                       </div>
 
                       <div class="form-group">
                             <h3>Why join us?:</h3>
-
                             <div class = "row">
                                   <div class="form-group">
+
                                       <div class = "col-md-7">
-                                        <div class="crop-control" style="height: 200px; width: 200px;">
+                                        <div class="crop-control" style="height: 200px; width: 400px;">
                                           <div class="image-container">
-                                            <img src="https://grangeprint.com/image/cache/placeholder-750x750-nofill-255255255.png">
+                                            <img src="http://www.pek-cy.com/sites/default/files/default-image.png">
                                             <label for="what_photo1" class="input-trigger hover-div">
                                               <p>
                                                 <i class="fa fa-file-image-o fa-5x" aria-hidden="true"></i>
@@ -128,7 +174,7 @@
                             <div class="row" style="padding-top: 1rem;">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        {!!Form::textarea('what_photo1_explanation', old('what_photo1_explanation'), ['class' => 'form-control'])!!}
+                                        {!!Form::textarea('what_photo1_explanation', old('what_photo1_explanation'), ['class' => 'form-control ui form'])!!}
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +193,9 @@
                             </div>
 
                             <div class="col-sm-7">
+                                <div class="ui form">
                                 {!! Form::email('email', old('email'), ['class' => 'form-control', 'placeholder'=>$company->email]) !!}
+                                </div>
                             </div>
                           </div>
 
@@ -187,7 +235,9 @@
                             </div>
 
                             <div class="col-sm-7">
+                                <div class="ui form">
                                 {!! Form::text('company_size', old('company_size'), ['class' => 'form-control', 'placeholder'=>$company->company_size]) !!}
+                                </div>
                             </div>
                           </div>
 
@@ -197,52 +247,43 @@
 
                           <div class="row">
                             <div class="col-sm-4">
+
                               {!! Form::label('tel', 'Company Tel#') !!}
                             </div>
 
                             <div class="col-sm-7">
+                               <div class="ui form">
                                {!! Form::text('tel', old('tel'), ['class' => 'form-control', 'placeholder'=>$company->tel]) !!}
+                               </div>
                             </div>
                           </div>
 
                         </li>
-                        <li>
 
+                        <li>
                           <div class="row">
                             <div class="col-sm-4">
-                              {!! Form::label('address1', 'Company address') !!}
+                              {!! Form::label('city', 'City address') !!}
                             </div>
                             <div class="col-sm-7">
-                                {!! Form::text('address1', old('address1'), ['class' => 'form-control', 'placeholder'=> 'Street, Unit, Floor']) !!}
-                            </div>
-                          </div>
-
-
-                        </li>
-                        <li>
-
-                          <div class="row">
-                            <div class="col-sm-4">
-                              {!! Form::label(null, null) !!}
-                            </div>
-                            <div class="col-sm-7">
+                                <div class="ui form">
                                 {!! Form::text('city', old('city'), ['class' => 'form-control', 'placeholder'=>$company->city]) !!}
+                                </div>
                             </div>
                           </div>
-
                         </li>
 
                         <li>
-
                           <div class="row">
                             <div class="col-sm-4">
-                              {!! Form::label(null, null) !!}
+                              {!! Form::label('country', 'Country') !!}
                             </div>
                             <div class="col-sm-7">
+                                <div class="ui form">
                                 {!! Form::text('country', old('country'), ['class' => 'form-control', 'placeholder'=>$company->country]) !!}
+                                </div>
                             </div>
                           </div>
-
                         </li>
 
                         <li>
@@ -252,7 +293,7 @@
                               {!! Form::label('language', 'Spoken language') !!}
                             </div>
                             <div class="col-sm-7">
-                                {!! Form::text('language', old('language'), ['class' => 'form-control', 'placeholder'=> 'e.g. English']) !!}
+                                {!! Form::text('language', old('language'), ['class' => 'form-control ui form', 'placeholder'=> 'e.g. English']) !!}
                             </div>
                           </div>
 
@@ -278,11 +319,12 @@
                         {!! Form::close() !!}
                     @endif
                 @endif
-            @endif
-            --}}
+            @endif --}}
+            
+        {{--{!! Form::hidden('company_id', $company_id) !!}--}}
         <div class="row text-center">
             <div class="form-group">
-                {!!Form::submit('Update Company', ['class' => 'btn btn-primary'])!!}
+                {!!Form::submit('Update company', ['class' => 'btn btn-primary'])!!}
             </div>
         </div>
     {!!Form::close()!!}

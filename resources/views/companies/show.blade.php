@@ -61,7 +61,11 @@
             <div class="row text-center">
                 <div class="col-md-12 cover-info">
                     <div class="cover-image">
-                        <img src="{{ $company->background_photo }}" alt="{{ $company->company_name}}" />
+                          @if(!empty($company->background_photo))
+                               <img src="{{ $company->background_photo }}" alt="{{ $company->company_name}} Cover photo" />
+                          @else
+                              <img src="{{ asset('img/default-opening.jpg') }}" class="bg-img">
+                          @endif                        
                     </div>
                     <div class="row cover-info" id="openings-title" style="margin:0px; margin-top:-100px;">
                         <div class="col-sm-2">
@@ -134,7 +138,7 @@
                         </li>
                         <li>
                             <div class="field-name">Company Tel#</div>
-                            <div class="field-value">{{ $company->tel }} (Tel)</div>
+                            <div class="field-value">{{ $company->tel }}</div>
                         </li>
                         <li>
                             <div class="field-name">Company address</div>
@@ -180,7 +184,6 @@
                     @endif
                 @endif
             @endif
-
         </div> {{-- END COMPANY INFO --}}
 
         <div id="joblists" class="tab-pane fade">
@@ -231,16 +234,15 @@
                                             @else
                                             <li>{{return_category($match_array[$i])}}</li> 
                                             @endif
-
                                             @if($i == count($match_array) - 1)
                                         </ul>">
                                         {{$main_language}}<span class="caret"></span>
                                         @endif
-                                    </a>
+                                        </a>
                                     @endfor
                                     @endif
                                     @endforeach
-                                </li>
+                                    </li>
                                 </ul>
                             </div> <!-- col-sm-6 -->
 
