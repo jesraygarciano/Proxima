@@ -98,6 +98,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany(Company::class);
     }
 
+    public function canEdit($opening){
+        return $this->companies()->where('companies.id',$opening->company_id)->count() > 0;
+    }
+
+    public function companies_display()
+    {
+        return $this->belongsToMany(Company::class);
+    }
+
     public function saved_applicants(){
         return $this->belongsToMany(User::class,'save_applicants','user_id','applicant_saved_id')->withTimestamps();
     }

@@ -197,8 +197,32 @@ class HiringPortalController extends Controller
         //     dd($scout_companies);
         // }
 
+
+
         //the users that will shown on the applicants list
-        $applicants = User::where('is_active', 1)->whereRaw('concat(f_name," ",m_name," ",l_name) like "%'.$requests->name.'%"')->where('role', 0)->paginate(10);
+/*        $applicants = User::where('is_active', 1)->whereRaw('concat(f_name," ",m_name," ",l_name) like "%'.$requests->name.'%"')->where('role', 0)->paginate(10);*/
+        $provinces = \DB::table('provinces')->get();
+
+
+        //the users that will shown on the applicants list
+        $applicants = Resume::where('is_active', 1)->whereRaw('concat(f_name," ",m_name," ",l_name) like "%'.$requests->name.'%"')->paginate(10);
+
+        // $complete_name = Resume::select('id', \DB::raw('CONCAT(f_name, " ", m_name, " ", l_name) AS complete_names'))
+        //     ->orderBy('f_name')
+        //     ->lists('complete_names', 'id');
+
+        if($requests->applicant_search){
+            $applicant_search_ids = Resume::where('f_name','like','%'.$requests->applicant_search.'%')->lists('id');
+            $applicants->where('f_name','like','%'.$requests->applicant_search.'%');
+
+        }
+
+
+        if($requests->province){
+            $provinces_search = \DB::table('provinces')->whereRaw('name like "%'.$requests->province.'%" or iso_code like "%'.$requests->province.'%"')->lists('iso_code');
+            $applicants->whereIn('province_code',$provinces_search);
+        }
+
 
         //getting ids of companies that auth user created.
         $companies_ids = Common::company_ids_that_user_have();
@@ -241,8 +265,7 @@ class HiringPortalController extends Controller
         // return $applied_application_openings;
 
 
-
-        return view('hiring_portal.user_index', compact('applicants','companies_scouted_array'));
+        return view('hiring_portal.user_index', compact('applicants','provinces','companies_scouted_array'));
         // return view('hiring_portal.user_index', compact('applicants'));
     }
 

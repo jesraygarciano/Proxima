@@ -184,8 +184,10 @@ function return_category($id){
     // dd($category);
     return $category;
 }
- 
 
+function return_resume_Skills(){
+    return \App\Resume_skill::all();
+}
 
 
 

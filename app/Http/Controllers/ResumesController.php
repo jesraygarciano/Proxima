@@ -136,13 +136,11 @@ class ResumesController extends Controller
         $resume = Resume::where('user_id', \Auth::id())->where('is_active', 1)->where('is_master', 1)->get()->first();
         $skill_ids = array();
         // if ($resume->has_skill() != null) {
-        // dd($resume);
         $skill_ids = Common::resume_skill_ids_get($resume);
         // }
         
         // $skills = $resume->has_skill()->get();
         // $skills = $resume->has_skill()->get()->where('language', 'PHP')->get();
-        // dd($skills);
 
         $age = Common::cal_age($resume->birth_date);
         $birth_date = Common::month_converted_date($resume->birth_date);
@@ -198,7 +196,7 @@ class ResumesController extends Controller
 
         $resume->has_skill()->detach();
         $resume_skill_ids = $request->input('skills');
-        foreach($resume_skill_ids as $resume_skill_id) {
+        foreach($resume_skill_ids as $resume_skill_id){
             $resume->has_skill()->attach($resume_skill_id);
         }
 

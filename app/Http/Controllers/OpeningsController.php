@@ -139,10 +139,13 @@ class OpeningsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($company_id)
+    public function create(Request $request)
     {
+        $company_id = $request->company_id;
+        $opening = $request->opening_id ? Opening::find($request->opening_id) : false;
+
         $country_array = Common::return_country_array();
-        return view('openings.create', compact('country_array','company_id'));
+        return view('openings.create', compact('country_array','company_id','opening'));
     }
 
     /**
@@ -159,18 +162,13 @@ class OpeningsController extends Controller
 
         $this->validate($request, [
             'title' => 'required',
-            'requirements' => 'required',
             // 'picture' => 'required',
             'skills' => 'required',
-
+            'salary_range' => 'required',
+            'details' => 'required',
+            'requirements' => 'required',
         ]);
 
-
-        if($request->picture){
-            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->picture));
-            $fileNameToStore = time().'.png';
-            file_put_contents(public_path('/storage/').$fileNameToStore, $data);
-        }
         // Handle file upload
         // if($request->hasFile('picture')){
         //     //  Get filename with the extension
@@ -190,16 +188,27 @@ class OpeningsController extends Controller
         }*/
 
         // Create Opening
-        $opening = new Opening;
-        $opening->title = $request->input('title');
-        $opening->company_id = $request->input('company_id');
-        $opening->requirements = $request->input('requirements');
-        $opening->salary_range = 1;
+        $opening = $request->opening_id ? Opening::find($request->opening_id) : new Opening;
+
         if($request->picture){
+            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->picture));
+            $fileNameToStore = time().'.png';
+            file_put_contents(public_path('/storage/').$fileNameToStore, $data);
             $opening->picture = $fileNameToStore;
         }
+
+        $opening->title = $request->title;
+
+        if(!$request->opening_id)
+        {
+            $opening->company_id = $request->company_id;
+        }
+
+        $opening->salary_range = $request->salary_range;
+        $opening->requirements = $request->requirements;
+        $opening->details = $request->details;
         $opening->save();
-        $opening->register_skill($request->input('skills'));
+        $opening->register_skill($request->skills);
 
         // $openings_skills = \App\Opening_skill::where('language',$request->language)->get();
 

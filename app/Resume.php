@@ -29,6 +29,12 @@ class Resume extends Model
         return asset('storage/'.$this->attributes['photo']);
     }
 
+    //related to scout
+    public function companies_that_scout_users()
+    {
+        return $this->belongsToMany('App\Company', 'scouts', 'user_id', 'company_id')->withTimestamps();
+    }    
+
     public function educations()
     {
         return $this->hasMany(Education::class);

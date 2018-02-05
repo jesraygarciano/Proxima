@@ -17,73 +17,81 @@
         <div class="row">
         {{-- {{ $applied_application_openings }} --}}
         @if (count($applied_application_openings) > 0)
-            @foreach ($applied_application_openings as $applied_application_opening)
+            @foreach ($applied_application_openings as $opening)
             <div class="col-md-6">
                     <div class="job-tile">
                         <div>
-                            <span class="job-position featured">Featured</span>
-                            <span class="job-position regular">Regular</span>
-                            <span class="job-position intern">Intern</span>
+                            <ul class="ribbon_style_list">
+                            @if($opening->featured_status == 1)
+                                <li class="job-position featured">Featured</li>
+                            @endif
+                            @if($opening->hiring_type == 0)
+                                <li class="job-position intern">Intern</li>
+                            @elseif($opening->hiring_type == 1)
+                                <li class="job-position regular">Regular</li>
+                            @elseif($opening->hiring_type == 2)
+                                <li class="job-position intern">Temporary</li>
+                            @endif
+                            </ul>
                         </div>
-                        <div class="title">
-                            <div class="job-title">
-                                <div class="ellipsis">
-                                    <a href="{{ url('openings', $applied_application_opening->id) }}"> {{ $applied_application_opening->title }} </a>
-                                </div>
-                            </div>
-                            <div class="company-name">
-                                <div class="ellipsis">
-                                    <a href="{{ url('companies', $applied_application_opening->company->id) }}"> {{$applied_application_opening->company->company_name}} </a>
-                                </div>
-                            </div>
+                        <div class="job-title">
+                            <a href="{{ url('openings', $opening->id) }}" class="ellipsis padding-right-110" style="display: block;"> {{ $opening->title }} </a>
+                            {{-- <img class="pull-right" src="{{ $opening->company->company_logo }}" alt="" border="0" height="100" width="130" style="max-width: 130px;"> --}}
+                            <span class="contain pull-right photo-adjust" style="background-image: url('{{ $opening->company->company_logo }}')"></span>
+                            {{-- <div class="clear"></div> --}}
                         </div>
-                        <br>
-                        <br>
-                        <br>
-                        <div style="height: 125px; width: 125px;" class="photo-wrapper pull-right">
-                            <img src="{{asset('img/bg-img.png')}}" class="bg-img">
-                            <img class="_image" src="{{ $applied_application_opening->company->company_logo }}">
+                        <div class="company-name_opening_list ellipsis padding-right-110"><a href="{{ url('companies', $opening->company->id) }}"> {{$opening->company->company_name}} </a>
                         </div>
-                        <ul class="feature-info-list">
-                            <li class="ellipsis-li"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $applied_application_opening->company->address1 }} </li>
-                            <li class="ellipsis-li"><i class="fa fa-dollar" aria-hidden="true"></i> PHP 10,000 - 15,000 </li>
+                        <ul class="opening-feature-info-list">
+                            <li class="ellipsis padding-right-110"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $opening->company->address1 }}
+                            </li>
+                            <li class="ellipsis padding-right-110"><i class="fa fa-dollar" aria-hidden="true"></i>                                    
+                                <!-- Salary range -->
+                                {!! salary_ranges()[$opening->salary_range] !!}
+                            </li>
                             <li>
                                 <i class="fa fa-code" aria-hidden="true"></i>
-                                <div class="label label-warning java">
-                                    Java
-                                </div>
-                                <div class="label label-primary python">
-                                    Python
-                                </div>
-                                <div class="label label-info javascript">
-                                    <div class="hover-info">
-                                        <div class="pointer"></div>
-                                        <div class="content">
-                                            <ul>
-                                                <li>JQuery</li>
-                                                <li>Angular</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    Javascript
-                                </div>
-                                <div class="label label-info html">
-                                    HTML
-                                </div>
-                            </li>
-                            <li class="ellipsis-li" title="{{ date(' M. j, Y ',strtotime($applied_application_opening->pivot->created_at)) }} Submited">
-                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                {{ date(' M. j, Y ',strtotime($applied_application_opening->pivot->created_at)) }} Submited
+                                <?php $x = 0; ?>
+                                @foreach(main_languages() as $main_language)
+                                    @if($match_array = array_intersect($opening->has_skill->lists('id')->toArray(), get_language_ids($main_language)))
+                                        @if($x < 3)
+                                            {{-- have to take away original key from $match_array --}}
+                                            <?php $match_array = array_values($match_array); ?>
+
+                                            @for($i=0; $i < count($match_array) ; $i++)
+                                                @if($i == 0)
+                                                    <a href="#!" role="button" class="btn label label-warning {{main_languages_class_convert()[$main_language]}}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
+                                                    <div>{{return_category($match_array[$i])}}</div>                    
+                                                @else
+                                                    <div>{{return_category($match_array[$i])}}</div> 
+                                                @endif
+
+                                                @if($i == count($match_array) - 1)
+                                                    ">
+                                                    {{$main_language}}<span class="caret"></span>
+                                                @endif
+                                                </a>
+                                            @endfor
+                                        @endif
+                                        <?php $x++; ?>
+                                    @endif
+                                @endforeach
+
+                                @if($x > 3)
+                                    <a href="#!" role="button" onclick="display_skills('{{addslashes(json_encode($opening->load("skill_requirements")))}}',this)" class="btn label label-default">
+                                        ...
+                                    </a>
+                                @endif
                             </li>
                         </ul>
-                        <hr style="margin-top: 7px; margin-bottom: 7px;">
+                        <hr class="opening-top-date-hr" style="margin-top: 7px; margin-bottom: 7px;">
                         <div class="footer">
                             <div class="pull-left">
-                                <div class="foggy-text"> {{ date(' M. j, Y ',strtotime($applied_application_opening->created_at)) }} </div>
+                                <div class="foggy-text"> {{ date(' M. j, Y ',strtotime($opening->created_at)) }} </div>
                             </div>
                             <div class="pull-right">
                                 <div class="foggy-text">
-                                    {!! link_to( url('applications', $applied_application_opening->pivot->id) , 'application info', ['class' => 'btn btn-primary']) !!}
+                                    @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
                                 </div>
                             </div>
                         </div>

@@ -55,7 +55,6 @@ Route::get('applications/{id}', ['as' => 'applications.show', 'uses' => 'Applica
 Route::post('applications/store', ['as' => 'applications.store', 'uses' => 'ApplicationController@store']);
 
 
-
 Route::get('resumes/create', ['as' => 'resumes.create', 'uses' => 'ResumesController@create']);
 Route::get('resumes/show', ['as' => 'resumes.show', 'uses' => 'ResumesController@show']);
 Route::post('resumes', ['as' => 'resumes.store', 'uses' => 'ResumesController@store']);
@@ -101,7 +100,7 @@ Route::post('edit_company_follow', ['as' => 'edit_company_follow', 'uses' => 'Co
 
 // Route::post('openings_unbookmark/{opening_id}', ['as' => 'openings.unbookmark_openings_index', 'uses' => 'OpeningsController@unbookmark_openings_index']);
 // Route::post('openings_unbookmark/{opening_id}', ['as' => 'openings.unbookmark_openings_index', 'uses' => 'OpeningsController@unbookmark_openings_index']);
-Route::get('openings/create/{company_id}','OpeningsController@create');
+Route::get('openings/create/{company_id?}','OpeningsController@create');
 Route::get('openings/{id}','OpeningsController@show');
 Route::post('openings', ['as' => 'openings.store', 'uses' => 'OpeningsController@store']);
 

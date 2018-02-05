@@ -183,9 +183,6 @@ class CompaniesController extends Controller
         $companies_ids = Common::company_ids_that_user_have();
 
         /*Mapper::map(53.381128999999990000, -1.470085000000040000, ['zoom' => 10, 'markers' => ['title' => 'My Location', 'animation' => 'DROP']]);*/
-        /*Mapper::map(53.381128999999990000, -1.470085000000040000, ['zoom' => 10, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'cluster' => false]);*/
-        /*Mapper::map(10.3186862, 123.9031675, ['zoom' => 15, "draggable" => true, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'clusters' => ['size' => 10, 'center' => true, 'zoom' => 30]]);
-        */
 
         /*$company_location = Company::select('id', \DB::raw('CONCAT(address1, " ", city, " ", country) AS company_google_map'))
             ->orderBy('address1')
@@ -199,9 +196,6 @@ class CompaniesController extends Controller
 
         /*Mapper::map(53.381128999999990000, -1.470085000000040000, ['eventBeforeLoad' => 'console.log("before load");']);*/
 
-        // dd($company);
-        // dd($openings);
-        // dd($companies_ids);
         return view('companies.show', compact('company', 'openings', 'companies_ids'));
     }
 
