@@ -34,58 +34,11 @@
                          @if (count($companies) > 0)
                               @foreach ($companies as $company)
                                  <div id="first-comp-list" class="col-xs-12 col-sm-6 col-md-6">
-                                      <div class="media well">
-                                        <div class="media-body">
-                                          <h3 class="mt-0 mb-1">
-                                              <a href="{{ url('companies', $company['id']) }}">
-                                                  {{ $company['company_name'] }}
-                                                  <br>
-                                                  {{-- {{ dd($company)}} --}}
-                                              </a>
-                                          </h3>
-                                          <ul>
-                                            <li>
-                                                <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
-                                                {{ $company['city'] }},
-                                                {{ $company['country'] }}
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-users fa-lg" aria-hidden="true"></i>
-                                                {{ $company['number_of_employee'] }}Employees
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-laptop fa-lg" aria-hidden="true"></i>
-                                                <a href="{{ $company['url'] }}">{{ $company['url'] }}</a>
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-language fa-lg" aria-hidden="true"></i>
-                                                {{ $company['bill_country'] }}
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-file-o fa-lg" aria-hidden="true"></i>
-                                                    <a href="{{ url('companies', $company['id']) }}">
-                                                      {{ $company->openings->count() }} Current hiring
-                                                    </a>
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
-                                                  Latest job posted:
-                                                  {{ $company['updated_at'] }}
-                                            </li> 
-                                          </ul>
-                                        <div id="company-bookmark">
-                                          <div class="d-flex align-self-end ml-3" style="transform:translateY(15px);">
-                                            @include('companies.follow_company.follow_button', ['company' => $company])                                            
-                                          </div>
-                                        </div>
-
-                                        </div> <!-- media body -->
-                                        <img class="d-flex ml-3" src="{{ $company->company_logo }}" alt="{{ $company->company_name}}" alt="{{ $company->company_name}}" height="150px;" width="150px;" />
-                                      </div>
+                                      @include('companies.company-container')
                                   </div>
-                                      @endforeach
-                                   {!! $companies->render() !!}
-                                  @endif
+                              @endforeach
+                           <center>@include('layouts.pagination',['paginator'=>$companies])</center>
+                          @endif
                          </div>
               </div>
 
