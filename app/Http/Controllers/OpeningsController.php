@@ -49,8 +49,6 @@ class OpeningsController extends Controller
             return ['result'=>'bookmarked','bookmarks'=>Opening::find($request->opening_id)->bookmark_count()];
         }
     }
-
-
     public function index(Request $request)
     {
 

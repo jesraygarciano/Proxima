@@ -81,7 +81,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->bookmarkings()->where('opening_id', $opening_id)->exists();
     }
 
-
     //related to scout
     public function companies_that_scout_users()
     {

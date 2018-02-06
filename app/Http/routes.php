@@ -94,7 +94,7 @@ Route::delete('openings_unbookmark/{opening_id}', ['as' => 'openings.unbookmark_
 // ajax functions (Uelmar)
 Route::post('edit_opening_bookmark', ['as' => 'edit_opening_bookmark', 'uses' => 'OpeningsController@edit_opening_bookmark']);
 Route::post('edit_company_follow', ['as' => 'edit_company_follow', 'uses' => 'CompaniesController@edit_company_follow']);
-
+Route::post('edit_save_applicant', ['as' => 'edit_save_applicant', 'uses' => 'HiringPortalController@edit_save_applicant']);
 
 
 

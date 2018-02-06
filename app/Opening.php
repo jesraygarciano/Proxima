@@ -28,7 +28,7 @@ class Opening extends Model
     public function bookmark_count()
     {
         return $this->users_that_bookmarked()->count();
-    }        
+    }
 
     //$opening_skill_ids should be array
     public function register_skill($opening_skill_ids)

@@ -12,6 +12,7 @@ class Company extends Model
     // dd('通りました');
 
     // protected $hidden = ['password'];
+    protected $appends = ['population'];
 
     public function openings()
     {
@@ -32,6 +33,39 @@ class Company extends Model
     public function scout_users_save($user_id)
     {
         return $this->scout_users()->attach($user_id);
+    }
+
+    public function getPopulationAttribute(){
+        switch ($this->attributes['company_size']) {
+            case 1:
+                return '1 ~ 10 employees';
+                break;
+            case 2:
+                return '11 ~ 30 employees';
+                break;
+            case 3:
+                return '31 ~ 50 employees';
+                break;
+            case 4:
+                return '51 ~ 100 employees';
+                break;
+            case 5:
+                return '101 ~ 200 employees';
+                break;
+            case 4:
+                return '201 ~ 500 employees';
+                break;
+            case 4:
+                return '501 ~ 1000 employees';
+                break;
+            case 4:
+                return '1001 ~ employees';
+                break;
+            
+            default:
+                return '';
+                break;
+        }
     }
 
     /*public function company_google_mapper()

@@ -54,7 +54,7 @@ class CompaniesController extends Controller
         }
 
         return view('companies.index', compact('companies'));
-        // return view('companies.index', compact('companies','opening_count'));        
+        // return view('companies.index', compact('companies','opening_count'));
     }
 
     /**
@@ -90,20 +90,6 @@ class CompaniesController extends Controller
             $fileNameToStore = time().'.png';
             file_put_contents(public_path('/storage/').$fileNameToStore, $data);
         }
-
-        // Handle file upload
-        // if($request->hasFile('company_logo')){
-        //     //  Get filename with the extension
-        //     $filenameWithExt = $request->file('company_logo')->getClientOriginalName();
-        //     //  Get just filename
-        //     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        //     // Get just text
-        //     $extension = $request->file('company_logo')->getClientOriginalExtension();
-        //     // Filename to store
-        //     $fileNameToStore = $filename.'_'.time().'.'.$extension;
-        //     // Upload Image
-        //     $path = $request->file('company_logo')->move(public_path(). '/storage' , $fileNameToStore);
-        // }
 
         $this->validate($request, $rules);  // ③
 
@@ -222,24 +208,57 @@ class CompaniesController extends Controller
     public function update(Request $request, $id)
     {
 
-        $this->validate($request, [
-            'what' => 'required',
-            'url' => 'required',
-            'tel' => 'required',
-            'address1' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     'what' => 'required',
+        //     'url' => 'required',
+        //     'tel' => 'required',
+        //     'address1' => 'required',
+        // ]);
 
         // $input = $request->except('photo', 'skills', '_token');
 
-        $company = Company::findOrFail($id);
-
-        $company->update($request->all());
+        // $company = Company::findOrFail($id);
+        //
+        // $company->update($request->all());
 
         // \Session::flash('flash_message', 'edited company information' );
 
         // return redirect(url('companies', [$company->id]));
         // return redirect()->route('companies.show', [$company->id]);
-        return redirect('companies/show')->with('success', 'Updated your resume');
+        // return redirect('companies/show')->with('success', 'Updated your resume');
+
+        // dd($request);
+
+        // $rules = [
+        //     'company_name' => 'required',
+        //     'email' => 'required|unique:companies',
+        //     'company_logo' => 'required',
+        //     'tel' => 'required',
+        // ];
+
+
+        if($request->company_logo){
+            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->company_logo));
+            $fileNameToStore = time().'.png';
+            file_put_contents(public_path('/storage/').$fileNameToStore, $data);
+        }
+
+        // $this->validate($request, $rules);
+
+        // Company::create($request->all());
+        $request->user()->companies()->update([
+            'company_name' => $request->company_name,
+            'email' => $request->email,
+            'ceo_name' => $request->ceo_name,
+            // 'is_active' => '1',
+            // 'company_logo' => $fileNameToStore,
+            // 'tel' => $request->tel,
+        ]);
+
+        // \Session::flash('flash_message', 'created company information');
+
+        // return redirect('companies');
+        return redirect('/');
 
     }
 
