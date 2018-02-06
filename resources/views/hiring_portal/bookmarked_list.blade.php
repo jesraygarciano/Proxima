@@ -62,8 +62,8 @@
                                                 </div>
                                             </li>
                                         </ul>
+                                        @include('hiring_portal.saved_applicants.save_applicant_bttn')
                                     </div>
-                                    @include('hiring_portal.saved_applicants.save_applicant_bttn')
                                 </div>
                             </div>
                         </div>

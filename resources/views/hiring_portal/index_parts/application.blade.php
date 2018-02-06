@@ -3,12 +3,12 @@
         @if (count($openings) > 0)
             @for ($i=0; $i < count($openings); $i++)
                 @if ($i == 0)
-                    <li class="active"><a href="#application_{{$openings[$i]->id}}" data-toggle="tab">
+                    <li class="active"><a class="ellipsis" href="#application_{{$openings[$i]->id}}" data-toggle="tab">
                         {{ $openings[$i]->id }}
                         {{ $openings[$i]->title }}
                     </a></li>
                 @else
-                    <li><a href="#application_{{$openings[$i]->id}}" data-toggle="tab">
+                    <li><a class="ellipsis" href="#application_{{$openings[$i]->id}}" data-toggle="tab">
                         {{ $openings[$i]->id }}
                         {{ $openings[$i]->title }}
                     </a></li>
@@ -26,13 +26,13 @@
         @if (count($openings) > 0)
             @for ($i=0; $i < count($openings); $i++)
                 @if ($i == 0)
-                    <div class="tab-pane active" id="application_{{$openings[$i]->id}}">
+                    <div class="tab-pane active" style="word-break: break-all;" id="application_{{$openings[$i]->id}}">
                         {{ $openings[$i]->id }}
                         {{ $openings[$i]->title }}
                         @include('hiring_portal.index_parts.application_parts')
                     </div>
                 @else
-                    <div class="tab-pane" id="application_{{$openings[$i]->id}}">
+                    <div class="tab-pane" style="word-break: break-all;" id="application_{{$openings[$i]->id}}">
                         {{ $openings[$i]->id }}
                         {{ $openings[$i]->title }}
                         @include('hiring_portal.index_parts.application_parts')

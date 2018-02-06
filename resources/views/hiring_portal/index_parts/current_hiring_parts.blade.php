@@ -30,7 +30,21 @@
       <div class="form-group">
           {!! Form::label('picture', 'Job Cover Photo', ['class' => 'col-md-3 control-label']) !!}
           <div class = "col-md-7">
-            {!! Form::file('picture', old('picture'), ['class' => 'form-control', 'placeholder'=>$openings[$i]->picture]) !!}
+            <div class="crop-control" style="height: 200px; width: 200px;">
+              <div class="image-container">
+                <img src="https://grangeprint.com/image/cache/placeholder-750x750-nofill-255255255.png">
+                <label for="picture" class="input-trigger hover-div">
+                  <p>
+                    <i class="fa fa-file-image-o fa-5x" aria-hidden="true"></i>
+                    <br>
+                    Upload
+                  </p>
+                </label>
+              </div>
+              <div class="input-container">
+                <input type="file" id="picture" name="picture" accept="image/*" />
+              </div>
+            </div>
           </div>
       </div>            
 

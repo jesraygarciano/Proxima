@@ -14,7 +14,7 @@
               </div>
               <div class="col-md-7">
                 <h3>General information</h3>
-              </div>              
+              </div>
             </div>
           </div>
 
@@ -31,7 +31,7 @@
                 {!! Form::email('email', old('email'), ['class' => 'form-control', 'placeholder'=>$companies_show->email]) !!}
               </div>
           </div>
-          
+
           <div class="form-group">
               {!! Form::label('number_of_employee', 'Number of Employees', ['class' => 'col-md-3 control-label']) !!}
               <div class = "col-md-7">
@@ -50,31 +50,30 @@
 
           <div class="form-group">
               {!! Form::label('company_logo', 'Company Logo', ['class' => 'col-md-3 control-label']) !!}
-            <div class = "row">
-            {{-- <div class="page-header"> --}}
-                <div class="col-md-offset-3 col-md-8">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            {{-- {!!Form::file('photo')!!} --}}
-                            <div class="imagePreview"></div>
-                            <div class="input-group">
-                                <label class="input-group-btn">
-                                    <span class="btn btn-primary">
-                                        Choose File<input type="file" name="photo" style="display:none" class="uploadFile">
-                                    </span>
-                                </label>
-                                <input type="text" class="form-control" readonly="">
-                            </div>
-                        </div>
-                    </div>
+              <div class = "col-md-7">
+                <div class="crop-control" style="height: 200px; width: 200px;">
+                  <div class="image-container">
+                    <img src="https://grangeprint.com/image/cache/placeholder-750x750-nofill-255255255.png">
+                    <label for="photo" class="input-trigger hover-div">
+                      <p>
+                        <i class="fa fa-file-image-o fa-5x" aria-hidden="true"></i>
+                        <br>
+                        Upload
+                      </p>
+                    </label>
+                  </div>
+                  <div class="input-container">
+                    <input type="file" id="photo" name="photo" accept="image/*" />
+                  </div>
                 </div>
-            </div>
-          </div>  
+              </div>
+          </div>
 
           <div class="form-group">
               {!! Form::label('address1', 'Primary address:', ['class' => 'col-md-3 control-label']) !!}
               <div class = "col-md-7">
                 {!! Form::text('address1', old('address1'), ['class' => 'form-control', 'placeholder'=>$companies_show->address1]) !!}
+
               </div>
           </div>
 
@@ -121,7 +120,7 @@
               </div>
               <div class="col-md-7">
                 <h3>Secondary information</h3>
-              </div>              
+              </div>
             </div>
           </div>
 
@@ -214,7 +213,7 @@
               </div>
               <div class="col-md-7">
                 <h3>Supplementary information</h3>
-              </div>              
+              </div>
             </div>
           </div>
 
@@ -251,7 +250,7 @@
                     </div>
                 </div>
             </div>
-          </div>          
+          </div>
 
           <div class="form-group">
               {!! Form::label('what_photo1', 'Company details photo', ['class' => 'col-md-3 control-label']) !!}
@@ -290,7 +289,7 @@
                     </div>
                 </div>
             </div>
-          </div>          
+          </div>
 
           <div class="form-group">
               {!! Form::label('what_photo2', 'Company details photo', ['class' => 'col-md-3 control-label']) !!}
