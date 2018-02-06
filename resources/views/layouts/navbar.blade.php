@@ -40,7 +40,7 @@
                         @if (Auth::user()->role == 1)
                            @if(Session::get('company'))
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{-- {{ Session::company_ids_that_user_have()->company_name }} --}}
+                                {{-- {{ Session::get($company->email) }} --}}
                                 {{ Auth::user()->email }}
                                 <span class="caret"></span>
                             </a>
