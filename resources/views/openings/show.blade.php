@@ -2,6 +2,59 @@
 
 @section('content')
 
+<style type="text/css">
+    .cover-image{
+        position: relative;
+        height: 300px;
+        background: #c8c8c8;
+        overflow: hidden;
+        border: 1px solid #cecece;
+    }
+
+    .cover-image img{
+        position: absolute;
+        top: 50%;
+        transform:translateY(-50%);
+        width: 100%;
+        left: 0px;
+    }
+
+    .cover-info .picture{
+        padding: 5px;
+        background: white;
+        border: 1px solid #cecece;
+        position: relative;
+    }
+
+    .cover-info .picture img{
+        width: 100%;
+    }
+
+    .cover-info{
+    }
+
+    .cover-info img{
+        border:none!important;
+    }
+
+    .info{
+        font-size: 15px;
+        padding-bottom: 20px;
+    }
+</style>
+
+<?php $skills = return_resume_Skills(); ?>
+
+<style type="text/css">
+    .ui.form{
+        font-size: 12px;
+    }
+
+    .page-header .fa{
+        color: #0f739b;
+    }
+</style>
+
 <div class="container tall single-page">
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
@@ -16,131 +69,119 @@
         </li>
         <li role="presentation">
             <a href="#morehiring" role="tab" data-toggle="tab">
-                More job hiring
+                More job offer
             </a>
         </li>
     </ul>
 
    <!-- Tab panes -->
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="jobinfo">
-          <div class="row">
-            <div class="col-sm-12">
-                <h2>Job Information</h2>
-            </div>
-          </div>
-        <div id="show_opening"> {{-- START OF SHOW OPENING --}}
-            <style type="text/css">
-                .cover-image{
-                    position: relative;
-                    height: 300px;
-                    background: #c8c8c8;
-                    overflow: hidden;
-                    border: 1px solid #cecece;
-                }
-
-                .cover-image img{
-                    position: absolute;
-                    top: 50%;
-                    transform:translateY(-50%);
-                    width: 100%;
-                    left: 0px;
-                }
-
-                .cover-info .picture{
-                    padding: 5px;
-                    background: white;
-                    border: 1px solid #cecece;
-                    position: relative;
-                }
-
-                .cover-info .picture img{
-                    width: 100%;
-                }
-
-                .cover-info{
-                }
-
-                .cover-info img{
-                    border:none!important;
-                }
-            </style>
-                    <hr>
-                    <div class="row" id="openings-body" style="margin:0px;">
-                        <div class="col-md-7">
-                            <div class="job-description">
-                                <h4>
-                                    <i class="fa fa-file-text" aria-hidden="true"></i>
-                                    Job description:
-                                </h4>
-                                <hr class="hr-desc" />
-                                {{ $opening->details }}
-                            </div>
-                            <div class="job-qualify" >
-                                <h4>
-                                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                    Job Qualifications:
-                                </h4>
-                                <hr />
-                                <p>{{ $opening->requirements }}</p>
-                            </div>
-
+      <div role="tabpanel" class="tab-pane active" id="jobinfo" style="padding-top:30px;">
+        @if(\Auth::user() ? \Auth::user()->canEdit($opening) : false)
+        <a class="ui blue button massive" href="{{url('openings/create').'/?opening_id='.$opening->id}}"> Edit </a>
+        @endif
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-md-6">
+                <h4 class="page-header"><i class="fa fa-file-text" aria-hidden="true"></i> Basic Job Info</h4>
+                <div class="ui form">
+                    <label>Job Title</label>
+                    <div class="info">{{$opening->title}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="ui form">
+                            <label>Salary Range</label>
+                            <div class="info">{!! salary_ranges()[$opening->salary_range] !!}</div>
                         </div>
-
-                        <div class="col-md-5">
-                            <h4>
-                                <i class="fa fa-briefcase" aria-hidden="true"></i>
-                                Company Profile:
-                            </h4>
-                            <hr>
-
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    Company size:
-                                    <h5>
-                                        <b>
-                                            {{ $company->number_of_employee }}
-                                        </b>
-                                        Employees
-                                    </h5>
-                                    Telephone no.
-                                    <h5>
-                                        <b>
-                                            {{ $company->tel }}
-                                        </b>
-                                    </h5>
-                                    Country
-                                    <h5>
-                                        <b>
-                                            {{ $company->country }}
-                                        </b>
-                                    </h5>
-                                </div>
-                                <div class="col-xs-6">
-                                    Postal no.
-                                    <h5>
-                                        <b>
-                                            {{ $company->postal }}
-                                        </b>
-                                    </h5>
-                                    CEO:
-                                    <h5>
-                                        <b>
-                                            {{ $company->ceo_name }}
-                                        </b>
-                                    </h5>
-                                    Bill company name:
-                                    <h5>
-                                        <b>
-                                            {{ $company->bill_company_name }}
-                                        </b>
-                                    </h5>
-                                </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ui form">
+                            <label>Hiring Type</label>
+                            <div class="info">
+                            @if($opening->hiring_type == 0)
+                                Intern
+                            @elseif($opening->hiring_type == 1)
+                                Regular
+                            @elseif($opening->hiring_type == 2)
+                                Temporary
+                            @endif
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    {!! link_to(action('ApplicationController@create', [$opening->id]), 'Application Form', ['class' => 'btn btn-danger']) !!}
+                </div>
+                <div class="ui form">
+                    <label>Details</label>
+                    <div class="info">{!! $opening->details != '' ? $opening->details : '<span style="color:gray;">No info.</span>' !!}</div>
+                </div>
+                <div class="ui form">
+                    <label>Requirements</label>
+                    <div class="info">{!! $opening->requirements != '' ? $opening->requirements :  '<span style="color:gray;">No info.</span>' !!}</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h4 class="page-header">
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                    Skill Requirements
+                    <span style="color:#a94442;"></span>
+                </h4>
+                <div class="row" id="skill_required">
+                    <div class="col-md-4">
+                        {{-- <div class="job-card">
+                            <div class="header java ellipsis">Java</div>
+                            <div class="body "><div class="ellipsis">ApacheWicket</div> </div>
+                        </div> --}}
+                    </div>
+                    <div class="col-md-4">
+                        {{-- <div class="job-card">
+                            <div class="header java">Java</div>
+                            <div class="body "><div class="ellipsis">ApacheWicket</div> </div>
+                        </div> --}}
+                    </div>
+                    <div class="col-md-4">
+                        {{-- <div class="job-card">
+                            <div class="header java">Java</div>
+                            <div class="body "><div class="ellipsis">ApacheWicket</div> </div>
+                        </div> --}}
+                    </div>
+                    <script type="text/javascript">
+                        $(function(){
+                            var skill_requirements = JSON.parse("{{json_encode($opening->skill_requirements)}}".replace(/&quot;/g,'"'));
+
+                            var skills_container = $('#skill_required');
+                            skills_container.find('.col-md-4').html('');
+                            var language_added = [];
+                            var x = 0;
+
+                            for(var i = 0; i < skill_requirements.length; i++){
+                                if(x > 2){
+                                    x = 0;
+                                }
+
+                                var lang = skill_requirements[i].language.toLowerCase() == 'c++' ? 'cplus2' : (skill_requirements[i].language.toLowerCase() == "c#" ? 'csharp' : (skill_requirements[i].language.toLowerCase() == 'node.js' ? 'node-js' : skill_requirements[i].language.toLowerCase()) );
+
+                                if(language_added.includes(lang)){
+                                    skills_container.find('.'+lang).parent().find('.body').append('<div class="ellipsis">'+skill_requirements[i].category+'</div>');
+                                }
+                                else
+                                {
+                                    skills_container.find('.col-md-4').eq(x).append(
+                                        '<div class="job-card">'
+                                        +'    <div class="header ellipsis '+lang+'">'+skill_requirements[i].language+'</div>'
+                                        +'    <div class="body"><div class="ellipsis">'+skill_requirements[i].category+'</div> </div>'
+                                        +'</div>'
+                                        );
+                                    language_added.push(lang)
+                                    x++;
+                                }
+                            }
+
+                            if(skill_requirements.length < 1){
+                                skill_requirements.html('<div class="col-md-4" style="color:gray;">No skill requirements.</div>');
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -270,93 +311,16 @@
       <h3>Company hiring jobs</h3>
       <div class="row">
             <div class="col-md-10">
+                <div class="row">
                 {{ count($more_openings) ? ' ' : 'No other current hiring.'}}
                    @if (count($more_openings) > 0)
                     @foreach ($more_openings as $moreopening)
-                        <div class="job-tile">
-                            <div>
-                                @if($moreopening->featured_status == 1)
-                                    <span class="job-position featured">Featured</span>
-                                @endif
-                                @if($moreopening->hiring_type == 0)
-                                    <span class="job-position intern">Intern</span>
-                                @elseif($moreopening->hiring_type == 1)
-                                    <span class="job-position regular">Regular</span>
-                                @elseif($moreopening->hiring_type == 2)
-                                    <span class="job-position intern">Temporary</span>
-                                @endif
-                            </div>
-                            <div class="job-title">
-                                <a href="{{ url('openings', $moreopening->id) }}" class="ellipsis padding-right-110" style="display: block;"> {{ $moreopening->title }} </a>
-                                {{-- <img class="pull-right" src="{{ $moreopening->company->company_logo }}" alt="" border="0" height="100" width="130" style="max-width: 130px;"> --}}
-                                <span class="contain pull-right photo-adjust" style="background-image: url('{{ $moreopening->company->company_logo }}')"></span>
-                                {{-- <div class="clear"></div> --}}
-                            </div>
-                            <div class="company-name_opening_list ellipsis padding-right-110"><a href="{{ url('companies', $moreopening->company->id) }}"> {{$moreopening->company->company_name}} </a>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <ul class="opening-feature-info-list">
-                                        <li class="ellipsis padding-right-110"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $moreopening->company->address1 }}
-                                        </li>
-                                        <li class="ellipsis padding-right-110"><i class="fa fa-dollar" aria-hidden="true"></i>
-                                            {!! salary_ranges()[$moreopening->salary_range] !!}
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-code" aria-hidden="true"></i>
-                                            @foreach(main_languages() as $main_language)
-                                                @if($match_array = array_intersect($moreopening->has_skill->lists('id')->toArray(), get_language_ids($main_language)))
-                                                    {{-- have to take away original key from $match_array --}}
-                                                    <?php $match_array = array_values($match_array); ?>
-
-                                                    @for($i=0; $i < count($match_array) ; $i++)
-                                                        @if($i == 0)
-                                                            <a href="#!" role="button" class="btn label label-warning {{main_languages_class_convert()[$main_language]}}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
-                                                            <ul>
-                                                                <li>{{return_category($match_array[$i])}}</li>                    
-                                                        @else
-                                                            <li>{{return_category($match_array[$i])}}</li> 
-                                                        @endif
-
-                                                        @if($i == count($match_array) - 1)
-                                                            </ul>">
-                                                            {{$main_language}}<span class="caret"></span>
-                                                        @endif
-                                                        </a>
-                                                    @endfor
-                                                @endif
-                                            @endforeach
-                                        </li>
-                                    </ul>                                    
-                                </div>
-                                <div class="col-sm-4">
-                                    <ul class="opening-feature-info-list">
-                                        <li>
-                                            <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                                            {{ $moreopening->requirements }}
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-file-text" aria-hidden="true"></i>
-                                            {{ $moreopening->details }}
-                                        </li>                                         
-                                    </ul>                                    
-                                </div>
-                            </div>
-
-                            <hr class="opening-top-date-hr" style="margin-top: 7px; margin-bottom: 7px;">
-                            <div class="footer">
-                                <div class="pull-left">
-                                    <div class="foggy-text"> {{ date(' M. j, Y ',strtotime($moreopening->created_at)) }} </div>
-                                </div>
-                                <div class="pull-right">
-                                    <div class="foggy-text">
-                                        @include('openings.opening_bookmark.bookmark_button', ['opening' => $moreopening])
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-6">
+                        @include('inc.job-container',['opening'=>$moreopening])
+                    </div>
                     @endforeach
                 @endif
+                </div>
             </div>
                 <div class="col-md-2 well">
                     <h4>Advertisement</h4>

@@ -23,6 +23,8 @@
             position: relative;
             display: inline-block;
             cursor: pointer;
+            padding: 4px;
+            font-size: 90%;
         }
 
         .feature-info-list li .info-icon {
@@ -434,7 +436,7 @@
             <li>
                 {{--<a href="{{route('search_opening_with_language').'?language=ruby'}}">--}}
                     <a href="{{ url('openings?languages%5B%5D=ruby&show_advance_search=open') }}">
-                    <div class="round-icon medium-round-icon ruby" style="background: #ead57d;">
+                    <div class="round-icon medium-round-icon ruby" style="background: #ead57d!important;">
                         <img src="https://rebornix.gallerycdn.vsassets.io/extensions/rebornix/ruby/0.15.0/1503328840286/Microsoft.VisualStudio.Services.Icons.Default">
                     </div>
                     <b>Ruby</b>
@@ -443,7 +445,7 @@
             <li>
                 {{-- <a href="{{route('search_opening_with_language').'?language=java'}}"> --}}
                 <a href="{{ url('openings?languages%5B%5D=java&show_advance_search=open') }}">
-                    <div class="round-icon medium-round-icon java" style="background: #ffffff;">
+                    <div class="round-icon medium-round-icon java" style="background: #ffffff!important;">
                         <img src="https://images.sftcdn.net/images/t_optimized,f_auto/p/2f4c04f4-96d0-11e6-9830-00163ed833e7/3163796423/java-runtime-environment-logo.png">
                     </div>
                     <b>Java</b>
@@ -451,7 +453,7 @@
             </li>
             <li>
                     <a href="{{ url('openings?languages%5B%5D=c%2B%2B&show_advance_search=open') }}">
-                    <div class="round-icon medium-round-icon cplus2" style="background: #28aeff;">
+                    <div class="round-icon medium-round-icon cplus2" style="background: #28aeff!important;">
                         <img src="https://png.icons8.com/color/1600/c-plus-plus-logo.png">
                     </div>
                     <b>C++</b>
@@ -459,7 +461,7 @@
             </li>
             <li>
                 <a href="{{ url('openings?languages%5B%5D=python&show_advance_search=open') }}">
-                    <div class="round-icon medium-round-icon python" style="background: #fff1cc;">
+                    <div class="round-icon medium-round-icon python" style="background: #fff1cc!important;">
                         <img src="http://www.iconarchive.com/download/i73027/cornmanthe3rd/plex/Other-python.ico">
                     </div>
                     <b>Python</b>
@@ -488,7 +490,7 @@
             </li>
             <li>
                 <a href="{{ url('openings?languages%5B%5D=c%23&show_advance_search=open') }}">
-                    <div class="round-icon medium-round-icon csharp" style="background: #ba85fe;">
+                    <div class="round-icon medium-round-icon csharp" style="background: #ba85fe!important;">
                         <img src="https://developer.fedoraproject.org/static/logo/csharp.png">
                     </div>
                     <b>C#</b>
