@@ -1,7 +1,8 @@
 .applicant-tile{
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 3px 0 rgba(0,0,0,0.12)!important;
+    border:1px solid #dddddd;
+    /*padding:15px 19px 8px 19px;*/
     padding:19px;
-    border:1px solid #f0ad4e;
     margin-bottom: 10px;
     border-radius: 5px;
     position: relative;
@@ -12,21 +13,6 @@
     background: white;
     border-radius: 3px;
     font-weight: bold;
-}
-
-.featured{
-    color: #eda637;
-    border: 1px solid #eda637;
-}
-
-.regular{
-    color: #3c763d;
-    border: 1px solid #3c763d;
-}
-
-.intern{
-    color: #79ace9;
-    border: 1px solid #79ace9;
 }
 
 .applicant-tile .footer{
@@ -77,9 +63,6 @@
 }
 
 .applicant-tile .fa-bookmark{
-    position: absolute;
-    right: 10px;
-    top:0px;
     color: #a3a3a3;
     cursor: pointer;
 }

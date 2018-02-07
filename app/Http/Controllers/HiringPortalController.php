@@ -19,8 +19,8 @@ class HiringPortalController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('onlyhiring', ['except' => ['edit_save_applicant']]);
+        $this->middleware('auth', ['except' => ['index','show']]);
+        $this->middleware('onlyhiring', ['except' => ['index','edit_save_applicant','show','save_applicant_index','unsave_applicant_index','user_bookmark_lists','json_update_saved_applicants']]);
         $this->middleware('navbar');
     }
     /**
@@ -96,6 +96,11 @@ class HiringPortalController extends Controller
 
     }
 
+    public function user_bookmark_lists(){
+        $applicants = Auth::user()->saved_applicants;
+        return view('hiring_portal.bookmarked_list',compact('applicants'));
+    }
+
 
     // this code is for add/remove saved applicants function
     public function json_update_saved_applicants(Request $requests)
@@ -105,14 +110,6 @@ class HiringPortalController extends Controller
 
         return ['success'=>true];
     }
-
-
-
-   /**
-     * Display applicants
-     *
-     *
-     */
 
     public function user_index(Request $requests)
     {
@@ -197,14 +194,15 @@ class HiringPortalController extends Controller
         //     dd($scout_companies);
         // }
 
-
         //the users that will shown on the applicants list
-        // $applicants = User::where('is_active', 1)->whereRaw('concat(f_name," ",m_name," ",l_name) like "%'.$requests->name.'%"')->where('role', 0)->paginate(10);
-        $applicants = Resume::where('is_active', 1)->whereRaw('concat(f_name," ",m_name," ",l_name) like "%'.$requests->name.'%"')->paginate(10);
+        $applicants = User::query()->where('is_active', 1)->orderBy('created_at','desc');
+        // $applicants = Resume::where('is_active', 1)->whereRaw('concat(f_name," ",m_name," ",l_name) like "%'.$requests->name.'%"')->paginate(10);
+        // 
 
-        // $applicants = User::query()->where('is_active', 1)->where('role', 0)->orderBy('created_at','desc');        
+        /*$applicants = User::query()->where('is_active', 1)->where('role', 0)->orderBy('created_at','desc');
+        $applicants = Resume::query()->where('is_active', 1)->orderBy('created_at','desc'); */
+
         $provinces = \DB::table('provinces')->get();
-
 
         // $complete_name = Resume::select('id', \DB::raw('CONCAT(f_name, " ", m_name, " ", l_name) AS complete_names'))
         //     ->orderBy('f_name')
@@ -213,18 +211,45 @@ class HiringPortalController extends Controller
         /*if($requests->applicant_search){
             $applicant_search_ids = Resume::where('f_name','like','%'.$requests->applicant_search.'%')->lists('id');
             $applicants->where('f_name','like','%'.$requests->applicant_search.'%');
-
         }*/
+        // $complete_name = Resume::select('id', \DB::raw('CONCAT(f_name, " ", m_name, " ", l_name) AS complete_names'))
+        //     ->orderBy('f_name')
+        //     ->lists('complete_names', 'id');
 
         if($requests->applicant_search){
-            $applicant_search_ids = Resume::where('f_name','like','%'.$requests->applicant_search.'%')->lists('id');
+            $applicant_search_ids = User::where('f_name', 'like', '%'.$requests->applicant_search.'%')->lists('id');
+
             $applicants->whereIn('id',$applicant_search_ids);
+
+        }
+
+        if($requests->languages && strlen($requests->languages[0]) > 0)
+        {
+            $resume_skills = \App\Resume_skill::whereIn('language',$requests->languages)->lists('id');
+
+            $pivot_resume_skills = \DB::table('joining_resume_skills')->whereIn('resume_skill_id',$resume_skills)->lists('resume_id');
+
+            $applicantes = Resume::whereIn('id',$pivot_resume_skills)->lists('user_id');
+
+            $applicants->whereIn('id',$applicantes);
+
         }
 
         if($requests->province){
             $provinces_search = \DB::table('provinces')->whereRaw('name like "%'.$requests->province.'%" or iso_code like "%'.$requests->province.'%"')->lists('iso_code');
             $applicants->whereIn('province_code',$provinces_search);
         }
+
+        if($requests->gender){
+            $applicants->where('gender',$requests->gender);
+
+            /*$resume_gender = Resume::where('gender',$requests->gender)->lists('id');
+            $applicants->whereIn('gender',$resume_gender);*/
+
+        }
+
+
+        $applicants = $applicants->paginate(6);        
 
         //getting ids of companies that auth user created.
         $companies_ids = Common::company_ids_that_user_have();
@@ -235,7 +260,6 @@ class HiringPortalController extends Controller
             $scout_companies = $applicants[$i]->companies_that_scout_users()->withPivot('user_id', 'company_id')->get();
 
             $companies_array = array();
-            
             for ($j=0; $j < count($scout_companies) ; $j++) {
                 if (in_array($scout_companies[$j]->id, $companies_ids)) {
                     $companies_array[] = $scout_companies[$j];
@@ -247,14 +271,11 @@ class HiringPortalController extends Controller
             } else {
                 $companies_scouted_array += array($applicants[$i]->id => $companies_array);
             }
-
             // dd($scout_companies_screened);
             // dd($scout_companies);
         }
 
         // dd($companies_scouted_array);
-
-
 
         // $applied_application_openings = DB::table('users as u')
         //     ->select('u.f_name', 'u.m_name', 'u.l_name', 'u.email', 'u.city', 'u.program_of_study', 'c.company_name')
@@ -265,7 +286,6 @@ class HiringPortalController extends Controller
         //     ->wherein('c.user_id',$companies_ids)
         //     ->get();
         // return $applied_application_openings;
-
 
         return view('hiring_portal.user_index', compact('applicants','provinces','companies_scouted_array'));
         // return view('hiring_portal.user_index', compact('applicants'));
@@ -287,7 +307,6 @@ class HiringPortalController extends Controller
     }
 
 
-
     public function user_index_show($id)
     {
 
@@ -307,6 +326,7 @@ class HiringPortalController extends Controller
                 $companies_array[] = $scout_companies[$j];
             }
         }
+
         // // dd($companies_array);
         // if ($i == 0) {
         //     $companies_scouted_array = array($applicants[$i]->id => $companies_array);
@@ -330,7 +350,7 @@ class HiringPortalController extends Controller
      */
     public function create()
     {
-        //
+        //create
     }
 
     /**
@@ -341,7 +361,7 @@ class HiringPortalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //store
     }
 
     /**
@@ -378,13 +398,6 @@ class HiringPortalController extends Controller
         $applicants = User::wherein('id', $applicant_ids)->get();
 
         return view('hiring_portal.index', compact('companies_show', 'companies', 'openings', 'applications', 'applicants'));
-    }
-
-
-
-    public function user_bookmark_lists(){
-        $applicants = Auth::user()->saved_applicants;
-        return view('hiring_portal.bookmarked_list',compact('applicants'));
     }
 
 

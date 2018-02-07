@@ -1,7 +1,7 @@
 <?php
 
 
-Route::get('/', 'PortalController@diverge');
+Route::get('/', ['as' => 'portals.general_portal', 'uses' => 'PortalController@general_portal']);
 Route::get('portals/general_portal', ['as' => 'portals.general_portal', 'uses' => 'PortalController@general_portal']);
 
 
@@ -23,7 +23,7 @@ Route::get('hiring_portal/user_index', 'HiringPortalController@user_index');
 Route::get('hiring_portal/user_index_show/{id}', ['as' => 'hiring_portal.user_index_show', 'uses' => 'HiringPortalController@user_index_show']);
 
 
-Route::get('hiring_portal', 'HiringPortalController@index');
+Route::get('hiring_portal', ['as' => 'hiring_portal', 'uses' => 'HiringPortalController@index']);
 
 // save applicant route
 Route::post('save_applicant_index/{applicant_saved_id}', ['as' => 'save_applicant_index', 'uses' => 'HiringPortalController@save_applicant_index']);
@@ -129,6 +129,13 @@ Route::post('auth/register/{status}', 'Auth\AuthController@postRegister');
 Route::get('password/email', 'Auth\PasswordController@getEmail');
 Route::post('password/email', 'Auth\PasswordController@postEmail');
 
+// link for account verification
+Route::get('verify/account',['as'=>'verify/account','uses'=>'Auth\AuthController@verify_account']);
+
 // Password reset routes...
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+// Socialite
+Route::get('/redirect', 'SocialAuthFacebookController@redirect');
+Route::get('/callback', 'SocialAuthFacebookController@callback');

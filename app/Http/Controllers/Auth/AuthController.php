@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Mail;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
@@ -40,7 +42,7 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->middleware('guest', ['except' => ['verify_account', 'getLogout']]);
     }
 
     /**
@@ -79,8 +81,9 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $verify_token = md5(uniqid(rand(), true));
 
-        return User::create([
+        $user = User::create([
             // 'f_name' => $data['f_name'],
             // 'l_name' => $data['l_name'],
             // 'm_name' => $data['m_name'],
@@ -88,6 +91,25 @@ class AuthController extends Controller
             'role' => $data['role'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'verify_token'=>$verify_token
         ]);
+
+        // send verification email
+
+        Mail::send('emails.verify-email', ['user'=>$user], function ($message) use ($user){
+            $message->from(env('MAIL_USERNAME'), 'Nexseed Support');
+            $message->subject('Account Verification');
+            $message->to($user->email);
+        });
+
+        return $user;
+    }
+
+    public function verify_account(Request $request){
+
+        $user = \App\User::where('verify_token',$request->verify_token)->first();
+        $user->verify_token = '';
+        $user->save();
+        return 'Thank you!<br>Your account is now verified.<br><a href="'.url('/').'">Proceed>>></a>';
     }
 }

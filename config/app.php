@@ -136,6 +136,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -205,6 +206,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,  // 追加
         'Html' => Collective\Html\HtmlFacade::class,  // 追加
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
         // Google maps
         'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,

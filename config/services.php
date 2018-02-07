@@ -35,4 +35,10 @@ return [
         'secret' => '',
     ],
 
+    'facebook' => [
+        'client_id'     => '192564384662924',
+        'client_secret' => '66d451f9d7117b6712cb6a384f5293b0',
+        'redirect'      => 'http://localhost:8000/callback',
+    ],
+
 ];
