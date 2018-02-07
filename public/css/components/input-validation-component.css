@@ -19,3 +19,16 @@
 {
     border-color:#a94442!important;
 }
+
+.ui.form .error-label{
+	display: none;
+}
+
+.ui.form.has-error input,.ui.form.has-error .dropdown, .ui.form.has-error textarea{
+	border-color:#a94442;
+}
+
+.ui.form.has-error .error-label{
+	color: #a94442;
+	display: block;
+}

@@ -1,10 +1,25 @@
 .job-tile{
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 3px 0 rgba(0,0,0,0.12)!important;
     padding:15px 19px 8px 19px;
-    border:1px solid #f0ad4e;
+    border:1px solid #dddddd;
     margin-bottom: 10px;
     border-radius: 5px;
     position: relative;
+}
+
+.job-tile .edit-bttn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 0px;
+    overflow: hidden;
+    display: block;
+    transition: 200ms ease all;
+}
+
+.job-tile:hover .edit-bttn{
+    opacity: 1;
+    width: 30px;
 }
 
 .job-tile .title{
@@ -14,12 +29,17 @@
     padding:0px 15px;
 }
 
+.job-tile .photo-adjust{
+    transform: translateY(-35px);
+}
+
 .job-tile .photo-wrapper{
     float: right;
     width: 150px;
     background: #f3f3f3;
     margin-top: -25px;
     border: 1px solid #ececec;
+    border-radius: 4px;
 }
 
 .opening-feature-info-list{
@@ -31,6 +51,7 @@
 
 .opening-feature-info-list li{
     padding-top: 1px;
+    min-height: 30px;
 }
 
 .opening-feature-info-list li .label{
@@ -84,23 +105,7 @@
 .job-position{
     padding: 4px;
     background: white;
-    border-radius: 3px;
     font-weight: bold;
-}
-
-.featured{
-    color: #eda637;
-    border: 3px solid #eda637;
-}
-
-.regular{
-    color: #3c763d;
-    border: 3px solid #3c763d;
-}
-
-.intern{
-    color: #79ace9;
-    border: 3px solid #79ace9;
 }
 
 .job-tile .footer{
@@ -135,4 +140,33 @@
     position: absolute;
     bottom:37px;
     right: 12px;
+}
+
+
+.job-card{
+    position: relative;
+    margin-top: 5px;
+}
+
+.job-card .header{
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    border-radius: 4px 4px 0 0;
+    background: gray;
+}
+
+.job-card .body{
+    border: 1px solid #e5e5e5;
+    border-radius: 0 0 4px 4px;
+}
+
+.job-card .body > div{
+    border-bottom:1px solid #e5e5e5;
+    padding: 5px;
+}
+
+.job-card .body > div::last-child{
+    border:none;
 }

@@ -88,7 +88,7 @@
                 <div class="tab-pane active wizard-step" role="tabpanel" id="step0">
                     <h3>step0</h3>
 
-                    <h4 class="form-heading">Seminers Attended</h4>
+                    <h4 class="form-heading">Why do you want to join us?</h4>
                     <hr>
 
                     <div class="row">
@@ -96,7 +96,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     {{-- {!!Form::label('objective', 'Objective:')!!} --}}
-                                    {!!Form::textarea('seminars_attended', null, ['class' => 'form-control'])!!}
+                                    {!!Form::textarea('description', null, ['class' => 'form-control'])!!}
                                 </div>
                             </div>
                         </div>
@@ -149,7 +149,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                            
+                    </div>
 
                     <h4 class="form-heading required-label">Phone Number</h4>
                     <hr>
@@ -892,7 +892,7 @@
                         <!-- <li><button type="button" class="btn btn-default next-step">Skip</button></li> -->
                         <li><button type="button" class="btn btn-primary btn-info-full next-step">Save and continue</button></li>
                     </ul>
-                </div>                   
+                </div>
                 <div class="tab-pane wizard-step" role="tabpanel" id="complete">
                     <h3>Complete</h3>
                     <p>You have successfully completed all steps.</p>
@@ -1033,218 +1033,218 @@
         unickwizard($('#resume-wizard'),{
             rules:{
 
-// step 1 requirements
-photo:{
-    identifier:'photo',
-    rules: [
-    {
-        type:'file',
-        prompt:'Photo required'
-    }
-    ]
-},
-f_name:{
-    identifier:'f_name',
-    rules: [
-    {
-        type:'empty',
-        prompt:'Please enter your first name'
-    }
-    ]
-},
-l_name:{
-    identifier:'l_name',
-    rules: [
-    {
-        type:'empty',
-        prompt:'Please enter your last name'
-    }
-    ]
-},
-phone_number:{
-    identifier:'phone_number',
-    rules: [
-    {
-        type:'empty',
-        prompt:'Please enter your phone number'
-    }
-    ]
-},
-email:{
-    identifier:'email',
-    rules: [
-    {
-        type:'empty',
-        prompt:'Please enter your email'
-    }
-    ]
-},
-birth_date:{
-    identifier:'birth_date',
-    rules: [
-    {
-        type:'empty',
-        prompt:'Please enter your birthdate'
-    }
-    ]
-},
-address1:{
-    identifier:'address1',
-    rules: [
-    {
-        type:'empty',
-        prompt:'Please enter your address1'
-    }
-    ]
-},
-address2:{
-    identifier:'address2',
-    rules: [
-    {
-        type:'empty',
-        prompt:'Please enter your address2'
-    }
-    ]
-},
-city:{
-    identifier:'city',
-    rules: [
-    {
-        type:'empty',
-        prompt:'Please enter your city'
-    }
-    ]
-},
-country:{
-    identifier:'country',
-    rules: [
-    {
-        type:'empty',
-        prompt:'Please enter your country'
-    }
-    ]
-},
-postal:{
-    identifier:'postal',
-    rules: [
-    {
-        type:'empty',
-        prompt:'Please enter your postal'
-    }
-    ]
-},
-spoken_language:{
-    identifier:'spoken_language',
-    rules: [
-    {
-        type:'empty',
-        prompt:'Please enter your spoken language'
-    }
-    ]
-},
-ed_university:{
-    identifier:'ed_university',
-    rules: [
-    {
-        type:'empty',
-        prompt:'Please enter your university'
-    }
-    ]
-},
-ed_from_month:{
-    identifier:'ed_from_month',
-    type:'semantic-group',
-    rules: [
-    {
-        type:'empty',
-        prompt:'month start'
-    }
-    ]
-},
-ed_from_year:{
-    identifier:'ed_from_year',
-    type:'semantic-group',
-    rules: [
-    {
-        type:'empty',
-        prompt:'year start'
-    }
-    ]
-},
-ed_to_month:{
-    identifier:'ed_to_month',
-    type:'semantic-group',
-    rules: [
-    {
-        type:'empty',
-        prompt:'month end'
-    }
-    ]
-},
-ed_to_year:{
-    identifier:'ed_to_year',
-    type:'semantic-group',
-    rules: [
-    {
-        type:'empty',
-        prompt:'year end'
-    }
-    ]
-},
+                // step 1 requirements
+                photo:{
+                    identifier:'photo',
+                    rules: [
+                        {
+                            type:'file',
+                            prompt:'Photo required'
+                        }
+                    ]
+                },
+                f_name:{
+                    identifier:'f_name',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Please enter your first name'
+                        }
+                    ]
+                },
+                l_name:{
+                    identifier:'l_name',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Please enter your last name'
+                        }
+                    ]
+                },
+                phone_number:{
+                    identifier:'phone_number',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Please enter your phone number'
+                        }
+                    ]
+                },
+                email:{
+                    identifier:'email',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Please enter your email'
+                        }
+                    ]
+                },
+                birth_date:{
+                    identifier:'birth_date',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Please enter your birthdate'
+                        }
+                    ]
+                },
+                address1:{
+                    identifier:'address1',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Please enter your address1'
+                        }
+                    ]
+                },
+                address2:{
+                    identifier:'address2',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Please enter your address2'
+                        }
+                    ]
+                },
+                city:{
+                    identifier:'city',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Please enter your city'
+                        }
+                    ]
+                },
+                country:{
+                    identifier:'country',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Please enter your country'
+                        }
+                    ]
+                },
+                postal:{
+                    identifier:'postal',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Please enter your postal'
+                        }
+                    ]
+                },
+                spoken_language:{
+                    identifier:'spoken_language',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Please enter your spoken language'
+                        }
+                    ]
+                },
+                ed_university:{
+                    identifier:'ed_university',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Please enter your university'
+                        }
+                    ]
+                },
+                ed_from_month:{
+                    identifier:'ed_from_month',
+                    type:'semantic-group',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'month start'
+                        }
+                    ]
+                },
+                ed_from_year:{
+                    identifier:'ed_from_year',
+                    type:'semantic-group',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'year start'
+                        }
+                    ]
+                },
+                ed_to_month:{
+                    identifier:'ed_to_month',
+                    type:'semantic-group',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'month end'
+                        }
+                    ]
+                },
+                ed_to_year:{
+                    identifier:'ed_to_year',
+                    type:'semantic-group',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'year end'
+                        }
+                    ]
+                },
 
 
-// step 2 requirements
-summary:{
-    identifier:'summary',
-    rules:[
-    {
-        type:'empty',
-        prompt:'Skill/Experience Summary required'
-    }
-    ]
-},
+                // step 2 requirements
+                summary:{
+                    identifier:'summary',
+                    rules:[
+                        {
+                            type:'empty',
+                            prompt:'Skill/Experience Summary required'
+                        }
+                    ]
+                },
 
-// step 3 requirements
-objective:{
-    identifier:'objective',
-    rules:[
-    {
-        type:'empty',
-        prompt:'Objective required'
-    }
-    ]
-},
-cr_company:{
-    identifier:'cr_company',
-    rules:[
-    {
-        type:'empty',
-        prompt:'Company / University name required'
-    }
-    ]
-},
-cr_name:{
-    identifier:'cr_name',
-    rules:[
-    {
-        type:'empty',
-        prompt:'Company personnel name required'
-    }
-    ]
-},
-cr_phone_number:{
-    identifier:'cr_phone_number',
-    rules:[
-    {
-        type:'empty',
-        prompt:'Company personnel number required'
-    }
-    ]
-},
-}
-}
-);
-    });
+                // step 3 requirements
+                objective:{
+                    identifier:'objective',
+                    rules:[
+                        {
+                            type:'empty',
+                            prompt:'Objective required'
+                        }
+                    ]
+                },
+                cr_company:{
+                    identifier:'cr_company',
+                    rules:[
+                        {
+                            type:'empty',
+                            prompt:'Company / University name required'
+                        }
+                    ]
+                },
+                cr_name:{
+                    identifier:'cr_name',
+                    rules:[
+                        {
+                            type:'empty',
+                            prompt:'Company personnel name required'
+                        }
+                    ]
+                },
+                cr_phone_number:{
+                    identifier:'cr_phone_number',
+                    rules:[
+                        {
+                            type:'empty',
+                            prompt:'Company personnel number required'
+                        }
+                    ]
+                },
+            }
+        }
+    );
+});
 </script>
 
 
@@ -1297,111 +1297,111 @@ cr_phone_number:{
     .cover-info img{
         border:none!important;
     }
-</style>
+    </style>
 
-<div class="row text-center">
-    <div class="col-md-12 cover-info">
-        <div class="cover-image">
-            <img src="{{ $company->company_logo }}" alt="{{ $company->company_name}}" />
-        </div>
-        <div class="row cover-info" id="openings-title" style="margin:0px; margin-top:-100px;">
-            <div class="col-sm-2">
-                <div class="picture">
-                    <div class="photo-wrapper">
-                        <img src="{{asset('img/bg-img.png')}}" class="bg-img">
-                        <img class="_image" src="{{ $company->company_logo }}">
+    <div class="row text-center">
+        <div class="col-md-12 cover-info">
+            <div class="cover-image">
+                <img src="{{ $company->company_logo }}" alt="{{ $company->company_name}}" />
+            </div>
+            <div class="row cover-info" id="openings-title" style="margin:0px; margin-top:-100px;">
+                <div class="col-sm-2">
+                    <div class="picture">
+                        <div class="photo-wrapper">
+                            <img src="{{asset('img/bg-img.png')}}" class="bg-img">
+                            <img class="_image" src="{{ $company->company_logo }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row" style="text-align:left;">
+                        <div class="col-sm-6">
+                            <h1>
+                                <a href="{{ url('companies', $company['id']) }}">
+                                    {{ $company->company_name }}
+                                    <br>
+                                </a>
+                            </h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <h5>
+                                <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
+                                &nbsp; {{ $company->city }}, {{ $company->country }}
+                            </h5>
+                            <h5>
+                                <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+                                &nbsp; {{ $company->created_at }}
+                            </h5>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="row" style="text-align:left;">
-                    <div class="col-sm-6">
-                        <h1>
-                            <a href="{{ url('companies', $company['id']) }}">
-                                {{ $company->company_name }}
-                                <br>
-                            </a>
-                        </h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <h5>
-                            <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
-                            &nbsp; {{ $company->city }}, {{ $company->country }}
-                        </h5>
-                        <h5>
-                            <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
-                            &nbsp; {{ $company->created_at }}
-                        </h5>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-</div>
 
 
-<hr>
-<div class="row">
-    <div class="col-md-8">
-        <h3>About us:</h3>
-        {{ $company->what }}
+    <hr>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>About us:</h3>
+            {{ $company->what }}
+        </div>
+        <div class="col-md-4">
+            <h3>Company details:</h3>
+            <ul class="company-list-info">
+                <li>
+                    <div class="field-name">Email</div>
+                    <div class="field-value">{{ $company->email }}</div>
+                </li>
+                <li>
+                    <div class="field-name">CEO</div>
+                    <div class="field-value">{{ $company->ceo_name }}</div>
+                </li>
+                <li>
+                    <div class="field-name">COO</div>
+                    <div class="field-value">{{ $company->in_charge }}</div>
+                </li>
+                <li>
+                    <div class="field-name">Address(s)</div>
+                    <div class="field-value">{{ $company->address1 }}</div>
+                    <div class="field-value">{{ $company->address2 }}</div>
+                </li>
+                <li>
+                    <div class="field-name">City</div>
+                    <div class="field-value">{{ $company->city }}</div>
+                </li>
+                <li>
+                    <div class="field-name">Country</div>
+                    <div class="field-value">{{ $company->country }}</div>
+                </li>
+                <li>
+                    <div class="field-name">Website</div>
+                    <div class="field-value">{{ $company->url }}</div>
+                </li>
+                <li>
+                    <div class="field-name">Contact</div>
+                    <div class="field-value">{{ $company->tel }} (Tel)</div>
+                </li>
+                <li>
+                    <div class="field-name">Employees</div>
+                    <div class="field-value">{{ $company->number_of_employee }}</div>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h3>Company details:</h3>
-        <ul class="company-list-info">
-            <li>
-                <div class="field-name">Email</div>
-                <div class="field-value">{{ $company->email }}</div>
-            </li>
-            <li>
-                <div class="field-name">CEO</div>
-                <div class="field-value">{{ $company->ceo_name }}</div>
-            </li>
-            <li>
-                <div class="field-name">COO</div>
-                <div class="field-value">{{ $company->in_charge }}</div>
-            </li>
-            <li>
-                <div class="field-name">Address(s)</div>
-                <div class="field-value">{{ $company->address1 }}</div>
-                <div class="field-value">{{ $company->address2 }}</div>
-            </li>
-            <li>
-                <div class="field-name">City</div>
-                <div class="field-value">{{ $company->city }}</div>
-            </li>
-            <li>
-                <div class="field-name">Country</div>
-                <div class="field-value">{{ $company->country }}</div>
-            </li>
-            <li>
-                <div class="field-name">Website</div>
-                <div class="field-value">{{ $company->url }}</div>
-            </li>
-            <li>
-                <div class="field-name">Contact</div>
-                <div class="field-value">{{ $company->tel }} (Tel)</div>
-            </li>
-            <li>
-                <div class="field-name">Employees</div>
-                <div class="field-value">{{ $company->number_of_employee }}</div>
-            </li>
-        </ul>
-    </div>
-</div>
 
-@if (!Auth::guest())
-@if (Auth::user()->role == 1)
-@if (in_array(Auth::user()->id, $companies_ids))
-<br/>
-{!! link_to(action('CompaniesController@edit', [$company->id]), '編集', ['class' => 'btn btn-primary']) !!}
-<br/>
-{!! Form::open(['method' => 'DELETE', 'url' => ['companies', $company->id]]) !!}
-{!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
-{!! Form::close() !!}
-@endif
-@endif
-@endif
+    @if (!Auth::guest())
+        @if (Auth::user()->role == 1)
+            @if (in_array(Auth::user()->id, $companies_ids))
+                <br/>
+                {!! link_to(action('CompaniesController@edit', [$company->id]), '編集', ['class' => 'btn btn-primary']) !!}
+                <br/>
+                {!! Form::open(['method' => 'DELETE', 'url' => ['companies', $company->id]]) !!}
+                {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
+                {!! Form::close() !!}
+            @endif
+        @endif
+    @endif
 </div>
 </div>
 </div>

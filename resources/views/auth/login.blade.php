@@ -57,7 +57,7 @@
             </div>
             <div class="col-md-6 col-md-offset-4">
               <hr>
-              <a href="#" style="display: block;">
+              {{-- <a href="javascript:checkLoginState()" style="display: block;">
                 <div class="input-group" style="border: 1px solid #cecece; width: 100%; padding: 5px; border-left: 6px solid #0b5390;">
                   <i class="fa fa-3x fa-facebook-square" style="color:#326087; vertical-align: middle;"></i> Login Using Facebook
                 </div>
@@ -65,6 +65,12 @@
               <a href="#" style="display: block; color: black;">
                 <div class="input-group" style="margin-top:5px; border: 1px solid #cecece; width: 100%; padding: 5px; border-left: 6px solid #5e5e5e;">
                   <i class="fa fa-3x fa-github-square" style="color:#000000; vertical-align: middle;"></i> Login Using Github
+                </div>
+              </a> --}}
+
+              <a href="{{url('/redirect')}}" style="display: block;">
+                <div class="input-group" style="border: 1px solid #cecece; width: 100%; padding: 5px; border-left: 6px solid #0b5390;">
+                  <i class="fa fa-3x fa-facebook-square" style="color:#326087; vertical-align: middle;"></i> Login Using Facebook
                 </div>
               </a>
             </div>
@@ -74,4 +80,41 @@
     </div><!-- .col -->
   </div><!-- .row -->
 </div><!-- .container-fluid -->
+{{-- <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '192564384662924',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.12'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      if(response.status != 'connected')
+      {
+        FB.login();
+      }
+      else
+      {
+        FB.api('/me/picture','GET',{height: 500}, function(response) {
+          console.log(response);
+        });
+      }
+
+    });
+  }
+</script> --}}
 @endsection

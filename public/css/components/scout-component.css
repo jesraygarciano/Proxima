@@ -59,24 +59,9 @@
 
 .scout-position{
     padding: 5px;
-    background: white;
+    color: white;
     border-radius: 3px;
     font-weight: bold;
-}
-
-.featured{
-    color: #eda637;
-    border: 1px solid #eda637;
-}
-
-.regular{
-    color: #3c763d;
-    border: 1px solid #3c763d;
-}
-
-.intern{
-    color: #79ace9;
-    border: 1px solid #79ace9;
 }
 
 .scout-tile .footer{
