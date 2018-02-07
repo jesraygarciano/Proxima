@@ -20,7 +20,7 @@ function resume_skill_array($language){
 
     // $a = 0;
     // $skill_array = array();
-    // for ($i=0; $i < count($skill_collection) ; $i++) { 
+    // for ($i=0; $i < count($skill_collection) ; $i++) {
         // if ($i == 0) {
         //     $skill_array = array($skill_collection[$i]->language => $skill_collection[$i]->category);
 
@@ -36,24 +36,24 @@ function resume_skill_array($language){
         //     $skill_array[$skill_collection[$i]->language] = $skill_collection[$i]->category;
         // }
         // $a += 1;
-        // 
+        //
         // $skill_add = array($skill_collection[$i]->language => $skill_collection[$i]->category);
         // $skill_array = array_merge($skill_add, $skill_array);
-        // 
+        //
         // $skill_add[$skill_collection[$i]->language] = $skill_collection[$i]->category;
         // $skill_array = array_merge($skill_array, $skill_add);
     // }
     // dd(count($skill_array));
     // dd($skill_array);
     // dd($skill_collection['3']);
-    // 
+    //
     // dd($skill_array);
     // $a = array(3, 5, 6);
     // dd($a);
-    // 
-    
+    //
+
     $skill_array = App\Resume_skill::where('language', $language)->get();
-    
+
     return $skill_array;
 }
 
@@ -70,7 +70,7 @@ function main_languages() {
             "Javascript",
             "Node.js"
         );
-    
+
     return $main_languages;
 }
 
@@ -87,7 +87,7 @@ function main_languages_class_convert() {
             "Javascript" => "javascript",
             "Node.js" => "node-js"
         );
-    
+
     return $main_languages;
 }
 
@@ -108,7 +108,7 @@ function month_array() {
             "11" => "November",
             "12" => "December"
         );
-    
+
     return $month;
 }
 
@@ -130,7 +130,7 @@ function salary_ranges() {
 }
 
 function year_array() {
- 
+
     $year_array = array();
     $year_array_add = array();
     $a = date("Y");
@@ -170,7 +170,7 @@ function return_month($int){
         return $int;
     }
 
-    
+
 }
 
 function get_language_ids($language){
@@ -189,7 +189,13 @@ function return_resume_Skills(){
     return \App\Resume_skill::all();
 }
 
+function return_master_resume($user){
 
+    $master_resume = App\Resume::where('user_id', $user->id)->where('is_master', 1)->where('is_active', 1)->first();
+
+    // $languages = $master_resume->has_skill()->get()->toArray();
+    return $master_resume;
+}
 
 
 

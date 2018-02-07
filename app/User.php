@@ -24,7 +24,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['f_name', 'l_name', 'm_name', 'email', 'password', 'birth_date', 'role', 'university', 'graduate_flag', 'program_of_study', 'field_of_study', 'gender', 'postal', 'address1', 'address2', 'city', 'country', 'phone_number', 'photo', 'objective', 'is_active'];
+    protected $fillable = ['f_name', 'l_name', 'm_name', 'email', 'password', 'birth_date', 'role', 'university', 'graduate_flag', 'program_of_study', 'field_of_study', 'gender', 'postal', 'address1', 'address2', 'city', 'country', 'phone_number', 'photo', 'objective', 'is_active','verify_token'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -44,10 +44,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsToMany(Opening::class, 'save_openings', 'user_id', 'opening_id');
     }
 
-    public function bookmark($opening_id) { 
+    public function bookmark($opening_id) {
 
         //confirming if it exists or not
-        $exist = $this->is_bookmarking($opening_id); // 
+        $exist = $this->is_bookmarking($opening_id); //
 
         if ($exist) {
 
@@ -110,10 +110,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsToMany(User::class,'save_applicants','user_id','applicant_saved_id')->withTimestamps();
     }
 
-    public function save_applicant($applicant_saved_id) { 
+    public function save_applicant($applicant_saved_id) {
 
         //confirming if it exists or not
-        $exist = $this->is_applicant_saved($applicant_saved_id); // 
+        $exist = $this->is_applicant_saved($applicant_saved_id); //
 
         if ($exist) {
 
@@ -156,9 +156,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsToMany(Company::class, 'follow_companies', 'user_id', 'company_id');
     }
 
-    public function follow($company_id) { 
+    public function follow($company_id) {
 
-        $exist = $this->is_following($company_id); // 
+        $exist = $this->is_following($company_id); //
 
         if ($exist) {
 
@@ -195,6 +195,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function scouters(){
         return $this->belongsToMany(User::class,'save_applicants','applicant_saved_id','user_id')->withTimestamps();
     }
+
+    // public function master_resume(){
+    //     return $this->belongsToMany(User::class,'save_applicants','applicant_saved_id','user_id')->withTimestamps();
+    // }
 
     // public function application_resume()
     // {
