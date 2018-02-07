@@ -56,6 +56,14 @@
                 <label>Requirements</label>
                 <textarea type="text" name="requirements">{{ $opening->requirements ?? old('requirements') }}</textarea>
             </div>
+
+            <br />
+            <div class="ui form">
+                <label>Start date</label>
+                <input type="date" value="{{ $opening->from_post ?? old('from_post') }}" name="from_post">
+            </div>
+
+
         </div>
         <div class="col-md-6">
             <h4 class="page-header">
