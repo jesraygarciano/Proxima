@@ -39,7 +39,6 @@
                     @if($x < 3)
                         {{-- have to take away original key from $match_array --}}
                         <?php $match_array = array_values($match_array); ?>
-
                         @for($i=0; $i < count($match_array) ; $i++)
                             @if($i == 0)
                                 <a href="#!" role="button" class="btn label label-warning {{main_languages_class_convert()[$main_language]}}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
@@ -47,7 +46,7 @@
                             @else
                                 <div>{{return_category($match_array[$i])}}</div> 
                             @endif
-
+                            
                             @if($i == count($match_array) - 1)
                                 ">
                                 {{$main_language}}<span class="caret"></span>
@@ -58,7 +57,6 @@
                     <?php $x++; ?>
                 @endif
             @endforeach
-
             @if($x > 3)
                 <a href="#!" role="button" onclick="display_skills('{{addslashes(json_encode($opening->load("skill_requirements")))}}',this)" class="btn label label-default">
                     ...
@@ -69,11 +67,22 @@
     <hr class="opening-top-date-hr" style="margin-top: 7px; margin-bottom: 7px;">
     <div class="footer">
         <div class="pull-left">
-            <div class="foggy-text"> {{ date(' M. j, Y ',strtotime($opening->created_at)) }} </div>
+
+            @if (Auth::user()->role == 1)
+            <div class="foggy-text"> Registed date: <b>{{ date(' M. j, Y ',strtotime($opening->created_at)) }} </b> </div>
+            <div class="foggy-text"> Started date: <b>{{ date(' M. j, Y ',strtotime($opening->title)) }} </b> </div>
+            <div class="foggy-text"> Post expire date: <b>{{ date(' M. j, Y ',strtotime($opening->created_at)) }} </b> </div>
+            @endif
+
+
         </div>
         <div class="pull-right">
             <div class="foggy-text">
+
+            @if (Auth::user()->role == 0)
                 @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
+            @endif
+
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@
     </article>
     <hr>
     <div class="row">
-        <div class="col-md-3 well" id="opening-search">
+        <div class="col-md-3" id="opening-search">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h4>Applicant Search:</h4>
@@ -18,7 +18,7 @@
                             <div class="form-group">
                                 {{-- {!!Form::label('applicant_search', '')!!} --}}
                                 <div class="table-display">
-                                  <input type="text" class="form-control cell-display no-b-radius-right" name="applicant_search" value="{{$_GET['applicant_search'] ?? ''}}" placeholder="Applicants">
+                                  <input type="text" class="form-control cell-display no-b-radius-right" name="applicant_search" value="{{$_GET['applicant_search'] ?? ''}}" placeholder="Applicant name">
                                   <span class="input-group-btn cell-display">
                                     <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                   </span>
@@ -34,7 +34,7 @@
 
                                 <div class="form-group">
                                     <label for="formGroupExampleInput2">Applicant:</label>
-                                    <input type="text" class="form-control" name="company_name" value="{{$_GET['company_name'] ?? ''}}" placeholder="Applicant name">
+                                    <input type="text" class="form-control" name="applicant_search" value="{{$_GET['applicant_search'] ?? ''}}" placeholder="Applicant name">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleSelect1">Programming Languages:</label>
@@ -68,7 +68,7 @@
                                     <div class="form-group">
                                         <label>Gender</label>
                                         <select class="form-control" name="gender" id="gender">
-                                            <option value="">Select type</option>
+                                            <option value="">Select gender</option>
                                             <option value="0">Male</option>
                                             <option value="1">Female</option>
                                         </select>
@@ -94,7 +94,7 @@
                                         if(prevent_reoccur){
 
                                             $('#advance_search' ).animate({ height : "0px" }, 400 );
-                                            
+
                                             $('[name=show_advance_search]').val('closed');
                                             prevent_reoccur = false;
                                             return false;
@@ -122,21 +122,23 @@
                             </script>
                         </form>
                     </div>
-
                 </div>
         </div>
         <!-- #f4b400 -->
         <div class="col-md-7">
+            {{ count($applicants) ? ' ' : 'Sorry, No applicant result.'}}            
             @if (count($applicants) > 0)
-                @for ($i=0; $i < count($applicants); $i++)
+                
+                @foreach ($applicants as $applicant)
+
                     <div class="applicant-tile">
                         <div class="row">
                             <div class="col-xs-3">
                                 <div class="applicant-image">
                                     <img src="{{asset('img/bg-img.png')}}" class="bg-img">
 
-                                      @if(empty($applicants[$i]->photo)) <!-- Should be !empty -->
-                                           <img src="{{ $applicants[$i]->photo }}" alt="{{ $applicants[$i]->f_name }}" />
+                                      @if(empty($applicant->photo)) <!-- Should be !empty -->
+                                           <img src="{{ $applicant->photo }}" alt="{{ $applicant->f_name }}" />
                                       @else
                                           <img class="_image" src="{{asset('img/member-placeholder.png')}}">
                                       @endif
@@ -146,15 +148,43 @@
                             <div class="col-xs-9">
                                 <div class="applicant-name">
                                     <i class="fa fa-user" aria-hidden="true"></i>
-                                    <a href="{{ url('hiring_portal/user_index_show', $applicants[$i]->id) }}">{{$applicants[$i]->f_name.' '.$applicants[$i]->l_name}}</a></div>
+                                    <a href="{{ url('hiring_portal/user_index_show', $applicant->id) }}">{{$applicant->f_name.' '.$applicant->l_name}}</a></div>
                                     <ul class="feature-info-list">
                                         <li>
                                             <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
-                                             {{$applicants[$i]->country.', '.$applicants[$i]->city}}
+                                             {{$applicant->country.', '.$applicant->city}}
                                         </li>
                                         <br />
                                          <li>
-                                            
+                                            <i class="fa fa-code fa-lg" aria-hidden="true"></i>
+
+                                            @foreach(main_languages() as $main_language)
+                                                @if (return_master_resume($applicant))
+
+                                                    @if($match_array = array_intersect(return_master_resume($applicant)->has_skill->lists('id')->toArray(), get_language_ids($main_language)))
+                                                        {{-- @if($x < 3) --}}
+                                                            {{-- have to take away original key from $match_array --}}
+                                                            <?php $match_array = array_values($match_array); ?>
+                                                            @for($j=0; $j < count($match_array) ; $j++)
+                                                                @if($j == 0)
+                                                                    <a href="#!" role="button" class="btn label label-warning {{main_languages_class_convert()[$main_language]}}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
+                                                                    <div>{{return_category($match_array[$j])}}</div>
+                                                                @else
+                                                                    <div>{{return_category($match_array[$j])}}</div>
+                                                                @endif
+
+                                                                @if($j == count($match_array) - 1)
+                                                                    ">
+                                                                    {{$main_language}}<span class="caret"></span>
+                                                                @endif
+                                                                </a>
+                                                            @endfor
+                                                        {{-- @endif --}}
+
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
                                         </li>
                                     </ul>
                             </div>
@@ -162,7 +192,7 @@
                         <hr class="opening-top-date-hr" style="margin-top: 7px; margin-bottom: 7px;">
                         <div class="footer">
                             <div class="pull-left">
-                                <div class="foggy-text"><b>Date registered</b>: {{ date(' M. j, Y ',strtotime($applicants[$i]->created_at)) }} </div>
+                                <div class="foggy-text"><b>Date registered</b>: {{ date(' M. j, Y ',strtotime($applicant->created_at)) }} </div>
                             </div>
                             <div class="pull-right">
                                 <div class="foggy-text">
@@ -170,14 +200,12 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- @include('hiring_portal.saved_applicants.save_applicant_bttn') --}}
                     </div>
-
-                @endfor
-                {!! $applicants->render() !!}
+                @endforeach
+                    @include('layouts.pagination', ['paginator' => $applicants->appends($_GET)])
             @endif
 
-        </div>        
+        </div>
         <div class="col-md-2 well">
             <h4>Advertisement</h4>
         </div>
