@@ -43,7 +43,7 @@
 }
 #general_search_placeholder::-moz-placeholder {
     /* Mozilla Firefox 19+ */
-    font-style: italic;    
+    font-style: italic;
     color: #1879a3;
     opacity: 1;
 }
@@ -77,7 +77,7 @@
     }
     .dropdown.dropdown-lg .dropdown-menu {
         min-width: 500px;
-        background: rgba(255,255,255, 0.8);        
+        background: rgba(255,255,255, 0.8);
     }
 }
 
@@ -297,7 +297,7 @@
 .feature-post-carosel .post-container .post-item{
   margin-right: 10px;
   width: 350px;
-  height: 250px;
+  height: 255px;
   display: inline-block;
   vertical-align: middle;
   transition: 200ms ease all;

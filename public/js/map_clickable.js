@@ -18,6 +18,20 @@ CLICKABLE MAP
         goToUrl:'/portals/search_ph_region/'
       },options);
 
+
+      // append pointer on html body
+      if($('.map-pointer').length < 1)
+      {
+        $('body').append(
+        '<div class="map-pointer" style="z-index:10000;">'
+        +'  <div class="text-container">'
+        +'    Cebu'
+        +'  </div>'
+        +'  <div class="arrow"></div>'
+        +'</div>'
+        );
+      }
+
       // dimension of svg
       var height = $this.find('svg').data('height');
       var width = $this.find('svg').data('width');
@@ -158,23 +172,23 @@ CLICKABLE MAP
       // path mouseover function filling map pointer text
       $($this).find('path').mouseover(function(e){
         var hirings = $(this).data('hirings') > 0 ? ' <span><span class="badge badge-info" style="background-color:#17a2b8;">'+$(this).data('hirings')+'</span> Hirings' : '<span style="color:#797979;">No Hirings</span>'
-        $this.find('.map-pointer .text-container').html(
+        $('.map-pointer .text-container').html(
           $(this).attr('title')
           +'<div style="font-size:10px;">'
           +hirings
           +'</div>'
         );
         positioMousePointer({x:e.pageX - $(window).scrollLeft(), y:e.pageY - $(window).scrollTop() - 5});
-        $this.find('.map-pointer').show();
+        $('.map-pointer').show();
       });
 
       // event for hiding the map pointer
       $this.mouseout(function(){
-        $this.find('.map-pointer').hide();
+        $('.map-pointer').hide();
       });
 
       function positioMousePointer(position){
-        $this.find('.map-pointer').css({left:position.x, top:position.y});
+        $('.map-pointer').css({left:position.x, top:position.y});
       }
 
       checkIfClicked();

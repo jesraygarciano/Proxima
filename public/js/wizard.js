@@ -101,6 +101,56 @@ unickwizard = function($this,options){
 								no_error = false;
 							}
 						break;
+						case 'lower':
+							if(input.val().length != 0)
+							{
+								if(isNaN(input.val()))
+								{
+									addClassHassError(input,'invalid',v.identifier);
+									no_error = false;
+								}
+								else
+								{
+									var c_val = parseInt(form.find('[name='+v.rules[x].c_input+']').val());
+									var val = parseInt(input.val());
+
+									if(c_val <= val)
+									{
+										addClassHassError(input,v.rules[x].prompt,v.identifier);
+										no_error = false;
+									}
+								}
+							}
+							else
+							{
+								addClassHassError(input,'Field required',v.identifier);
+								no_error = false;
+							}
+						break;
+						case 'higher':
+							if(input.val().length != 0)
+							{
+								if(isNaN(input.val()))
+								{
+									addClassHassError(input,'invalid',v.identifier);
+									no_error = false;
+								}
+								else
+								{
+									var c_val = parseInt(form.find('[name='+v.rules[x].c_input+']').val());
+									var val = parseInt(input.val());
+									if(c_val >= val)
+									{
+										addClassHassError(input,v.rules[x].prompt,v.identifier);
+										no_error = false;
+									}
+								}
+							}
+							else
+							{
+								addClassHassError(input,'Field required',v.identifier);
+							}
+						break;
 						case 'email':
 							if(!ValidateEmail(input.val()))
 							{
