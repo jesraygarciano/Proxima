@@ -26,6 +26,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $fillable = ['f_name', 'l_name', 'm_name', 'email', 'password', 'birth_date', 'role', 'university', 'graduate_flag', 'program_of_study', 'field_of_study', 'gender', 'postal', 'address1', 'address2', 'city', 'country', 'phone_number', 'photo', 'objective', 'is_active','verify_token'];
 
+    protected $appends = ['name','photo'];
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -36,7 +38,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     //related to application
     public function openings()
     {
-        return $this->belongsToMany(Opening::class, 'applications', 'user_id', 'opening_id')->withPivot('id', 'created_at');
+        return $this->belongsToMany(Opening::class, 'applications', 'user_id', 'opening_id')->withPivot('id', 'description','created_at');
     }
 
     public function bookmarkings()
@@ -85,6 +87,26 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function companies_that_scout_users()
     {
         return $this->belongsToMany('App\Company', 'scouts', 'user_id', 'company_id')->withTimestamps();
+    }
+
+    public function scouts(){
+        return $this->hasMany('\App\Scout');
+    }
+
+    public function openingNotifications(){
+        return $this->hasMany('\App\OpeningNotification');
+    }
+
+    public function getNameAttribute(){
+        return $this->attributes['f_name'].' '.$this->attributes['l_name'];
+    }
+
+    public function getPhotoAttribute(){
+        if(!file_exists('storage/'.$this->attributes['photo']) || str_replace(' ','',$this->attributes['photo']) == ''){
+            return asset('img/member-placeholder.png');
+        }
+
+        return asset('storage/'.$this->attributes['photo']);
     }
 
     public function companies_that_scout_users_save($company_id)
