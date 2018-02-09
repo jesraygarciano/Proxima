@@ -177,7 +177,8 @@ class CompaniesController extends Controller
 
         if (!empty($company->address1)){
         // Mapper::location($company->city, $company->country); //company_location
-        Mapper::location($company->address1. " ". $company->city. " ". $company->country)->map(['zoom' => 17, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'clusters' => ['size' => 10, 'center' => true, 'zoom' => 30]]);
+        //$company->address1. " ". $company->city. " ".             
+        Mapper::location($company->country)->map(['zoom' => 17, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'clusters' => ['size' => 10, 'center' => true, 'zoom' => 30]]);
         }
 
         /*Mapper::map(53.381128999999990000, -1.470085000000040000, ['eventBeforeLoad' => 'console.log("before load");']);*/

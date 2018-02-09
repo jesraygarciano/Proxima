@@ -19,6 +19,10 @@ class Company extends Model
         return $this->hasMany(Opening::class);
     }
 
+    public function applications(){
+        return $this->hasManyThrough('\App\Application','\App\Opening');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

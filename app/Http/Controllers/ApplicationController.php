@@ -78,28 +78,28 @@ class ApplicationController extends Controller
         // dd($resume);
 
 
-        $this->validate($request, [
-            'description' => 'required',
-            'f_name' => 'required',
-            'm_name' => 'required',
-            'l_name' => 'required',
-            'email' => 'required',
-            'birth_date' => 'required',
-            'civil_status' => 'required',
-            'nationality' => 'required',
-            'country' => 'required',
-            'city' => 'required',
-            'address1' => 'required',
-            'address2' => 'required',
-            'postal' => 'required',
-            'phone_number' => 'required',
-            'gender' => 'required',
-            'objective' => 'required',
-            'university' => 'required',
-            'field_of_study' => 'required',
-            'program_of_study' => 'required',
-            'term' => 'required'
-            ]);
+        // $this->validate($request, [
+        //     'description' => 'required',
+        //     'f_name' => 'required',
+        //     'm_name' => 'required',
+        //     'l_name' => 'required',
+        //     'email' => 'required',
+        //     'birth_date' => 'required',
+        //     'civil_status' => 'required',
+        //     'nationality' => 'required',
+        //     'country' => 'required',
+        //     'city' => 'required',
+        //     'address1' => 'required',
+        //     'address2' => 'required',
+        //     'postal' => 'required',
+        //     'phone_number' => 'required',
+        //     'gender' => 'required',
+        //     'objective' => 'required',
+        //     'university' => 'required',
+        //     'field_of_study' => 'required',
+        //     'program_of_study' => 'required',
+        //     'term' => 'required'
+        //     ]);
 
         $resume = new Resume;
         // $input = $request->except('skills', '_token');
@@ -117,6 +117,9 @@ class ApplicationController extends Controller
         $applications->description = $request->input('description');
         $applications->user_id = \Auth::id();
         $applications->opening_id = $request->input('opening_id');
+        $applications->expected_salary = $request->expected_salary ?? '';
+        $applications->from_available_time = $request->from_available_time;
+        $applications->to_available_time = $request->to_available_time;
         $applications->resume_id = $resume->id;
         $applications->save();
 
@@ -190,7 +193,7 @@ class ApplicationController extends Controller
         //getting application data and opening data that is linked with the application datas
         // $applied_application_openings = Application::applied_application_openings(\Auth::id());
         $applied_application_openings = \Auth::user()->openings()->orderBy('pivot_created_at', 'desc')->get();
-
+        // dd($applied_application_openings);
 
         // dd($applied_application_openings);
 

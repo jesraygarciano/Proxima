@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Opening extends Model
 {
+
     protected $fillable = ['title', 'company_id', 'address', 'picture', 'icon', 'details', 'requirements', 'term', 'other', 'created_at', 'updated_at'];
+
+   // protected $dates = ['created_at', 'updated_at', 'deleted_at','from_post','until_post','start_at','end_at'];
+
 
     // protected $hidden = ['password'];
     public function company()
@@ -54,16 +58,35 @@ class Opening extends Model
         return $this->hasMany(Application::class, 'application_id');
     }
 
+    public function applicant_notifications(){
+        return $this->hasMany('App\OpeningNotification');
+    }
+
     public function skill_requirements()
     {
         return $this->belongsToMany(Opening_skill::class, 'joining_opening_skills', 'opening_id', 'opening_skill_id');
     }
+
+    // public function 
 
     public function getPictureAttribute(){
         if(!file_exists('storage/'.$this->attributes['picture']) || str_replace(' ','',$this->attributes['picture']) == ''){
             return asset('img/default-opening.jpg');
         }
         return asset('storage/'.$this->attributes['picture']);
+    }
+
+    public function notifySubscribedApplicants(){
+        $follower_ids = \DB::table('follow_companies')->where('company_id',$this->company->id)->lists('user_id');
+
+        foreach ($follower_ids as $id) {
+            \App\OpeningNotification::create([
+                // 
+                'opening_id'=>$this->attributes['id'],
+                'user_id'=>$id,
+                'company_id'=>$this->attributes['company_id'],
+            ]);
+        }
     }
 
 }

@@ -13,6 +13,8 @@ use App\Libs\Common;
 use Auth;
 use App\User;
 use Mapper;
+use Carbon\Carbon;
+
 // use Common;
 
 
@@ -58,7 +60,7 @@ class OpeningsController extends Controller
         $provinces = \DB::table('provinces')->get();
 
         /*$language_lang = strtoupper($request->language);
-
+        
         if($language_lang){
 
             $openings = collect();
@@ -71,6 +73,16 @@ class OpeningsController extends Controller
         return view('openings.index',compact('provinces','openings'));
 
         }*/
+
+
+        $curr_date = date('Y-m-d H:i:s');
+
+        // if ($openings->from_post, '>=', date(' M. j, Y h:i:s A')) {
+        //     # code...
+        // }
+
+        $post_active = Opening::where('from_post', '>=', date(' M. j, Y h:i:s A'));
+
 
         if($request->languages && strlen($request->languages[0]) > 0)
         {
@@ -105,6 +117,8 @@ class OpeningsController extends Controller
         }
 
         $openings = $openings->paginate(6);
+
+        // $expiredate = $openings->where('is_active', 1)->where( 'created_at', '>', Carbon::now()->addDays(30))->get();
 
         return view('openings.index',compact('provinces','openings'));
     }
@@ -143,7 +157,7 @@ class OpeningsController extends Controller
         $opening = $request->opening_id ? Opening::find($request->opening_id) : false;
 
         $country_array = Common::return_country_array();
-        return view('openings.create', compact('country_array','company_id','opening'));
+        return view('openings.create', compact('country_array','company_id','opening','post_active'));
     }
 
     /**
@@ -154,6 +168,7 @@ class OpeningsController extends Controller
      */
     public function store(Request $request)
     {
+
         if (!$request->has('skills')) {
             $request->skills = "";
         }
@@ -181,7 +196,7 @@ class OpeningsController extends Controller
         //     $path = $request->file('picture')->move(public_path(). '/storage' , $fileNameToStore);
         // }
 
-/*        foreach ($openings_skills as $skill) {
+        /*foreach ($openings_skills as $skill) {
             $openings = $openings->merge($skill->openings);
         }*/
 
@@ -196,6 +211,11 @@ class OpeningsController extends Controller
         }
 
         $opening->title = $request->title;
+        $opening->from_post = $request->from_post;
+        $opening->until_post = Carbon::parse($request->from_post)->AddDays(30);
+
+        // $expiredate = date(strtotime($request->from_post. "+30 days"))
+        // $opening->until_post = $request->from_post;
 
         if(!$request->opening_id)
         {
@@ -250,9 +270,13 @@ class OpeningsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $company_id = $request->company_id;
+        $opening = $request->opening_id ? Opening::find($request->opening_id) : false;
+
+        $country_array = Common::return_country_array();
+        return view('openings.edit', compact('country_array','company_id','opening','post_active'));
     }
 
     /**
@@ -262,9 +286,75 @@ class OpeningsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        {
+
+        if (!$request->has('skills')) {
+            $request->skills = "";
+        }
+
+        $this->validate($request, [
+            'title' => 'required',
+            // 'picture' => 'required',
+            'skills' => 'required',
+            'salary_range' => 'required',
+            'details' => 'required',
+            'requirements' => 'required',
+        ]);
+
+        // Handle file upload
+        // if($request->hasFile('picture')){
+        //     //  Get filename with the extension
+        //     $filenameWithExt = $request->file('picture')->getClientOriginalName();
+        //     //  Get just filename
+        //     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        //     // Get just text
+        //     $extension = $request->file('picture')->getClientOriginalExtension();
+        //     // Filename to store
+        //     $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        //     // Upload Image
+        //     $path = $request->file('picture')->move(public_path(). '/storage' , $fileNameToStore);
+        // }
+
+        /*foreach ($openings_skills as $skill) {
+            $openings = $openings->merge($skill->openings);
+        }*/
+
+        // Create Opening
+        $opening = $request->opening_id ? Opening::find($request->opening_id) : new Opening;
+
+        if($request->picture){
+            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->picture));
+            $fileNameToStore = time().'.png';
+            file_put_contents(public_path('/storage/').$fileNameToStore, $data);
+            $opening->picture = $fileNameToStore;
+        }
+
+        $opening->title = $request->title;
+        $opening->from_post = $request->from_post;
+        $opening->until_post = Carbon::parse($request->from_post)->AddDays(30);
+
+        // $expiredate = date(strtotime($request->from_post. "+30 days"))
+        // $opening->until_post = $request->from_post;
+
+        if(!$request->opening_id)
+        {
+            $opening->company_id = $request->company_id;
+        }
+
+        $opening->salary_range = $request->salary_range;
+        $opening->requirements = $request->requirements;
+        $opening->details = $request->details;
+        $opening->save();
+        $opening->register_skill($request->skills);
+
+        // $openings_skills = \App\Opening_skill::where('language',$request->language)->get();
+
+        return redirect('hiring_portal');
+        // return redirect()->action('HiringPortalController@show', [$request->input('company_id')]);
+        }
+
     }
 
     /**

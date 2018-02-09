@@ -11,15 +11,21 @@ class Application extends Model
     // dd('通りました');
     protected $fillable = ['description', 'is_active', 'user_id','opening_id','resume_id','created_at', 'updated_at', 'from_available_time', 'to_available_time', 'expected_salary', 'salary_from', 'salary_to'];
 
+    protected $appends = ['submitted_date'];
+
     // dd('通りました');
 
     // protected $hidden = ['password'];
 
 
     //related to application
-    public function users()
+    public function user()
     {
     	return $this->belongsTo(User::class);
+    }
+
+    public function getSubmittedDateAttribute(){
+        return date('M. d, Y',strtotime($this->attributes['created_at']));
     }
 
     //related to application

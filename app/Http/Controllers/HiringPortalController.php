@@ -113,108 +113,11 @@ class HiringPortalController extends Controller
 
     public function user_index(Request $requests)
     {
-        //Getting lists of users who are applicants
-        // $applicants = User::where('is_active', 1)->where('role', 0)->get();
-        // // $applicants = User::where('is_active', 1)->where('role', 0)->paginate(3);
-        // // $companies = Common::companies_that_user_have();
-        // // $scouted_users = array();
-        // // foreach ($companies as $company) {
-        // //     // dd($company);
-        // //     // dd(count($company->scout_users()->get()));
-        // //     $scouted_users[] = $company->scout_users()->get();
-        // // }
-        // // // dd($scouted_users);
-        // // dd(count($scouted_users));
-        // // dd($applicants);
-        // $applicants_scoute_companies = array();
-        //
-        // for ($i=0; $i < count($applicants) ; $i++) {
-        //     $applicants_scoute_companies[$i] = $applicants[$i];
-        //     $scoute_companies = $applicants[$i]->scouted_by_companies()->get();
-        //     dd($scoute_companies);
-        //     if (count($scoute_companies) > 0) {
-        //         foreach ($scout_companies as $scout_company) {
-        //             $scout_company;
-        //         }
-        //     }
-        //
-        //
-        // }
-        //
-        // dd($scoute_companies);
-
-        //the users that will shown on the applicants list
-        // $applicants = User::where('is_active', 1)->where('role', 0)->paginate(3);
-        //
-        // //creating array that will have applicants and company information that scouted to the applicants
-        // $applicants_scoute_companies = array();
-        //
-        // //getting ids of companies that auth user created.
-        // $companies_ids = Common::company_ids_that_user_have();
-        // // dd($companies_ids);
-        //
-        // for ($i=0; $i < count($applicants) ; $i++) {
-        //
-        //     $applicants_scoute_companies[$i] = $applicants[$i];
-        //
-        //     //$scoute_companies have information for the company scouted to $applicants[$i]
-        //     $scout_companies = $applicants[$i]->companies_that_scout_users()->withPivot('user_id', 'company_id')->get();
-        //     // dd($scout_companies);
-        //     if (count($scout_companies) > 0) {
-        //         for ($j=0; $j < count($scout_companies) ; $j++) {
-        //             //for confirming if id of the company that scouted to users exist in ids of the company that auth user created
-        //             if (in_array($scout_companies[$j]->id, $companies_ids )) {
-        //                 // $applicants_scoute_companies[$i][] = $scout_companies[$j];
-        //                 array_push($applicants_scoute_companies[$i][], $scout_companies[$j]);
-        //
-        //             }
-        //         }
-        //     }
-        // }
-        //
-        // dd($companies_ids);
-
-        // dd(count($applicants_scoute_companies));
-        // dd(count($applicants_scoute_companies[0]));
-        // dd($applicants_scoute_companies[1]);
-        // dd($applicants_scoute_companies[2]);
-        // dd($applicants_scoute_companies);
-
-        // for ($i=0; $i < count($applicants) ; $i++) {
-        //     $scout_companies = $applicants[$i]->companies_that_scout_users()->withPivot('user_id', 'company_id')->get();
-        //
-        //     for ($j=0; $j < count($scout_companies) ; $j++) {
-        //         if (in_array($scout_companies[$j]->id, $companies_ids)) {
-        //
-        //         }
-        //         $scout_companies_screened = $scout_companies[$j]->where('id', '1')->get();
-        //     }
-        //
-        //     dd($scout_companies_screened);
-        //     dd($scout_companies);
-        // }
 
         //the users that will shown on the applicants list
         $applicants = User::query()->where('is_active', 1)->orderBy('created_at','desc');
-        // $applicants = Resume::where('is_active', 1)->whereRaw('concat(f_name," ",m_name," ",l_name) like "%'.$requests->name.'%"')->paginate(10);
-        // 
-
-        /*$applicants = User::query()->where('is_active', 1)->where('role', 0)->orderBy('created_at','desc');
-        $applicants = Resume::query()->where('is_active', 1)->orderBy('created_at','desc'); */
 
         $provinces = \DB::table('provinces')->get();
-
-        // $complete_name = Resume::select('id', \DB::raw('CONCAT(f_name, " ", m_name, " ", l_name) AS complete_names'))
-        //     ->orderBy('f_name')
-        //     ->lists('complete_names', 'id');
-
-        /*if($requests->applicant_search){
-            $applicant_search_ids = Resume::where('f_name','like','%'.$requests->applicant_search.'%')->lists('id');
-            $applicants->where('f_name','like','%'.$requests->applicant_search.'%');
-        }*/
-        // $complete_name = Resume::select('id', \DB::raw('CONCAT(f_name, " ", m_name, " ", l_name) AS complete_names'))
-        //     ->orderBy('f_name')
-        //     ->lists('complete_names', 'id');
 
         if($requests->applicant_search){
             $applicant_search_ids = User::where('f_name', 'like', '%'.$requests->applicant_search.'%')->lists('id');
@@ -248,8 +151,7 @@ class HiringPortalController extends Controller
 
         }
 
-
-        $applicants = $applicants->paginate(6);        
+        $applicants = $applicants->paginate(6);
 
         //getting ids of companies that auth user created.
         $companies_ids = Common::company_ids_that_user_have();
@@ -274,18 +176,6 @@ class HiringPortalController extends Controller
             // dd($scout_companies_screened);
             // dd($scout_companies);
         }
-
-        // dd($companies_scouted_array);
-
-        // $applied_application_openings = DB::table('users as u')
-        //     ->select('u.f_name', 'u.m_name', 'u.l_name', 'u.email', 'u.city', 'u.program_of_study', 'c.company_name')
-        //     ->join('scouts as s', 's.user_id', '=', 'u.id')
-        //     ->join('company as c', 's.company_id', '=', 'c.id')
-        //     ->where('u.is_active', 1)
-        //     ->where('u.role', 0)
-        //     ->wherein('c.user_id',$companies_ids)
-        //     ->get();
-        // return $applied_application_openings;
 
         return view('hiring_portal.user_index', compact('applicants','provinces','companies_scouted_array'));
         // return view('hiring_portal.user_index', compact('applicants'));
@@ -326,19 +216,6 @@ class HiringPortalController extends Controller
                 $companies_array[] = $scout_companies[$j];
             }
         }
-
-        // // dd($companies_array);
-        // if ($i == 0) {
-        //     $companies_scouted_array = array($applicants[$i]->id => $companies_array);
-        // } else {
-        //     $companies_scouted_array += array($applicants[$i]->id => $companies_array);
-        // }
-
-
-            // dd($scout_companies_screened);
-            // dd($scout_companies);
-        // }
-
 
         return view('hiring_portal.user_index_show', compact('users', 'companies_array'));
     }

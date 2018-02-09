@@ -97,10 +97,12 @@ Route::post('edit_company_follow', ['as' => 'edit_company_follow', 'uses' => 'Co
 Route::post('edit_save_applicant', ['as' => 'edit_save_applicant', 'uses' => 'HiringPortalController@edit_save_applicant']);
 
 
-
 // Route::post('openings_unbookmark/{opening_id}', ['as' => 'openings.unbookmark_openings_index', 'uses' => 'OpeningsController@unbookmark_openings_index']);
 // Route::post('openings_unbookmark/{opening_id}', ['as' => 'openings.unbookmark_openings_index', 'uses' => 'OpeningsController@unbookmark_openings_index']);
 Route::get('openings/create/{company_id?}','OpeningsController@create');
+Route::get('openings/edit/{company_id?}','OpeningsController@edit');
+Route::post('openings/{id}', ['as' => 'openings.update', 'uses' => 'OpeningsController@update']);
+
 Route::get('openings/{id}','OpeningsController@show');
 Route::post('openings', ['as' => 'openings.store', 'uses' => 'OpeningsController@store']);
 
@@ -137,5 +139,19 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 // Socialite
-Route::get('/redirect', 'SocialAuthFacebookController@redirect');
-Route::get('/callback', 'SocialAuthFacebookController@callback');
+Route::get('/redirect/{media}', 'SocialAuthController@redirect');
+Route::get('/facebook/callback', 'SocialAuthController@callbackFacebook');
+Route::get('/github/callback', 'SocialAuthController@callbackGithub');
+
+
+Route::group(['middleware'=>'auth', 'prefix'=>'user'], function(){
+	Route::get('index',['as'=>'user_profile','uses'=>'UserController@index']);
+	Route::get('notifications',['as'=>'user_notifications','uses'=>'UserController@notifications']);
+
+	// ajax requests
+	Route::group(['prefix'=>'json/get/notification'],function(){
+		Route::get('scouts',['as'=>'json_get_scout_notification', 'uses'=>'UserController@json_get_scout_notification']);
+		Route::get('applications',['as'=>'json_get_application_notification', 'uses'=>'UserController@json_get_application_notification']);
+		Route::get('openings',['as'=>'json_get_opening_notification', 'uses'=>'UserController@json_get_opening_notification']);
+	});
+});
