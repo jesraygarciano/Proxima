@@ -31,15 +31,15 @@
               <div class="col-md-10">
                     {{ count($companies) ? ' ' : 'Sorry, No company result.'}}
                   <div class="row">
-                         @if (count($companies) > 0)
-                              @foreach ($companies as $company)
-                                 <div id="first-comp-list" class="col-xs-12 col-sm-6 col-md-6">
-                                      @include('companies.company-container')
-                                  </div>
-                              @endforeach
-                           <center>@include('layouts.pagination',['paginator'=>$companies])</center>
-                          @endif
-                         </div>
+                    @if (count($companies) > 0)
+                        @foreach ($companies as $company)
+                           <div id="first-comp-list" class="col-xs-12 col-sm-6 col-md-6">
+                                @include('companies.company-container')
+                            </div>
+                        @endforeach
+                     <center>@include('layouts.pagination',['paginator'=>$companies])</center>
+                    @endif
+                  </div>
               </div>
 
               <div id="comp-advertisement" class="col-md-2">

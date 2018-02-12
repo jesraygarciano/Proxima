@@ -52,15 +52,17 @@
         <div class="row text-center">
 
             <div class="col-md-12 cover-info">
-                <div class="cover-image">
+                <div class="">
                     {{-- <img src="{{ $company->company_logo }}" alt="{{ $company->company_name}}" /> --}}
-                    <div class="crop-control">
-                        <div class="image-container-cover">
+                    <div class="crop-control" style="height: 100%;" data-width="1200" data-height="400" data-dim="true">
+                        <div class="image-container-cover" style="height: 100%;">
+
                             @if(!empty($company->background_photo))
-                                <img src="{{ $company->background_photo }}" alt="{{ $company->company_name}} Cover photo" />
+                                <img style="width: 100%;" src="{{ $company->background_photo }}" alt="{{ $company->company_name}} Cover photo" />
                             @else
-                                <img src="{{ asset('img/default-opening.jpg') }}" class="bg-img">
+                                <img style="width: 100%;" src="{{ asset('img/default-opening.jpg') }}" class="bg-img">
                             @endif
+
                             <label for="background_photo" class="input-trigger hover-div">
                                 <p>
                                     <i class="fa fa-file-image-o fa-5x" aria-hidden="true"></i>
@@ -101,7 +103,7 @@
                             <div class="col-sm-7">
                                 <h2 style="padding-top: 1rem;font-weight: 600;">
                                     <a href="{{ url('companies', $company['id']) }}">
-                                        {{ $company->company_name }}
+                                        {{ $company->company_name ?? old('company_name') }}
                                         <br>
                                     </a>
                                 </h2>
@@ -113,7 +115,6 @@
                                         {!! Form::label('address1', 'Primary address:', ['class' => 'col-sm-4 control-label']) !!}
                                         <div class = "col-sm-7">
                                             <div class="ui form">
-
                                                 {!! Form::text('address1', old('address1'), ['class' => 'form-control', 'placeholder'=>$company->address1]) !!}
                                             </div>
                                         </div>
@@ -196,6 +197,7 @@
                                 <div class="ui form">
                                     {!! Form::email('email', old('email'), ['class' => 'form-control', 'placeholder'=>$company->email]) !!}
                                 </div>
+
                             </div>
                         </div>
                     </li>
@@ -271,10 +273,10 @@
                     <li>
                         <div class="row">
                             <div class="col-sm-4">
-                                {!! Form::label('language', 'Spoken language') !!}
+                                {!! Form::label('spoken_language', 'Spoken language') !!}
                             </div>
                             <div class="col-sm-7">
-                                {!! Form::text('language', old('language'), ['class' => 'form-control ui form', 'placeholder'=> 'e.g. English']) !!}
+                                {!! Form::text('spoken_language', old('spoken_language'), ['class' => 'form-control ui form', 'placeholder'=> 'e.g. English']) !!}
                             </div>
                         </div>
                     </li>

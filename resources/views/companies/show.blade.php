@@ -188,97 +188,25 @@
 
         <div id="joblists" class="tab-pane fade">
             <h3>Opening Job lists</h3>
-            <div class="row">
-                <div class="col-md-10">
-                    @if (count($openings) > 0)
-                    @foreach ($openings as $opening)
-                    <div class="job-tile">
-                        <div>
-                            @if($opening->hiring_type == 0)
-                            <span class="job-position intern">Intern</span>
-                            @elseif($opening->hiring_type == 1)
-                            <span class="job-position regular">Regular</span>
-                            @elseif($opening->hiring_type == 2)
-                            <span class="job-position intern">temporary/partime</span>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="row">
+                            {{ count($openings) ? ' ' : 'No other current hiring.'}}
+                            @if (count($openings) > 0)
+                                @foreach ($openings as $opening)
+                                    <div class="col-md-6">
+                                        @include('inc.job-container',['opening'=>$opening])
+                                    </div>
+                                @endforeach
                             @endif
                         </div>
-                        <div class="job-title">
-                            <a href="{{ url('openings', $opening->id) }}"> {{ $opening->title }} </a>
-                            <img class="pull-right" src="/storage/{{ $opening->company->company_logo }}" alt="" border="0" height="100" width="130" style="max-width: 130px;">
-                        </div>
-                        <div class="company-name_opening_list"><a href="{{ url('companies', $opening->company->id) }}"> {{$opening->company->company_name}} </a>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-5">
-                                <ul class="opening-feature-info-list">
-                                    <li>
-                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                        {{ $opening->company->address1 }}
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-dollar" aria-hidden="true"></i>
-                                        {!! salary_ranges()[$opening->salary_range] !!}
-                                    </li>                                                                
-                                    <li>
-                                        <i class="fa fa-code" aria-hidden="true"></i>
-                                        @foreach(main_languages() as $main_language)
-                                        @if($match_array = array_intersect($opening->has_skill->lists('id')->toArray(), get_language_ids($main_language)))
-                                        {{-- have to take away original key from $match_array --}}
-                                        <?php $match_array = array_values($match_array); ?>
-
-                                        @for($i=0; $i < count($match_array) ; $i++)
-                                        @if($i == 0)
-                                        <a href="#!" role="button" class="btn label label-warning {{main_languages_class_convert()[$main_language]}}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
-                                        <ul>
-                                            <li>{{return_category($match_array[$i])}}</li>                    
-                                            @else
-                                            <li>{{return_category($match_array[$i])}}</li> 
-                                            @endif
-                                            @if($i == count($match_array) - 1)
-                                        </ul>">
-                                        {{$main_language}}<span class="caret"></span>
-                                        @endif
-                                        </a>
-                                    @endfor
-                                    @endif
-                                    @endforeach
-                                    </li>
-                                </ul>
-                            </div> <!-- col-sm-6 -->
-
-                            <div class="col-sm-4">
-                                <ul class="opening-feature-info-list">
-                                    <li>
-                                        <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                                        {{ $opening->requirements }}
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-file-text" aria-hidden="true"></i>
-                                        {{ $opening->details }}
-                                    </li>                                         
-                                </ul>
-                            </div> <!-- col-sm-4 -->
-                        </div>
-
-                    <hr class="opening-top-date-hr" style="margin-top: 7px; margin-bottom: 7px;">
-                    <div class="footer">
-                        <div class="pull-left">
-                            <div class="foggy-text"> {{ date(' M. j, Y ',strtotime($opening->created_at)) }} </div>
-                        </div>
-                        <div class="pull-right">
-                            <div class="foggy-text">
-                                @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
-                            </div>
-                        </div>
+                    </div>
+                    <div class="col-md-2 well">
+                        <h4>Advertisement</h4>
                     </div>
                 </div>
-                @endforeach
-                @endif
-            </div>
-            <div class="col-md-2 well">
-                <h4>Advertisement</h4>
-            </div>
-        </div> {{-- END OF ROW --}}
+
+            </div> {{-- END OF ROW --}}
 
     </div>
 
