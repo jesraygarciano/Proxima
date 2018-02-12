@@ -35,6 +35,7 @@
 	var skills_modal = $('#skills-modal');
 	var main_language = JSON.parse("{{json_encode(main_languages())}}".replace(/&quot;/g,'"'));
 	function display_skills(json,elm){
+		console.log(json)
 		var opening = JSON.parse(json.replace(/&quot;/g,'"'));
 		var skills = opening.skill_requirements;
 

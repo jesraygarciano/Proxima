@@ -21,6 +21,8 @@ $(document).ready(function(){
 	var basic;
 	var result_image;
 	var current_elm;
+	var img_height;
+	var img_width;
 
 	$('.crop-control').each(function(){
 		var $this = $(this);
@@ -38,6 +40,19 @@ $(document).ready(function(){
 	});
 
 	function setInputEvent(elm){
+		img_height = $(elm).data('dim') ? $(elm).data('height') : 200;
+		img_width = $(elm).data('dim') ? $(elm).data('width') : 200;
+
+		console.log(img_width);
+
+		var border_width = img_width
+		var border_height = img_height
+
+		if(img_width > 400){
+			border_width = 400;
+			border_height = (img_height / img_width) * border_width;
+		}
+
 		elm.find('[type=file]').change(function(evt){
 			current_elm = elm;
 			var tgt = evt.target || window.event.srcElement,
@@ -54,11 +69,11 @@ $(document).ready(function(){
 				// initialize new cropie
 				basic = $('#crop-modal .cropper-container').croppie({
 				  viewport: {
-				      width: 200,
-				      height: 200,
+				      width: border_width,
+				      height: border_height,
 				      type: 'square'
 				  },
-				  boundary: { width: 300, height: 300 },
+				  boundary: { width: border_width, height: border_height },
 				});
 
 				current_elm = elm;
@@ -92,11 +107,16 @@ $(document).ready(function(){
 	  });
 
 	$('#crop-modal .save').click(function(){
+		console.log(img_height)
 		$('#crop-modal').modal('hide');
 		basic.croppie('result', {
 				type : 'rawcanvas',
 				format : 'jpeg',
-				quality: '1'
+				quality: '1',
+				size:{
+					width: img_width,
+					height: img_height
+				},
 			}).then(function(canvas){
 				current_elm.find('img').prop('src',canvas.toDataURL());
 				current_elm.find('[type=hidden]').val(canvas.toDataURL());

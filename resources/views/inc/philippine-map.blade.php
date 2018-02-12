@@ -53,12 +53,6 @@
 	}
 </style>
 <div class="map-view-box" id="philippines-m" style="border:1px solid #cecece; border-radius: 10px; position: relative;">
-	<div class="map-pointer">
-		<div class="text-container">
-			Cebu
-		</div>
-		<div class="arrow"></div>
-	</div>
 	<div class="map-bttn">
 		<button class="btn btn-primary btn-xs zoom-in">+</button>
 		<button class="btn btn-danger btn-xs zoom-out">-</button>

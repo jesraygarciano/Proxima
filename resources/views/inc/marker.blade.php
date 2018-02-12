@@ -3,29 +3,7 @@
 
 
 		// uelmar's code for book marking openings
-		$('.bookmark_opening_bttn').click(function(){
-			var $this = $(this);
-			// trigger ajax function
-			$.ajax({
-				url:"{{route('edit_opening_bookmark')}}",
-				type:'POST',
-				headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-				data:{ opening_id:$this.data('id') },
-				success:function(data){
-					if(data.result == "bookmarked"){
-						// opening bookmared
-						$this.css({'color':'#ff9a0b'});
-						$this.find('._text').html('Unbookmark'+' (<b>'+data.bookmarks+'</b>)');
-					}
-					else
-					{
-						// opening unbookmarked
-						$this.css({'color':'#808080'});
-						$this.find('._text').html('Bookmark'+' (<b>'+data.bookmarks+'</b>)');
-					}
-				}
-			});
-		});
+		button_bookmark_event($('.bookmark_opening_bttn'))
 
 		// uelmar's code for following company
 		$('.follow_company_bttn').click(function(){
@@ -39,7 +17,7 @@
 				success:function(data){
 					if(data == "followed"){
 						// opening bookmared
-						$this.css({'color':'red'});
+						$this.css({'color':'#ff9a0b'});
 						$this.find('._text').html('Unfollow');
 					}
 					else
@@ -80,4 +58,30 @@
 		});
 
 	});
+
+	function button_bookmark_event(elm){
+		elm.click(function(){
+			var $this = $(this);
+			// trigger ajax function
+			$.ajax({
+				url:"{{route('edit_opening_bookmark')}}",
+				type:'POST',
+				headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+				data:{ opening_id:$this.data('id') },
+				success:function(data){
+					if(data.result == "bookmarked"){
+						// opening bookmared
+						$this.css({'color':'#ff9a0b'});
+						$this.find('._text').html('Unbookmark'+' (<b>'+data.bookmarks+'</b>)');
+					}
+					else
+					{
+						// opening unbookmarked
+						$this.css({'color':'#808080'});
+						$this.find('._text').html('Bookmark'+' (<b>'+data.bookmarks+'</b>)');
+					}
+				}
+			});
+		});
+	}
 </script>
