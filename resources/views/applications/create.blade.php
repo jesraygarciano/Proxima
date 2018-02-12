@@ -95,28 +95,103 @@
                         <div class="col-md-offset-1 col-md-11">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    {{-- {!!Form::label('objective', 'Objective:')!!} --}}
+                                    {!!Form::label('objective', 'Objective:',['class' => 'required-label'])!!}
                                     {!!Form::textarea('description', null, ['class' => 'form-control'])!!}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <h4 class="form-heading">Awards/Certificate</h4>
+                    <h4 class="form-heading">Expected Salary</h4>
                     <hr>
 
                     <div class="row">
                         <div class="col-md-offset-1 col-md-11">
-                            <div class="col-md-12">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    {{-- {!!Form::label('objective', 'Objective:')!!} --}}
-                                    {!!Form::textarea('awards', null, ['class' => 'form-control'])!!}
+                                    {!!Form::text('expected_salary', old('expected_salary'), ['class' => 'form-control'])!!}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-info-full">Submit</button>
+                    <h4 class="form-heading">Available Time</h4>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-11">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="from_available_time" class="required-label">From</label>
+                                    {!!Form::select('from_available_time', array(
+                                        1 => '1am',
+                                        2 => '2am',
+                                        3 => '3am',
+                                        4 => '4am',
+                                        5 => '5am',
+                                        6 => '6am',
+                                        7 => '7am',
+                                        8 => '8am',
+                                        9 => '9am',
+                                        10 => '10am',
+                                        11 => '11am',
+                                        12 => '12pm',
+                                        13 => '1pm',
+                                        14 => '2pm',
+                                        15 => '3pm',
+                                        16 => '4pm',
+                                        17 => '5pm',
+                                        18 => '6pm',
+                                        19 => '7pm',
+                                        20 => '8pm',
+                                        21 => '9pm',
+                                        22 => '10pm',
+                                        23 => '11pm',
+                                        24 => '12am',
+                                    ),
+                                    old('from_available_time') ?? 8,
+                                    ['class' => 'form-control']
+                                    );!!}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="to_available_time" class="required-label">To</label>
+                                    {!!Form::select('to_available_time', array(
+                                        1 => '1am',
+                                        2 => '2am',
+                                        3 => '3am',
+                                        4 => '4am',
+                                        5 => '5am',
+                                        6 => '6am',
+                                        7 => '7am',
+                                        8 => '8am',
+                                        9 => '9am',
+                                        10 => '10am',
+                                        11 => '11am',
+                                        12 => '12pm',
+                                        13 => '1pm',
+                                        14 => '2pm',
+                                        15 => '3pm',
+                                        16 => '4pm',
+                                        17 => '5pm',
+                                        18 => '6pm',
+                                        19 => '7pm',
+                                        20 => '8pm',
+                                        21 => '9pm',
+                                        22 => '10pm',
+                                        23 => '11pm',
+                                        24 => '12am',
+                                    ),
+                                    old('from_available_time') ?? 17,
+                                    ['class' => 'form-control']
+                                    );!!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-info-full next-step">Submit</button>
                 </div>
 
 
@@ -881,11 +956,8 @@
                     </div>
 
                     {!! Form::hidden('is_active', 1) !!}
+                    {!! Form::hidden('opening_id', $opening->id) !!}
                     {!! Form::hidden('is_master', 1) !!}
-
-                    <div class="form-group col-md-12">
-                        {!!Form::submit('Register Your Resume', ['class' => 'btn btn-primary form-control'])!!}
-                    </div>
                     <p>This is step 3</p>
                     <ul class="list-inline pull-right">
                         <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
@@ -939,93 +1011,83 @@
                     </a>
                 </h4>
             </div>
-{{--                         <div class="col-md-4">
-<h5>
-<i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
-&nbsp; {{ $opening->address }}
-</h5>
-<h5>
-<i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
-&nbsp; {{ $opening->created_at }}
-</h5>
-</div> --}}
-</div>
-<div class="row" id="openings-body">
-    <div class="col-md-7">
-        <div class="job-description">
-            <h4>
-                <i class="fa fa-file-text" aria-hidden="true"></i>
-                Job description:
-            </h4>
-            <hr class="hr-desc" />
-            {{ $opening->details }}
         </div>
-        <div class="job-qualify">
-            <h4>
-                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                Job Qualifications:
-            </h4>
-            <hr />
-            <h5>{{ $opening->requirements }}</h5>
-        </div>
+        <div class="row" id="openings-body">
+            <div class="col-md-7">
+                <div class="job-description">
+                    <h4>
+                        <i class="fa fa-file-text" aria-hidden="true"></i>
+                        Job description:
+                    </h4>
+                    <hr class="hr-desc" />
+                    {{ $opening->details }}
+                </div>
+                <div class="job-qualify">
+                    <h4>
+                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                        Job Qualifications:
+                    </h4>
+                    <hr />
+                    <h5>{{ $opening->requirements }}</h5>
+                </div>
 
-    </div>
-
-    <div class="col-md-5">
-        <h4>
-            <i class="fa fa-briefcase" aria-hidden="true"></i>
-            Company Profile:
-        </h4>
-        <hr>
-
-        <div class="row">
-            <div class="col-xs-6">
-                Company size:
-                <h5>
-                    <b>
-                        {{ $company->number_of_employee }}
-                    </b>
-                    Employees
-                </h5>
-                Telephone no.
-                <h5>
-                    <b>
-                        {{ $company->tel }}
-                    </b>
-                </h5>
-                Country
-                <h5>
-                    <b>
-                        {{ $company->country }}
-                    </b>
-                </h5>
             </div>
-            <div class="col-xs-6">
-                Postal no.
-                <h5>
-                    <b>
-                        {{ $company->postal }}
-                    </b>
-                </h5>
-                CEO:
-                <h5>
-                    <b>
-                        {{ $company->ceo_name }}
-                    </b>
-                </h5>
-                Bill company name:
-                <h5>
-                    <b>
-                        {{ $company->bill_company_name }}
-                    </b>
-                </h5>
+
+            <div class="col-md-5">
+                <h4>
+                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                    Company Profile:
+                </h4>
+                <hr>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        Company size:
+                        <h5>
+                            <b>
+                                {{ $company->number_of_employee }}
+                            </b>
+                            Employees
+                        </h5>
+                        Telephone no.
+                        <h5>
+                            <b>
+                                {{ $company->tel }}
+                            </b>
+                        </h5>
+                        Country
+                        <h5>
+                            <b>
+                                {{ $company->country }}
+                            </b>
+                        </h5>
+                    </div>
+                    <div class="col-xs-6">
+                        Postal no.
+                        <h5>
+                            <b>
+                                {{ $company->postal }}
+                            </b>
+                        </h5>
+                        CEO:
+                        <h5>
+                            <b>
+                                {{ $company->ceo_name }}
+                            </b>
+                        </h5>
+                        Bill company name:
+                        <h5>
+                            <b>
+                                {{ $company->bill_company_name }}
+                            </b>
+                        </h5>
+                    </div>
+                </div>
             </div>
         </div>
+        {{-- <hr>
+        {!! link_to(action('ApplicationController@create', [$opening->id]), 'Application Form', ['class' => 'btn btn-danger']) !!} --}}
     </div>
-</div>
-<hr>
-{!! link_to(action('ApplicationController@create', [$opening->id]), 'Application Form', ['class' => 'btn btn-danger']) !!}
-</div>
 </div>
 
 <script type="text/javascript">
@@ -1040,6 +1102,35 @@
                         {
                             type:'file',
                             prompt:'Photo required'
+                        }
+                    ]
+                },
+                description:{
+                    identifier:'description',
+                    rules: [
+                        {
+                            type:'empty',
+                            prompt:'Description is required'
+                        }
+                    ]
+                },
+                from_available_time:{
+                    identifier:'from_available_time',
+                    rules: [
+                        {
+                            type:'lower',
+                            c_input:'to_available_time',
+                            prompt:'This should be lower'
+                        }
+                    ]
+                },
+                to_available_time:{
+                    identifier:'to_available_time',
+                    rules: [
+                        {
+                            type:'higher',
+                            c_input:'from_available_time',
+                            prompt:'This should be higher'
                         }
                     ]
                 },

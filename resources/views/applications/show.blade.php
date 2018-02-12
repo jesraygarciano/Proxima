@@ -3,10 +3,22 @@
 @section('content')
 
     <div id="single-opening" class="container">
-        <ul class="nav nav-pills">
-            <li class="active"><a data-toggle="pill" href="#application_form">Application Form</a></li>
-            <li><a data-toggle="pill" href="#jobinfo">Job Information</a></li>
-            <li><a data-toggle="pill" href="#companyinfo">Company Information</a></li>
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#application_form" role="tab" data-toggle="tab">
+                    Application From
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#jobinfo" role="tab" data-toggle="tab">
+                    Job Information
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#companyinfo" role="tab" data-toggle="tab">
+                    Company Information
+                </a>
+            </li>
         </ul>
         <div class="tab-content">
 
@@ -20,7 +32,7 @@
 ##  ## ##     ##       ##     ####  ##  ## ##   ##
 --}}
 
-            <div id="application_form" class="tab-pane fade in active"> {{-- START JOB INFO --}}
+            <div role="tabpanel" class="tab-pane active" id="application_form" style="padding-top:30px;">
                 <div class="resume-info">
                     <div class="row">
                         <div class="col-md-12">
@@ -163,7 +175,8 @@
 ##  ## ###### ##  ## ###### ##  ##  ####    ###### ##  ## ##     ####
 --}}
 
-            <div id="jobinfo" class="tab-pane fade"> {{-- START JOB INFO --}}
+            <div role="tabpanel" class="tab-pane" id="jobinfo" style="padding-top:30px;">
+            {{-- START JOB INFO --}}
                 <h3>Opening Information</h3>
                 <div class="container" id="show_opening"> {{-- START OF SHOW OPENING --}}
                     <div class="row text-center">
@@ -289,11 +302,11 @@
  ####   ####  ##   ## ##     ##  ## ##  ##   ##
 --}}
 
-            <div id="companyinfo" class="tab-pane fade">
+            <div role="tabpanel" class="tab-pane" id="companyinfo">
                 <h3>Company Information</h3>
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="/storage/{{ $company->company_logo }}" alt="{{ $company-> company_name}}" />                        
+                        <img src="/storage/{{ $company->company_logo }}" alt="{{ $company-> company_name}}" />
                     </div>
                     <div class="col-md-6">
                         <h1>{{ $company->company_name }}</h1>

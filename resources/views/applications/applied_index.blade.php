@@ -21,7 +21,7 @@
             <div class="col-md-6">
                     <div class="job-tile">
                         <div>
-                            <ul class="ribbon_style_list">
+                            <ul class="ribbon_style_list" style="display:inline-block">
                             @if($opening->featured_status == 1)
                                 <li class="job-position featured">Featured</li>
                             @endif
@@ -36,16 +36,14 @@
                         </div>
                         <div class="job-title">
                             <a href="{{ url('openings', $opening->id) }}" class="ellipsis padding-right-110" style="display: block;"> {{ $opening->title }} </a>
-                            {{-- <img class="pull-right" src="{{ $opening->company->company_logo }}" alt="" border="0" height="100" width="130" style="max-width: 130px;"> --}}
                             <span class="contain pull-right photo-adjust" style="background-image: url('{{ $opening->company->company_logo }}')"></span>
-                            {{-- <div class="clear"></div> --}}
                         </div>
                         <div class="company-name_opening_list ellipsis padding-right-110"><a href="{{ url('companies', $opening->company->id) }}"> {{$opening->company->company_name}} </a>
                         </div>
                         <ul class="opening-feature-info-list">
                             <li class="ellipsis padding-right-110"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $opening->company->address1 }}
                             </li>
-                            <li class="ellipsis padding-right-110"><i class="fa fa-dollar" aria-hidden="true"></i>                                    
+                            <li class="ellipsis padding-right-110"><i class="fa fa-dollar" aria-hidden="true"></i>
                                 <!-- Salary range -->
                                 {!! salary_ranges()[$opening->salary_range] !!}
                             </li>
@@ -61,9 +59,9 @@
                                             @for($i=0; $i < count($match_array) ; $i++)
                                                 @if($i == 0)
                                                     <a href="#!" role="button" class="btn label label-warning {{main_languages_class_convert()[$main_language]}}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
-                                                    <div>{{return_category($match_array[$i])}}</div>                    
+                                                    <div>{{return_category($match_array[$i])}}</div>
                                                 @else
-                                                    <div>{{return_category($match_array[$i])}}</div> 
+                                                    <div>{{return_category($match_array[$i])}}</div>
                                                 @endif
 
                                                 @if($i == count($match_array) - 1)
@@ -87,12 +85,22 @@
                         <hr class="opening-top-date-hr" style="margin-top: 7px; margin-bottom: 7px;">
                         <div class="footer">
                             <div class="pull-left">
-                                <div class="foggy-text"> {{ date(' M. j, Y ',strtotime($opening->created_at)) }} </div>
+                                <div class="foggy-text">Posted Date : {{ date(' M. j, Y ',strtotime($opening->created_at)) }} </div>
                             </div>
                             <div class="pull-right">
                                 <div class="foggy-text">
-                                    @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
+                                    <div style="position: relative;bottom: 100px;">
+                                        @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
+                                    </div>                                    
                                 </div>
+                            </div>
+                        </div>
+                        <hr class="opening-top-date-hr" style="margin-top: 7px; margin-bottom: 7px;">
+                        <div class="footer">
+                            <div class="">
+                                <a href="{{action('ApplicationController@show', $opening->pivot->id)}}" class="ui button red big" style="width:100%;">
+                                    your application data({{date(' M. j, Y ',strtotime($opening->pivot->created_at))}})
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -109,7 +117,7 @@
 
     @if (count($applied_application_openings) > 0)
         <div class="col-md-2 well">
-    @else        
+    @else
         <div class="col-md-2 col-md-offset-10 well">
     @endif
             <h4>Advertisement</h4>
