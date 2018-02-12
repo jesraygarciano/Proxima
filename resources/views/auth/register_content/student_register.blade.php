@@ -48,14 +48,14 @@
             </div> --}}
 
             <div class="col-md-6 col-md-offset-4">
-              <a href="#" style="display: block;">
+              <a href="{{url('/redirect','facebook')}}" style="display: block;">
                 <div class="input-group" style="border: 1px solid #cecece; width: 100%; padding: 5px; border-left: 6px solid #0b5390;">
-                  <i class="fa fa-3x fa-facebook-square" style="color:#326087; vertical-align: middle;"></i> Sign up Using Facebook
+                  <i class="fa fa-3x fa-facebook-square" style="color:#326087; vertical-align: middle;"></i> <b> Sign up Using Facebook</b>
                 </div>
               </a>
-              <a href="#" style="display: block; color: black;">
+              <a href="{{url('/redirect','github')}}" style="display: block; color: black;">
                 <div class="input-group" style="margin-top:5px; border: 1px solid #cecece; width: 100%; padding: 5px; border-left: 6px solid #5e5e5e;">
-                  <i class="fa fa-3x fa-github-square" style="color:#000000; vertical-align: middle;"></i> Sign Up Using Github
+                  <i class="fa fa-3x fa-github-square" style="color:#000000; vertical-align: middle;"></i> <b> Sign Up Using Github</b>
                 </div>
               </a>
               <hr>
