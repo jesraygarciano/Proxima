@@ -62,27 +62,23 @@ class OpeningsController extends Controller
         /*$language_lang = strtoupper($request->language);
         
         if($language_lang){
-
             $openings = collect();
             $openings_skills = \App\Opening_skill::where('language',$request->language)->get();
 
             foreach ($openings_skills as $skill) {
                 $openings = $openings->merge($skill->openings);
             }
-
         return view('openings.index',compact('provinces','openings'));
-
         }*/
 
 
-        $curr_date = date('Y-m-d H:i:s');
-
+        // $curr_date = date('Y-m-d H:i:s');
+        // dd($curr_date);
         // if ($openings->from_post, '>=', date(' M. j, Y h:i:s A')) {
         //     # code...
         // }
 
-        $post_active = Opening::where('from_post', '>=', date(' M. j, Y h:i:s A'));
-
+        // $post_active = Opening::where('from_post', '>=', $curr_date);
 
         if($request->languages && strlen($request->languages[0]) > 0)
         {
@@ -116,7 +112,24 @@ class OpeningsController extends Controller
             $openings->where('salary_range',$request->salary_range);
         }
 
-        $openings = $openings->paginate(6);
+        // $openings = $openings->paginate(6);->where('is_active', 1)
+
+        $openings = $openings->where('is_active', 1)
+        // ->where('until_post', '>', date('Y-m-d\TH:i'))
+        ->where(function($query)
+                    {
+                        $query->where('from_post', '<', date('Y-m-d\TH:i'))
+                              ->where('until_post', '>', date('Y-m-d\TH:i'));
+                    })
+        ->paginate(6);
+
+        // $openings = $openings->where(function($query)
+        //     {
+        //         $query->where('from_post', '<', date('Y-m-d\TH:i'))
+        //               ->where('until_post', '>', date('Y-m-d\TH:i'));
+        //     })
+        // ->paginate(6);
+        // dd($openings);
 
         // $expiredate = $openings->where('is_active', 1)->where( 'created_at', '>', Carbon::now()->addDays(30))->get();
 
@@ -155,9 +168,11 @@ class OpeningsController extends Controller
     {
         $company_id = $request->company_id;
         $opening = $request->opening_id ? Opening::find($request->opening_id) : false;
+        $provinces = \DB::table('provinces')->get();
+        $countries = \DB::table('countries')->get();
 
         $country_array = Common::return_country_array();
-        return view('openings.create', compact('country_array','company_id','opening','post_active'));
+        return view('openings.create', compact('countries','company_id','opening','post_active','provinces'));
     }
 
     /**
@@ -228,6 +243,11 @@ class OpeningsController extends Controller
         $opening->save();
         $opening->register_skill($request->skills);
 
+        if(!$request->opening_id)
+        {
+            $opening->notifySubscribedApplicants();
+        }
+
         // $openings_skills = \App\Opening_skill::where('language',$request->language)->get();
 
         return redirect('hiring_portal');
@@ -274,9 +294,11 @@ class OpeningsController extends Controller
     {
         $company_id = $request->company_id;
         $opening = $request->opening_id ? Opening::find($request->opening_id) : false;
+        $provinces = \DB::table('provinces')->get();
+        $countries = \DB::table('countries')->get();
 
         $country_array = Common::return_country_array();
-        return view('openings.edit', compact('country_array','company_id','opening','post_active'));
+        return view('openings.edit', compact('country_array','company_id','opening','post_active','provinces','countries'));
     }
 
     /**

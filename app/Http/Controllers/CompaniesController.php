@@ -107,7 +107,7 @@ class CompaniesController extends Controller
         \Session::flash('flash_message', 'created company information');
 
         // return redirect('companies');
-        return redirect('/');
+        return redirect('/hiring_portal');
     }
 
 
@@ -206,7 +206,7 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
 
         // $this->validate($request, [
@@ -237,6 +237,70 @@ class CompaniesController extends Controller
         //     'tel' => 'required',
         // ];
 
+        // $company = new Company;
+
+        // if($request->company_logo){
+        //     $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->company_logo));
+        //     $fileNameToStoreLogo = time().'.png';
+        //     file_put_contents(public_path('/storage/').$fileNameToStoreLogo, $data);
+        //     $company->company_logo = $fileNameToStoreLogo;
+        // }
+
+        // // if($request->background_photo){
+        // //     $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->background_photo));
+        // //     $fileNameToStorePhoto = time().'.png';
+        // //     file_put_contents(public_path('/storage/').$fileNameToStorePhoto, $data);
+        // //     $company->background_photo = $fileNameToStorePhoto;
+        // // }
+
+        // // if($request->what_photo1){
+        // //     $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->what_photo1));
+        // //     $fileNameToStorePhoto1 = time().'.png';
+        // //     file_put_contents(public_path('/storage/').$fileNameToStorePhoto1, $data);
+        // //     $company->what_photo1 = $fileNameToStorePhoto1;
+        // // }
+
+        // // $company->company_name = $request->company_name;
+        // $company->address1 = $request->address1;
+        // $company->established_at = $request->established_at;
+        // $company->what = $request->what;
+        // $company->what_photo1_explanation = $request->what_photo1_explanation;
+        // // $company->email = $request->email;
+        // // $company->ceo_name = $request->ceo_name;
+        // // $company->url = $request->url;
+        // // $company->company_size = $request->company_size;
+        // // $company->tel = $request->tel;
+        // // $company->city = $request->city;
+        // // $company->country = $request->country;
+        // // // $company->spoken_language = $request->spoken_language;
+
+        // $company->save();
+
+        // // $this->validate($request, $rules);
+
+        // // // Company::create($request->all());
+        // // $request->user()->companies()->update([
+        // //     'company_name' => $request->company_name,
+        // //     'email' => $request->email,
+        // //     'ceo_name' => $request->ceo_name,
+        // //     'is_active' => '1',
+        // //     'company_logo' => $fileNameToStore,
+        // //     'tel' => $request->tel,
+        // // ]);
+
+        // // \Session::flash('flash_message', 'created company information');
+
+        // // return redirect('companies');
+        // return redirect('/');
+        $rules = [    // ②
+            // 'company_name' => 'required',
+            // 'email' => 'required|unique:companies',
+            'url' => 'required',
+            // 'company_logo' => 'required',
+            // 'background_photo' => 'required',
+            'tel' => 'required',
+        ];
+        // $request->user_id = Auth::user()->id;
 
         if($request->company_logo){
             $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->company_logo));
@@ -244,23 +308,34 @@ class CompaniesController extends Controller
             file_put_contents(public_path('/storage/').$fileNameToStore, $data);
         }
 
-        // $this->validate($request, $rules);
+        $this->validate($request, $rules);  // ③
 
         // Company::create($request->all());
         $request->user()->companies()->update([
-            'company_name' => $request->company_name,
+            // 'company_name' => $request->company_name,
             'email' => $request->email,
+            'is_active' => '1',
+            // 'url' => $request->url,
+            'company_logo' => $fileNameToStore,
+            // 'background_photo' => $fileNameToStoreCover,
+            'tel' => $request->tel,
+            'address1' => $request->address1,
+            'established_at' => $request->established_at,
+            'what' => $request->what,
+            'what_photo1_explanation' => $request->what_photo1_explanation,
             'ceo_name' => $request->ceo_name,
-            // 'is_active' => '1',
-            // 'company_logo' => $fileNameToStore,
-            // 'tel' => $request->tel,
+            'url' => $request->url,
+            'company_size' => $request->company_size,
+            'city' => $request->city,
+            'country' => $request->country,
+            'spoken_language' => $request->spoken_language,
+
         ]);
 
-        // \Session::flash('flash_message', 'created company information');
+        \Session::flash('flash_message', 'created company information');
 
         // return redirect('companies');
-        return redirect('/');
-
+        return redirect('/hiring_portal');
     }
 
     /**
