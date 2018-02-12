@@ -35,6 +35,7 @@
         <link rel="stylesheet" href="{{ asset('css/components/general-component.css') }}">
         <link rel="stylesheet" href="{{ asset('css/components/layout-component.css') }}">
         <link rel="stylesheet" href="{{ asset('css/components/input-validation-component.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/components/user-info-component.css') }}">
         <link rel="stylesheet" href="{{ asset('css/components/image-cropper-component.css') }}">
         <link rel="stylesheet" href="{{ asset('css/progress_bar.css') }}">
         <link rel="stylesheet" href="{{ asset('css/main_tabs.css') }}">
@@ -54,7 +55,7 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
-        {{-- Google --}}        
+        {{-- Google --}}
 <!--         <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
         <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
  -->
@@ -69,10 +70,10 @@
 
         <!-- Semantic UI css -->
         {{-- @if( Request::path() == 'resumes/create') --}}
-        
+
         {{-- @endif --}}
         <!-- Semantic UI css end-->
-        
+
     </head>
     <body>
         <div id="fb-root"></div>
@@ -117,13 +118,13 @@
         </div>
 
 
-{{-- 
+{{--
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
- --}}        
+ --}}
 
 {{-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
  --}}
 
 
@@ -142,7 +143,7 @@
         <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
         <script type="text/javascript" src="{{asset('js/select2.min.js')}}"></script>
 
-        <!-- Uelmar custom js -->        
+        <!-- Uelmar custom js -->
         <script type="text/javascript" src="{{asset('js/carosel.js')}}"></script>
         <script type="text/javascript" src="{{asset('js/wizard.js')}}"></script>
         <script type="text/javascript" src="{{asset('js/map_clickable.js')}}"></script>

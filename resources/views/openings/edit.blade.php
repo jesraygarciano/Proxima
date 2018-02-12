@@ -21,7 +21,7 @@
     <h1>{{$opening ? 'Update Opening' : 'Write a New Opening'}}</h1>
     <hr>
     @include('errors.form_errors')
-    {!!Form::open(['route' => 'openings.store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+    {!!Form::open(['route' => 'openings.update', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
     <input type="hidden" name="opening_id" value="{{$_GET['opening_id'] ?? 0}}">
     <div class="row">
         <div class="col-md-6">
@@ -112,7 +112,6 @@
 
             </fieldset>
 
-
             <div class="ui form">
                 <label>Details</label>
                 <textarea type="text" name="details">{{ $opening->details ?? old('details') }}</textarea>
@@ -126,17 +125,26 @@
             <br />
 
             {{--@if(empty($opening->from_post)) --}}
+            @if(date('Y-m-d\TH:i') > $opening->from_post)
+                <div class="ui form">
+                    <label>Start date</label>
+                    <input style="font-size: 1.5em;color:#a9a9a9" type="datetime-local" 
+                    min="{{ date('Y-m-d\TH:i') }}" max="" value="{{ date('Y-m-d\TH:i',strtotime($opening->from_post)) }}"
+                            disabled="disabled"
+                     name="from_post">
+                </div>
+            @else
                 <div class="ui form">
                     <label>Start date</label>
                     <input style="font-size: 1.5em;" type="datetime-local" 
-
-                    min="{{ date('Y-m-d\TH:i') }}" max="" value="{{ date('Y-m-d\TH:i') }}" name="from_post">
+                    min="{{ date('Y-m-d\TH:i') }}" max="" value="{{ date('Y-m-d\TH:i',strtotime($opening->from_post)) }}"
+                     name="from_post">
                 </div>
+
+            @endif
+
             {{-- @endif
 
-                        @if(date('Y-m-d\TH:i') > $opening->from_post)
-                            disabled="disabled"
-                        @endif
              --}}
 
             {{--<div class="ui form">

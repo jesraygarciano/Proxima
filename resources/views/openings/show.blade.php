@@ -41,11 +41,7 @@
     font-size: 15px;
     padding-bottom: 20px;
 }
-</style>
 
-<?php $skills = return_resume_Skills(); ?>
-
-<style type="text/css">
 .ui.form{
     font-size: 12px;
 }
@@ -53,7 +49,11 @@
 .page-header .fa{
     color: #0f739b;
 }
+
+
 </style>
+
+<?php $skills = return_resume_Skills(); ?>
 
 <div class="container tall single-page">
     <ul class="nav nav-tabs" role="tablist">
@@ -79,7 +79,7 @@
 
         <div role="tabpanel" class="tab-pane active" id="jobinfo" style="padding-top:30px;">
             @if(\Auth::user() ? \Auth::user()->canEdit($opening) : false)
-                <a class="ui blue button massive" href="{{url('openings/create').'/?opening_id='.$opening->id}}"> Edit </a>
+                <a class="ui blue button massive" href="{{url('openings/edit').'/?opening_id='.$opening->id}}"> Edit </a>
             @endif
             <div class="row" style="margin-top: 30px;">
                 <div class="col-md-6">
@@ -108,21 +108,34 @@
                                     @endif
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
+                    <div class="ui form">
+                        <label>Date posted:</label>
+                        <div class="info">
+                                 {{ date(' M. j, Y ',strtotime($opening->created_at)) }}
+                        </div>
+                    </div>
 
-                            <div class="ui form">
-                                <label>Date posted:</label>
-                                <div class="info">
-                                         {{ date(' M. j, Y ',strtotime($opening->created_at)) }}
-                                </div>
-                            </div>
+                    <div class="ui form">
+                        <label>Address</label>
+                        <div class="info">
+
+                        {{$opening->address1}},
+                        {{$opening->address2}},
+                        {{$opening->province_code}},
+                        {{$opening->country_code}}
 
                         </div>
                     </div>
+
                     <div class="ui form">
                         <label>Details</label>
                         <div class="info">{!! $opening->details != '' ? $opening->details : '<span style="color:gray;">No info.</span>' !!}</div>
                     </div>
+
+
                     <div class="ui form">
                         <label>Requirements</label>
                         <div class="info">{!! $opening->requirements != '' ? $opening->requirements :  '<span style="color:gray;">No info.</span>' !!}</div>
@@ -180,13 +193,17 @@
                         </script>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href="{{action('ApplicationController@create', $opening->id)}}" class="ui button red big" >
-                            Apply to this Job
-                        </a>
-                    </div>
-                </div>
+                @if (!Auth::guest())
+                    @if (Auth::user()->role == 0)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="{{action('ApplicationController@create', $opening->id)}}" class="ui button red big" >
+                                    Apply to this Job
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+                @endif
             </div>
         </div>
 
@@ -309,7 +326,6 @@
         </div>
 
         <div id="morehiring" class="tab-pane fade">
-
             <h3>Company hiring jobs</h3>
             <div class="row">
                 <div class="col-md-10">
