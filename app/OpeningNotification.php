@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OpeningNotification extends Model
 {
+	protected $fillable = ['opening_id','user_id','company_id'];
+
     public function user(){
     	return $this->belongsTo('\App\User');
     }

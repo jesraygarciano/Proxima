@@ -153,5 +153,6 @@ Route::group(['middleware'=>'auth', 'prefix'=>'user'], function(){
 		Route::get('scouts',['as'=>'json_get_scout_notification', 'uses'=>'UserController@json_get_scout_notification']);
 		Route::get('applications',['as'=>'json_get_application_notification', 'uses'=>'UserController@json_get_application_notification']);
 		Route::get('openings',['as'=>'json_get_opening_notification', 'uses'=>'UserController@json_get_opening_notification']);
+		Route::get('stats',['as'=>'json_get_stat_notification', 'uses'=>'UserController@json_get_stat_notification']);
 	});
 });

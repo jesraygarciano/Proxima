@@ -11,6 +11,8 @@ class Opening extends Model
 
    // protected $dates = ['created_at', 'updated_at', 'deleted_at','from_post','until_post','start_at','end_at'];
 
+    protected $appends = ['salary_range_words'];
+
 
     // protected $hidden = ['password'];
     public function company()
@@ -67,7 +69,13 @@ class Opening extends Model
         return $this->belongsToMany(Opening_skill::class, 'joining_opening_skills', 'opening_id', 'opening_skill_id');
     }
 
-    // public function 
+    public function getSalaryRangeWordsAttribute(){
+        return salary_ranges()[$this->attributes['salary_range']];
+    }
+
+    public function getBookmarkCountAttribute(){
+        return $this->users_that_bookmarked()->count();
+    }
 
     public function getPictureAttribute(){
         if(!file_exists('storage/'.$this->attributes['picture']) || str_replace(' ','',$this->attributes['picture']) == ''){
@@ -78,6 +86,8 @@ class Opening extends Model
 
     public function notifySubscribedApplicants(){
         $follower_ids = \DB::table('follow_companies')->where('company_id',$this->company->id)->lists('user_id');
+
+        // dd($follower_ids);
 
         foreach ($follower_ids as $id) {
             \App\OpeningNotification::create([
