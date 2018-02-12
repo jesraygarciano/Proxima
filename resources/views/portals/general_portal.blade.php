@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    
+
     <!-- inline css || uelmar -->
     <style type="text/css">
         .info-container{
@@ -152,7 +152,7 @@
             font-size: 30px;
             color:white;
             padding-top: 15px;
-            padding-bottom: 5px;            
+            padding-bottom: 5px;
             text-align: center;
             background: #066c9c;
         }
@@ -174,6 +174,163 @@
                 padding: 10px;
             }
         }
+
+
+
+        /*for hiring information of carousel*/
+        .content-list>li{
+          position:relative;
+          padding-left: 0px !important;
+        }
+
+        .content-list>li>div>.fa-file-text{
+          position:absolute;
+          left:5.5px;
+          top:4px;
+          font-size: 10px;
+        }
+
+        .content-list>li>div>.fa-map-marker{
+          position:absolute;
+          left:3.1px;
+          top:4.3px;
+          font-size: 12px;
+        }
+
+        .content-list>li>div>.fa-dollar{
+          position:absolute;
+          left:3.1px;
+          top:4.2px;
+          font-size: 12px;
+        }
+
+        .content-list>li>div>.fa-code{
+          position:absolute;
+          left:3.5px;
+          top:4px;
+          font-size: 12px;
+        }
+
+        .content-list>li>.li-content{
+          display: inline-block;
+        }
+
+        .content-list>li>.i-wrapper{
+          position: relative;
+          height: 20px;
+          width: 20px;
+          border-radius: 10px;
+          left: 5px;
+          background-color: rgb(31, 89, 149);
+          color: white;
+        }
+
+        .content-list>li>.text-wrapper{
+          position: absolute;
+          top:-1px;
+          left:30px;
+          width: 180px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .content-list>li>.code-wrapper{
+          position: absolute;
+          top:-1px;
+          left:30px;
+          width: 180px;
+        }
+
+
+
+        /*for company information*/
+        .content-list-com>li{
+          position:relative;
+          margin-top: 0px;
+          margin-bottom: 0px;
+          padding-left: 0px !important;
+        }
+
+        .content-list-com>li>div>.fa-map-marker{
+          position:absolute;
+          left:7px;
+          top:4.3px;
+          font-size: 12px;
+        }
+
+        .content-list-com>li>div>.fa-users{
+          position:absolute;
+          left:4px;
+          top:4.2px;
+          font-size: 12px;
+        }
+
+        .content-list-com>li>div>.fa-laptop{
+          position:absolute;
+          left:3.5px;
+          top:4px;
+          font-size: 12px;
+        }
+
+        .content-list-com>li>div>.fa-language{
+          position:absolute;
+          left:5px;
+          top:4.1px;
+          font-size: 12px;
+        }
+
+        .content-list-com>li>div>.fa-file-o{
+          position:absolute;
+          left:5.5px;
+          top:4.1px;
+          font-size: 12px;
+        }
+
+        .content-list-com>li>.li-content{
+          display: inline-block;
+        }
+
+        .content-list-com>li>.i-wrapper{
+          position: relative;
+          height: 20px;
+          width: 20px;
+          border-radius: 10px;
+          left: 5px;
+          background-color: rgb(31, 89, 149);
+          color: white;
+        }
+
+        .content-list-com>li>.text-wrapper{
+          position: absolute;
+          top:-1px;
+          left:30px;
+          width: 180px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .content-list-com>li>.code-wrapper{
+          position: absolute;
+          top:-1px;
+          left:30px;
+          width: 180px;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </style>
 
     <div class="general-hero" style="margin-top:-30px;">
@@ -192,10 +349,13 @@
                     <div class="btn-group unick-drop-down">
                       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Openings
+                        <span class="caret"></span>
                       </button>
                       <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#opening-tab">Openings</a>
-                        <a class="dropdown-item" href="#company-tab">Company</a>
+                        <a class="dropdown-item" href="#opening-tab">Openings
+                        </a>
+                        <a class="dropdown-item" href="#company-tab">Company
+                        </a>
                       </div>
                     </div>
                     <!-- <ul class="nav nav-tabs landing-search-tab" role="tablist">
@@ -238,7 +398,7 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-primary">
-                                                Search 
+                                                Search
                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                             </button>
                                         </div>
@@ -254,7 +414,7 @@
                                     <div class="input-group-btn">
                                         <div class="btn-group" role="group">
                                             <button type="submit" class="btn btn-primary">
-                                                Search 
+                                                Search
                                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                             </button>
                                         </div>
@@ -308,71 +468,74 @@
                             </div>
                             <div class="company-name ellipsis"><a href="{{ url('companies', $opening->company->id) }}"> {{$opening->company->company_name}} </a></div>
                             <div style="/*height: 130px; width: 130px; */position:absolute; right:3px; top:80px;" class="photo-wrapper pull-right">
-                                {{-- <img src="http://localhost:8000/img/bg-img.png" class="bg-img">
-                                <img class="_image" src="{{ $opening->company->company_logo }}"> --}}
                                 <span class="contain" style="background-image: url('{{ $opening->company->company_logo }}')"></span>
                             </div>
-                            <ul class="feature-info-list">
+                            <ul class="feature-info-list content-list">
                                 <li>
-                                    <div class="ellipsis" title="{{ $opening->details }}">
-                                        <i class="info-icon fa fa-file-text" aria-hidden="true">
-                                        </i> 
-                                        <span>
-                                            {{ $opening->details }}
-                                        </span> 
+                                    <div class="li-content i-wrapper">
+                                        <i class="info-icon fa fa-file-text" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="li-content text-wrapper">
+                                        {{ $opening->details }}
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="ellipsis">
+                                    <div class="li-content i-wrapper">
                                         <i class="fa fa-map-marker info-icon info-icon_address_money" aria-hidden="true">
-                                        </i> 
-                                        <span>
-                                            {{ $opening->company->address1 }}
-                                        </span> 
+                                        </i>
+                                    </div>
+                                    <div class="li-content text-wrapper">
+                                        {{ $opening->company->address1 }}
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="ellipsis">
+                                    <div class="li-content i-wrapper">
                                         <i class="fa fa-dollar info-icon info-icon_address_money" aria-hidden="true">
-                                        </i> 
-                                        <span>
-                                            {!! salary_ranges()[$opening->salary_range] !!}
-                                        </span> 
+                                        </i>
                                     </div>
+                                    <div class="li-content text-wrapper">
+                                        {!! salary_ranges()[$opening->salary_range] !!}
+                                    </div>
+
                                 </li>
                                 <li class="li-code">
-                                    <i class="fa fa-code info-icon" aria-hidden="true"></i>
-                                    <?php $x = 0; ?>
-                                    @foreach(main_languages() as $main_language)
-                                        @if($match_array = array_intersect($opening->has_skill->lists('id')->toArray(), get_language_ids($main_language)))
-                                            @if($x < 3)
-                                                {{-- have to take away original key from $match_array --}}
-                                                <?php $match_array = array_values($match_array); ?>
+                                    <div class="li-content i-wrapper">
+                                        <i class="fa fa-code info-icon" aria-hidden="true"></i>
+                                    </div>
 
-                                                @for($i=0; $i < count($match_array) ; $i++)
-                                                    @if($i == 0)
-                                                        <a href="#!" role="button" class="btn label label-warning {{main_languages_class_convert()[$main_language]}}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
-                                                        <div>{{return_category($match_array[$i])}}</div>                    
-                                                    @else
-                                                        <div>{{return_category($match_array[$i])}}</div> 
-                                                    @endif
+                                    <div class="li-content code-wrapper">
+                                        <?php $x = 0; ?>
+                                        @foreach(main_languages() as $main_language)
+                                            @if($match_array = array_intersect($opening->has_skill->lists('id')->toArray(), get_language_ids($main_language)))
+                                                @if($x < 3)
+                                                    {{-- have to take away original key from $match_array --}}
+                                                    <?php $match_array = array_values($match_array); ?>
 
-                                                    @if($i == count($match_array) - 1)
-                                                        ">
-                                                        {{$main_language}}<span class="caret"></span>
-                                                    @endif
-                                                    </a>
-                                                @endfor
+                                                    @for($i=0; $i < count($match_array) ; $i++)
+                                                        @if($i == 0)
+                                                            <a href="#!" role="button" class="btn label label-warning {{main_languages_class_convert()[$main_language]}}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
+                                                            <div>{{return_category($match_array[$i])}}</div>
+                                                        @else
+                                                            <div>{{return_category($match_array[$i])}}</div>
+                                                        @endif
+
+                                                        @if($i == count($match_array) - 1)
+                                                            ">
+                                                            {{$main_language}}<span class="caret"></span>
+                                                        @endif
+                                                        </a>
+                                                    @endfor
+                                                @endif
+                                                <?php $x++; ?>
                                             @endif
-                                            <?php $x++; ?>
-                                        @endif
-                                    @endforeach
+                                        @endforeach
 
-                                    @if($x > 3)
-                                        <a href="#!" role="button" onclick="display_skills('{{addslashes(json_encode($opening->load("skill_requirements")))}}',this)" class="btn label label-default">
-                                            ...
-                                        </a>
-                                    @endif
+                                        @if($x > 3)
+                                            <a href="#!" role="button" onclick="display_skills('{{addslashes(json_encode($opening->load("skill_requirements")))}}',this)" class="btn label label-default">
+                                                ...
+                                            </a>
+                                        @endif
+                                    </div>
                                 </li>
                             </ul>
                             <hr class="opening-top-date-hr" style="margin-top: 7px; margin-bottom: 7px;">
@@ -382,7 +545,10 @@
                                 </div>
                                 <div class="pull-right" style="margin-top: 11px;">
                                     <div class="foggy-text">
+                                      @if (Auth::check() && (!Auth::user()->role == 1))
                                         @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
+                                      @endif
+
                                     </div>
                                 </div>
                                 <div class="clear" style="clear: both;"></div>
@@ -469,7 +635,7 @@
             </li>
         </ul>
         <ul class="ud-list" style="margin-top:-50px;">
-            
+
             <li>
                 <a href="{{ url('openings?languages%5B%5D=swift&show_advance_search=open') }}">
                     <div class="round-icon medium-round-icon">
@@ -498,7 +664,7 @@
             </li>
             <li>
                 <a href="{{ url('openings?languages%5B%5D=javascript&show_advance_search=open') }}">
-                    <div class="round-icon medium-round-icon {{-- javascript --}}" {{-- style="background: #9cffff; --}}">
+                    <div class="round-icon medium-round-icon {{-- javascript --}}" {{-- style="background: #9cffff; --}}>
                         <img src="http://www.northeastjsconference.com/wp-content/uploads/2015/11/learn-javascript.png"  id="javascript-imgsize">
                     </div>
                     <b>Javascript</b>
@@ -558,7 +724,7 @@
                     <div class="text-content">
                         <b><a href="#">RUBY</a></b>
                         <div>
-                            A ruby is a pink to blood-red colored gemstone, a variety of the mineral corundum (aluminium oxide). 
+                            A ruby is a pink to blood-red colored gemstone, a variety of the mineral corundum (aluminium oxide).
                         </div>
                     </div>
                 </div>
@@ -585,43 +751,63 @@
                                     <br>
                                 </a>
                             </h3>
-                            <ul class="feature-info-list company-feature" style="margin-top:10px;">
+                            <ul class="feature-info-list company-feature content-list-com" style="">
                                 <li>
-                                    <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
-                                    <div class="ellipsis">
-                                        {{ $company['city'] }},
-                                        {{ $company['country'] }} 
-                                        &nbsp;
+                                    <div class="li-content i-wrapper">
+                                        <i class="fa fa-map-marker " aria-hidden="true"></i>
+                                    </div>
+                                    <div class="li-content text-wrapper">
+                                        {{-- <div class="ellipsis"> --}}
+                                            {{ $company['city'] }},
+                                            {{ $company['country'] }}
+                                            &nbsp;
+                                        {{-- </div> --}}
                                     </div>
                                 </li>
                                 <li>
-                                    <i class="fa fa-users fa-lg" aria-hidden="true"></i>
-                                    <div class="ellipsis">
-                                      {{ $company['number_of_employee'] }} <b>Employees</b>
-                                      &nbsp;
+                                    <div class="li-content i-wrapper">
+                                        <i class="fa fa-users " aria-hidden="true"></i>
+                                    </div>
+                                    <div class="li-content text-wrapper">
+                                        <div class="ellipsis">
+                                          {{ $company['number_of_employee'] }} <b>Employees</b>
+                                          &nbsp;
+                                        </div>
                                     </div>
                                 </li>
                                 <li>
-                                    <i class="fa fa-laptop fa-lg" aria-hidden="true"></i>
-                                    <div class="ellipsis">
-                                      {{ $company['url'] }}
-                                      &nbsp;
+                                    <div class="li-content i-wrapper">
+                                        <i class="fa fa-laptop " aria-hidden="true"></i>
+                                    </div>
+                                    <div class="li-content text-wrapper">
+                                        <div class="ellipsis">
+                                          {{ $company['url'] }}
+                                          &nbsp;
+                                        </div>
                                     </div>
                                 </li>
                                 <li>
-                                    <i class="fa fa-language fa-lg" aria-hidden="true"></i>
-                                    <div class="ellipsis">
-                                      {{ $company['bill_country'] }}
-                                      &nbsp;
+                                    <div class="li-content i-wrapper">
+                                        <i class="fa fa-language " aria-hidden="true"></i>
+                                    </div>
+                                    <div class="li-content text-wrapper">
+                                        <div class="ellipsis">
+                                          {{ $company['bill_country'] }}
+                                          &nbsp;
+                                        </div>
                                     </div>
                                 </li>
                                 <li>
-                                <i class="fa fa-file-o fa-lg" aria-hidden="true"></i>
-                                    <div class="ellipsis">
-                                      <a href="{{ url('companies', $company['id']) }}">
-                                        {{ $company->openings->count() }} Current hiring
-                                        &nbsp;
-                                      </a>
+                                    <div class="li-content i-wrapper">
+                                        <i class="fa fa-file-o " aria-hidden="true"></i>
+                                    </div>
+                                    <div class="li-content text-wrapper">
+                                        <div class="ellipsis">
+                                          <a href="{{ url('companies', $company['id']) }}">
+                                            {{ $company->openings->count() }} Current hiring
+                                            &nbsp;
+                                          </a>
+                                        </div>
                                     </div>
                                 </li>
                             </ul>
@@ -629,10 +815,10 @@
                               <div id="company-bookmark">
                                 <div class="d-flex align-self-end ml-3" style="text-align: right;">
         <!--                                             <a href="">
-                                      <i class="fa fa-star-o fa-lg" aria-hidden="true"></i>
+                                      <i class="fa fa-star-o " aria-hidden="true"></i>
                                       Follow
                                     </a> -->
-                                  @include('companies.follow_company.follow_button', ['company' => $company])                                            
+                                  @include('companies.follow_company.follow_button', ['company' => $company])
                                 </div>
                               </div>
                           </div> <!-- media body -->
@@ -709,13 +895,13 @@
     </div>
 
 <script type="text/javascript">
- 
+
     $(function(){
-        
+
         $(".input-group-btn .dropdown-menu li a").click(function(){
 
             var selText = $(this).html();
-        
+
            //working version - for multiple buttons //
            $(this).parents('.input-group-btn').find('.btn-search').html(selText);
 
