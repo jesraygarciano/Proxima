@@ -1,7 +1,7 @@
 <!-- uelmar's -->
 
 <!-- semantic modal -->
-<div class="ui modal" id="crop-modal">
+<div class="ui modal" style="height: fill-content;" id="crop-modal">
   <div class="header">Crop Image</div>
   <div class="content">
     <div style="position: relative;" class="ccc">

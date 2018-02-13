@@ -17,6 +17,7 @@
     }
 </style>
 
+
 <div class="container" style="padding-top:20px;">
     <h1>{{$opening ? 'Update Opening' : 'Write a New Opening'}}</h1>
     <hr>
@@ -66,49 +67,97 @@
                 padding:0 10px;
                 border-bottom:none;
             }
+
+            #opening_city{
+                padding: 1.1rem 1rem;
+            }
+            #postal-code-add{
+                padding: 1.1rem 1rem;
+            }
+
         </style>
+
             <br />
             <fieldset class="scheduler-border">
                 <legend class="scheduler-border">Location</legend>
                         <div class="ui form">
                             <label>Primary Address</label>
-                            <input type="text" value="{{ $opening->address1 ?? old('address1') }}" name="address1">
+                            <input type="text" value="{{ $opening->address1 ?? old('address1') }}" name="address1" id="address1">
                         </div>
                         <div class="ui form">
                             <label>Secondary Address</label>
                             <input type="text" value="{{ $opening->address2 ?? old('address2') }}" name="address2">
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-5">
+            <br />
+            <div id="tab" class="btn-group" data-toggle="buttons">
+                <a href="#prices" class="btn btn-default active" id="domestic">
+                    <input type="radio" />Domestic</a>
+                <a href="#features" class="btn btn-default" id="international">
+                    <input type="radio" />International</a>
+            </div>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="prices">
+                        <div class="row" id="domestic-address">
+                            <div class="col-md-6">
                                 <div class="ui form">
                                     <label>Province:</label>
-                                    <select class="form-control fluid normal dropdown multi-select" name="province" id="province">
+
+                                    <!--  fluid normal dropdown multi-select  -->
+                                    <select class="form-control provinceopening" name="province" id="province">
                                         <option value="" checked>Province</option>
+                                        
                                         @foreach($provinces as $province)
-                                            <option value="{{$province->iso_code}}">{{$province->name}}</option>
+                                            <option data-value="{{$province->iso_code}}" value="{{ $opening ? $opening->iso_code : null }}">{{$province->name}}</option>
                                         @endforeach
+
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="ui form">
-                                    <label>Country:</label>
-                                    <select class="form-control fluid normal dropdown multi-select" name="country" id="country">
+                                    <label>Postal Code</label>
+                                    <input type="number" value="{{ $opening->postal ?? old('postal') }}" name="postal" id="postal-code-add">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="international-address">
+                            <div class="col-md-6">
+                                <div class="ui form">
+                                    <label>Countries:</label>
+                                    <!--  fluid normal dropdown multi-select  -->
+                                    <select class="form-control opening_country" name="country" id="country" style="border:1px solid #dededf;color:#dededf;" disabled>
                                         <option value="" checked>Select Country</option>
                                         @foreach($countries as $country)
-                                            <option value="{{$country->iso_alpha3}}">{{$country->name}}</option>
+                                            <option data-value="{{$country->iso_alpha3}}" value="{{$country->iso_alpha3}}">{{$country->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+
+                            <div class="col-md-6">
                                 <div class="ui form">
-                                    <label>Postal Code</label>
-                                    <input type="number" value="{{ $opening->postal ?? old('postal') }}" name="postal">
+                                    <label>City:</label>
+                                        <input type="text" id="opening_city" value="{{ $opening->city ?? old('city') }}" name="city" disabled="true" disabled>
                                 </div>
-                            </div>                            
-                        </div>
+                            </div>
+                        </div>                        
+                </div>
+
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        $('#province').val("{{$_GET['province'] ?? ''}}");
+                    });
+                </script>
+
+                <div class="tab-pane" id="features">
+
+                </div>
+            </div>
+
+
 
             </fieldset>
 

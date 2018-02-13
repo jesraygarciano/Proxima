@@ -126,6 +126,7 @@
                         {{$opening->address2}},
                         {{$opening->province_code}},
                         {{$opening->country_code}}
+                        {{$opening->postal}}
 
                         </div>
                     </div>

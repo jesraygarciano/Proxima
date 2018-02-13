@@ -210,3 +210,56 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+
+@if(Session::has('no_role'))
+    <div class="ui modal" style="height: fill-content;" id="confirm_role">
+        
+          <div class="header">Role Confirmation</div>
+          <div class="content">
+            <form id="confirm_role_form" action="{{url('/confirm/role')}}" method="post">
+                {!! csrf_field() !!}
+                <div class="well">
+                    We have set your role as applicant by default.
+                    But we need to know if you are an hiring user or if you are really an applicant.
+                    <p>
+                        Please confirm your role.
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <center>
+                            <label>
+                                <i class="fa fa-user fa-5x"></i>
+                                <br>
+                                Applicant
+                                <br>
+                                <input type="radio" checked value="0" name="role">
+                            </label>
+                        </center>
+                    </div>
+                    <div class="col-sm-6">
+                        <center>
+                            <label>
+                                <i class="fa fa-building fa-5x"></i>
+                                <br>
+                                Hiring user
+                                <br>
+                                <input type="radio" value="1" name="role">
+                            </label>
+                        </center>
+                    </div>
+                </div>
+            </form>
+          </div>
+          <div class="actions">
+            <button type="button" onclick="$('#confirm_role_form').submit()" class="btn btn-primary save">Confirm</button>
+            <button type="button" class="btn deny btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+    </div>
+@endif
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#confirm_role').modal('show')
+    });
+</script>

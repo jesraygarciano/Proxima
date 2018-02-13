@@ -23,6 +23,46 @@ function validatePhonenumber(phoneNumber)
 	}
 }
 
+$("#domestic").on("click",function(){
+
+        $(".provinceopening").css({'border' : '1px solid #96c8da','color' : '#285363'});
+        $(".provinceopening").attr('disabled', false);
+        $("#postal-code-add").css({'border' : '1px solid #96c8da','color' : '#285363'});
+        $("#postal-code-add").attr('disabled', false);
+        $("#opening_city").css({'border' : '1px solid #dededf','color' : '#dededf'});
+        $("#opening_city").attr('disabled', true);
+        $(".opening_country").css({'border' : '1px solid #dededf','color' : '#dededf'});
+        $(".opening_country").prop('disabled', true);
+
+        // $("#domestic-address").css('display' , 'initial');
+        // $("#international-address").css('display' , 'none');
+    });
+
+$("#international").on("click",function(){
+        $(".provinceopening").css({'border' : '1px solid #dededf','color' : '#dededf'});
+        $(".provinceopening").attr('disabled', true);
+        $("#postal-code-add").css({'border' : '1px solid #dededf','color' : '#dededf'});
+        $("#postal-code-add").attr('disabled', true);
+        $("#opening_city").css({'border' : '1px solid #96c8da', 'color' : '#285363'});
+        $("#opening_city").prop('disabled', false);
+        $(".opening_country").css({'border' : '1px solid #96c8da', 'color' : '#285363'});
+        $(".opening_country").prop('disabled', false);
+
+        // $('.opening_country').prop('disabled', false);
+        // $("#domestic-address").css('display' , 'none');
+        // $("#international-address").css('display' , 'initial');        
+    });
+
+
+    // function domesticAddress() {
+    //     document.getElementById('country').disabled=true;document.getElementById('city').disabled=true;document.getElementById('provincecreate').disabled=false;document.getElementById('postal').disabled=false;
+    // }
+    // function internationalAddress() {
+    //     document.getElementById('country').disabled=false;
+    //     document.getElementById('city').disabled=false;
+    //     document.getElementById('provincecreate').disabled=true;
+    //     document.getElementById('postal').disabled=true;
+    //     }
 
 /*$(document).ready(function() {
     var timeToDisplay = 2000;

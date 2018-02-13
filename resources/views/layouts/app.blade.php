@@ -11,11 +11,12 @@
         @if( Request::path() == 'resumes/create' || Request::path() == 'openings' || Request::url('/resumes/{id}/edit'))
 
         {{--@if( Request::path() == 'resumes/create' || Request::path() == 'openings' || Request::path() == 'portals/general_portal')--}}
+            {{-- <link rel="stylesheet" href="/bower_components/semantic-ui-calendar/dist/calendar.min.css" /> --}}
             <link rel="stylesheet" type="text/css" href="{{ asset('semantic/out/semantic.css') }}">
         @endif
 
         <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
         {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
          --}}
 
@@ -159,6 +160,7 @@
 
             <script src="{{asset('semantic/out/semantic.js')}}"></script>
             <script type="text/javascript" src="{{asset('js/for_semantic.js')}}"></script>
+{{-- <script type="text/javascript" src="/bower_components/semantic-ui-calendar/dist/calendar.min.js"></script> --}}
         @endif
         @include('inc.image-cropper')
         @include('inc.marker')
