@@ -48,6 +48,10 @@ class PortalController extends Controller
 
     }
 
+    public function hiring_portal(){
+        return view('portals.hiring-portal');
+    }
+
     public function general_portal()
     {
 

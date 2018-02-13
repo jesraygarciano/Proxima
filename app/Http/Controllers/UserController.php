@@ -70,4 +70,11 @@ class UserController extends Controller
 
         return ['scouts'=>$scouts, 'applications'=>$applications, 'openings'=>$openings];
     }
+
+    public function confirm_role(Request $requests){
+        $user = \Auth::user();
+        $user->role = $requests->role;
+        $user->save();
+        return redirect()->back();
+    }
 }

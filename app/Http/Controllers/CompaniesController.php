@@ -295,9 +295,11 @@ class CompaniesController extends Controller
         $rules = [    // ②
             // 'company_name' => 'required',
             // 'email' => 'required|unique:companies',
+            'email' => 'required',        
             'url' => 'required',
-            // 'company_logo' => 'required',
-            // 'background_photo' => 'required',
+            'company_logo' => 'required',
+            'background_photo' => 'required',
+            'what_photo1' => 'required',            
             'tel' => 'required',
         ];
         // $request->user_id = Auth::user()->id;
@@ -306,6 +308,16 @@ class CompaniesController extends Controller
             $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->company_logo));
             $fileNameToStore = time().'.png';
             file_put_contents(public_path('/storage/').$fileNameToStore, $data);
+        }
+        if($request->background_photo){
+            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->background_photo));
+            $fileNameToStoreCover = time().'cover'.'.png';
+            file_put_contents(public_path('/storage/').$fileNameToStoreCover, $data);
+        }
+        if($request->what_photo1){
+            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->what_photo1));
+            $fileNameToStoreWhat = time().'what'.'.png';
+            file_put_contents(public_path('/storage/').$fileNameToStoreWhat, $data);
         }
 
         $this->validate($request, $rules);  // ③
@@ -316,8 +328,12 @@ class CompaniesController extends Controller
             'email' => $request->email,
             'is_active' => '1',
             // 'url' => $request->url,
+
             'company_logo' => $fileNameToStore,
-            // 'background_photo' => $fileNameToStoreCover,
+            'background_photo' => $fileNameToStoreCover,
+            'what_photo1' => $fileNameToStoreWhat,
+
+           // 'background_photo' => $fileNameToStoreCover,
             'tel' => $request->tel,
             'address1' => $request->address1,
             'established_at' => $request->established_at,
@@ -332,7 +348,7 @@ class CompaniesController extends Controller
 
         ]);
 
-        \Session::flash('flash_message', 'created company information');
+        \Session::flash('flash_message', 'Updated company information');
 
         // return redirect('companies');
         return redirect('/hiring_portal');

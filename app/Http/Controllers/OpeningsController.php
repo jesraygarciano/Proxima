@@ -164,6 +164,7 @@ class OpeningsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create(Request $request)
     {
         $company_id = $request->company_id;
@@ -238,6 +239,7 @@ class OpeningsController extends Controller
         }
 
         $opening->salary_range = $request->salary_range;
+
         $opening->requirements = $request->requirements;
         $opening->details = $request->details;
         $opening->save();
@@ -365,7 +367,13 @@ class OpeningsController extends Controller
             $opening->company_id = $request->company_id;
         }
 
-        $opening->salary_range = $request->salary_range;
+        $opening->address1 = $request->address1;
+        $opening->address2 = $request->address2;
+        $opening->postal = $request->postal;
+        $opening->province_code = $request->province;
+        $opening->country_code = $request->country;
+        $opening->city = $request->city;
+
         $opening->requirements = $request->requirements;
         $opening->details = $request->details;
         $opening->save();

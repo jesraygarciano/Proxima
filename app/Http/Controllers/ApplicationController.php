@@ -45,10 +45,11 @@ class ApplicationController extends Controller
         $user = \Auth::user();
         $resume = Common::get_master_resume();
         $opening = Opening::findOrFail($opening_id);
-        $company = $opening->company()->get()->first();
+        // $company = $opening->company()->get()->first();
+        $company = $opening->company()->first();
         // dd($company);
         $skills = Resume_skill::all();
-
+        $educations = $resume->educations()->get();
 
         if($resume){
             // $resume = Resume::where('user_id', $user->id)->where('is_active', 1)->where('is_master', 1)->get()->first();
@@ -58,7 +59,7 @@ class ApplicationController extends Controller
             $languages_ids = array();
         }
 
-        return view('applications.create', compact('user', 'resume', 'languages_ids', 'opening', 'company', 'skills'));
+        return view('applications.create', compact('user', 'resume', 'languages_ids', 'opening', 'company', 'skills', 'educations'));
 
     }
 

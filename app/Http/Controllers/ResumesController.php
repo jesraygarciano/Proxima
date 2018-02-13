@@ -84,7 +84,7 @@ class ResumesController extends Controller
         //     // Upload Image
         //     $path = $request->file('photo')->move(public_path(). '/storage' , $fileNameToStore);
         // }
-        
+
         // dd($request);
         $input = $request->except('photo','skills', '_token');
         // dd($input);
@@ -99,7 +99,7 @@ class ResumesController extends Controller
         if (\Input::has('ex_company')){
             $experience = new Experience;
             $experience->resume_id = $resume->id;
-            $experience->fill($input)->save();            
+            $experience->fill($input)->save();
         }
 
         $education = new Education;
@@ -138,7 +138,7 @@ class ResumesController extends Controller
         // if ($resume->has_skill() != null) {
         $skill_ids = Common::resume_skill_ids_get($resume);
         // }
-        
+
         // $skills = $resume->has_skill()->get();
         // $skills = $resume->has_skill()->get()->where('language', 'PHP')->get();
 
@@ -155,9 +155,9 @@ class ResumesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     // public function edit($resume_id)
-    public function edit()    
+    public function edit()
     {
 /*        $resume = Resume::findOrFail($resume_id);
         $languages_ids = $resume->has_skill()->get()->lists('id')->toArray();
@@ -165,8 +165,18 @@ class ResumesController extends Controller
 */
         $user = \Auth::user();
         $skills = Resume_skill::all();
+        $resume = Common::get_master_resume();
+        $educations = $resume->educations();
 
-        return view('resumes.edit', compact('user', 'skills'));
+        if($resume){
+            // $resume = Resume::where('user_id', $user->id)->where('is_active', 1)->where('is_master', 1)->get()->first();
+            $languages_ids = $resume->has_skill()->get()->lists('id')->toArray();
+        }else{
+            $resume = new Resume;
+            $languages_ids = array();
+        }
+
+        return view('resumes.edit', compact('user', 'skills', 'resume', 'languages_ids', 'educations'));
 
     }
 

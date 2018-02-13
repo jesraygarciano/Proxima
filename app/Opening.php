@@ -13,7 +13,6 @@ class Opening extends Model
 
     protected $appends = ['salary_range_words'];
 
-
     // protected $hidden = ['password'];
     public function company()
     {
