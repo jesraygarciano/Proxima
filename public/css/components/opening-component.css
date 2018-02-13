@@ -30,7 +30,7 @@
 }
 
 .job-tile .photo-adjust{
-    transform: translateY(-35px);
+    /*transform: translate(-8px,-70px);*/
 }
 
 .job-tile .photo-wrapper{
@@ -51,7 +51,7 @@
 
 .opening-feature-info-list li{
     padding-top: 1px;
-    min-height: 30px;
+    /*min-height: 30px;*/
 }
 
 .opening-feature-info-list li .label{
@@ -111,6 +111,7 @@
 .job-tile .footer{
     display: table;
     width: 100%;
+    position: relative;
 }
 
 .job-tile .footer a{
@@ -118,12 +119,30 @@
     cursor: pointer;
 }
 
+.job-tile .footer a{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.job-desc-active{
+    padding:.7rem;
+    color:#fff;
+    border-radius: 5px;
+    position: absolute;
+    top: 30px;
+    right: 0;
+}
+
+.date-disabled{
+    color: #a9a9a9;
+}
+
 .foggy-text{
     color: #808080;
 }
 
 .job-title{
-    margin-top:15px;
+    margin-top:10px;
     font-size: 20px;
 }
 

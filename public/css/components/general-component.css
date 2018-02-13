@@ -195,6 +195,27 @@
 .violet-bttn:hover{
     background: rgb(84, 45, 154);
 }
+
+.orange-bttn{
+    color: #ef6733;
+    background: white;
+}
+
+.orange-bttn:hover{
+    background: #ef6733;
+    color: white;
+}
+
+.blue-bttn{
+    background: #337ab7;
+    color: white;
+}
+
+.blue-bttn:hover{
+    color: #337ab7;
+    background: white;
+}
+
 /*end*/
 
 /*language colors*/
@@ -485,4 +506,69 @@
 .intern::after{
     border-bottom-color:#79ace9!important;
     border-top-color:#79ace9!important;
+}
+
+.loader {
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.noti-bell{
+    position: relative;
+}
+
+.noti-bell .num-icon{
+    position: absolute;
+    right: 0px;
+    top: 10px;
+    height: 15px;
+    width: 15px;
+    background: #fe4242;
+    color: white;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.noti-bell .num-icon div{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.noti-bell .noti-lists{
+    padding: 10px 0px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    top: 100%;
+    min-width: 150px;
+    border: 1px solid rgb(238, 238, 238);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 3px 0 rgba(0,0,0,0.12)!important;
+    border-radius: 10px;
+    display: none;
+}
+
+.noti-bell .noti{
+    padding: 10px;
+    background: #f6f6f6;
+    border-bottom: 1px solid #ededed;
+    display: block;
+    color: #4d5355;
+}
+
+.noti-bell:hover .noti-lists{
+    display: block;
 }

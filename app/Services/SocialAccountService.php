@@ -18,6 +18,8 @@ class SocialAccountService
             return $account->user;
         } else {
 
+            \Session::flash('no_role', 'social account created');
+
             $account = new SocialAccount([
                 'provider_user_id' => $providerUser->getId(),
                 'provider' => $media

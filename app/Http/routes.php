@@ -142,6 +142,18 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 Route::get('/redirect/{media}', 'SocialAuthController@redirect');
 Route::get('/facebook/callback', 'SocialAuthController@callbackFacebook');
 Route::get('/github/callback', 'SocialAuthController@callbackGithub');
+Route::post('/confirm/role', 'UserController@confirm_role');
+
+
+
+
+
+
+
+Route::group(['prefix'=>'hiring'], function(){
+	Route::get('index',['as'=>'hiring_index', 'uses'=>'PortalController@hiring_portal']);
+});
+
 
 
 Route::group(['middleware'=>'auth', 'prefix'=>'user'], function(){
