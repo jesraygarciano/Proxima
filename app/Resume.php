@@ -54,4 +54,9 @@ class Resume extends Model
     {
         return $this->hasMany(Experience::class);
     }
+
+    public function character_references()
+    {
+        return $this->hasMany(CharacterReferences::class);
+    }
 }
