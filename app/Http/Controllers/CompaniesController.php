@@ -161,6 +161,8 @@ class CompaniesController extends Controller
 
     public function show($id)
     {
+        $provinces = \DB::table('provinces')->get();
+        $countries = \DB::table('countries')->get();        
         $company = Company::findOrFail($id);
 
         $openings = Opening::where('company_id', $company->id)->get();
@@ -177,13 +179,13 @@ class CompaniesController extends Controller
 
         if (!empty($company->address1)){
         // Mapper::location($company->city, $company->country); //company_location
-        //$company->address1. " ". $company->city. " ".             
+        //$company->address1. " ". $company->city. " ".
         Mapper::location($company->country)->map(['zoom' => 17, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'clusters' => ['size' => 10, 'center' => true, 'zoom' => 30]]);
         }
 
         /*Mapper::map(53.381128999999990000, -1.470085000000040000, ['eventBeforeLoad' => 'console.log("before load");']);*/
 
-        return view('companies.show', compact('company', 'openings', 'companies_ids'));
+        return view('companies.show', compact('provinces','countries','company', 'openings', 'companies_ids'));
     }
 
     /**
@@ -295,11 +297,11 @@ class CompaniesController extends Controller
         $rules = [    // ②
             // 'company_name' => 'required',
             // 'email' => 'required|unique:companies',
-            'email' => 'required',        
+            'email' => 'required',
             'url' => 'required',
             'company_logo' => 'required',
             'background_photo' => 'required',
-            'what_photo1' => 'required',            
+            'what_photo1' => 'required',
             'tel' => 'required',
         ];
         // $request->user_id = Auth::user()->id;
@@ -307,17 +309,17 @@ class CompaniesController extends Controller
         if($request->company_logo){
             $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->company_logo));
             $fileNameToStore = time().'.png';
-            file_put_contents(public_path('/storage/').$fileNameToStore, $data);
+            file_put_contents(public_path('storage/').$fileNameToStore, $data);
         }
         if($request->background_photo){
             $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->background_photo));
             $fileNameToStoreCover = time().'cover'.'.png';
-            file_put_contents(public_path('/storage/').$fileNameToStoreCover, $data);
+            file_put_contents(public_path('storage/').$fileNameToStoreCover, $data);
         }
         if($request->what_photo1){
             $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->what_photo1));
             $fileNameToStoreWhat = time().'what'.'.png';
-            file_put_contents(public_path('/storage/').$fileNameToStoreWhat, $data);
+            file_put_contents(public_path('storage/').$fileNameToStoreWhat, $data);
         }
 
         $this->validate($request, $rules);  // ③

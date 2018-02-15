@@ -146,8 +146,27 @@ Route::post('/confirm/role', 'UserController@confirm_role');
 
 
 
+// Author Uelmar Ortega
+// Feb. 14, 2018
+
+Route::get('fire', function () {
+    // this fires the event
+    event(new App\Events\Broadcaster());
+    return "event fired";
+});
 
 
+Route::group(['prefix'=>'messaging'], function(){
+	Route::get('index',function(){
+		return view('messaging.index');
+	});
+
+	// ajax requests
+	Route::group(['prefix'=>'json'], function(){
+		Route::get('fetch/user/messages', ['as'=>'json_return_user_messages', 'uses'=>'MessagerController@json_return_user_messages']);
+		Route::get('fetch/chatable/users', ['as'=>'json_return_chatable_users', 'uses'=>'MessagerController@json_return_chatable_users']);
+	});
+});
 
 
 Route::group(['prefix'=>'hiring'], function(){

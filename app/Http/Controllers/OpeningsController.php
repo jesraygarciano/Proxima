@@ -17,7 +17,6 @@ use Carbon\Carbon;
 
 // use Common;
 
-
 class OpeningsController extends Controller
 {
     public function __construct()
@@ -58,6 +57,7 @@ class OpeningsController extends Controller
 
         $openings = Opening::query()->where('is_active', 1)->orderBy('created_at','desc');
         $provinces = \DB::table('provinces')->get();
+        $countries = \DB::table('countries')->get();
 
         /*$language_lang = strtoupper($request->language);
         
@@ -227,8 +227,7 @@ class OpeningsController extends Controller
         }
 
         $opening->title = $request->title;
-        $opening->from_post = $request->from_post;
-        $opening->until_post = Carbon::parse($request->from_post)->AddDays(30);
+        $opening->salary_range = $request->salary_range;
 
         // $expiredate = date(strtotime($request->from_post. "+30 days"))
         // $opening->until_post = $request->from_post;
@@ -238,10 +237,35 @@ class OpeningsController extends Controller
             $opening->company_id = $request->company_id;
         }
 
-        $opening->salary_range = $request->salary_range;
+        $opening->hiring_type = $request->hiring_type;
+        $opening->address1 = $request->address1;
 
-        $opening->requirements = $request->requirements;
+        if (!empty($request->address2)) {
+            $opening->address2 = $request->address2;
+        }
+
+        if (!empty($request->province)) {
+            $opening->province_code = $request->province;
+            $opening->country_code = 'PHL';
+        }
+
+        if (!empty($request->postal)){
+            $opening->postal = $request->postal;
+        }
+
+        if (!empty($request->country)) {
+            $opening->country_code = $request->country;        
+        }
+
+        if (!empty($request->city)) {
+        $opening->city = $request->city;
+        }
+
         $opening->details = $request->details;
+        $opening->requirements = $request->requirements;
+
+        $opening->from_post = $request->from_post;
+        $opening->until_post = Carbon::parse($request->from_post)->AddDays(30);
         $opening->save();
         $opening->register_skill($request->skills);
 
@@ -266,6 +290,8 @@ class OpeningsController extends Controller
     public function show($id)
     {
 
+        $provinces = \DB::table('provinces')->get();
+        $countries = \DB::table('countries')->get();
         $opening = Opening::findOrFail($id);
 
         $company = Company::where('id', $opening->company_id)->get()->first();
@@ -282,7 +308,7 @@ class OpeningsController extends Controller
 
         /*Mapper::location($opening->$company->address1. " ". $opening->$company->city. " ". $opening->$company->country)->map(['zoom' => 18, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'clusters' => ['size' => 10, 'center' => true, 'zoom' => 30]]);*/
         
-        return view('openings.show', compact('opening','company', 'resume', 'more_openings'));
+        return view('openings.show', compact('opening','company', 'resume', 'more_openings','provinces','countries'));
     }
 
 
@@ -356,8 +382,7 @@ class OpeningsController extends Controller
         }
 
         $opening->title = $request->title;
-        $opening->from_post = $request->from_post;
-        $opening->until_post = Carbon::parse($request->from_post)->AddDays(30);
+        $opening->salary_range = $request->salary_range;
 
         // $expiredate = date(strtotime($request->from_post. "+30 days"))
         // $opening->until_post = $request->from_post;
@@ -369,16 +394,24 @@ class OpeningsController extends Controller
 
         $opening->address1 = $request->address1;
         $opening->address2 = $request->address2;
-        $opening->postal = $request->postal;
         $opening->province_code = $request->province;
-        $opening->country_code = $request->country;
+        $opening->postal = $request->postal;
+        $opening->country_code = $request->country;        
         $opening->city = $request->city;
 
-        $opening->requirements = $request->requirements;
         $opening->details = $request->details;
+        $opening->requirements = $request->requirements;
+
+        $opening->from_post = $request->from_post;
+        $opening->until_post = Carbon::parse($request->from_post)->AddDays(30);
+
         $opening->save();
         $opening->register_skill($request->skills);
 
+        if(!$request->opening_id)
+        {
+            $opening->notifySubscribedApplicants();
+        }
         // $openings_skills = \App\Opening_skill::where('language',$request->language)->get();
 
         return redirect('hiring_portal');

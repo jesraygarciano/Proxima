@@ -30,6 +30,9 @@ class HiringPortalController extends Controller
      */
     public function index()
     {
+        $provinces = \DB::table('provinces')->get();
+        $countries = \DB::table('countries')->get();
+
         $companies_show = Company::latest('created_at')->where('is_active', 1)->where('user_id', Auth::user()->id)->first();
 
         $companies = Company::latest('created_at')->where('is_active', 1)->where('user_id', Auth::user()->id)->get();
@@ -59,7 +62,7 @@ class HiringPortalController extends Controller
             $applicants = array();
         }
 
-        return view('hiring_portal.index', compact('companies_show', 'companies', 'openings', 'applications', 'applicants'));
+        return view('hiring_portal.index', compact('provinces','countries','companies_show', 'companies', 'openings', 'applications', 'applicants'));
     }
 
     public function application_detail($id)

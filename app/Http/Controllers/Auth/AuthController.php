@@ -96,11 +96,11 @@ class AuthController extends Controller
 
         // send verification email
 
-        Mail::send('emails.verify-email', ['user'=>$user], function ($message) use ($user){
-            $message->from(env('MAIL_USERNAME'), 'Nexseed Support');
-            $message->subject('Account Verification');
-            $message->to($user->email);
-        });
+        // Mail::send('emails.verify-email', ['user'=>$user], function ($message) use ($user){
+        //     $message->from(env('MAIL_USERNAME'), 'Nexseed Support');
+        //     $message->subject('Account Verification');
+        //     $message->to($user->email);
+        // });
 
         return $user;
     }

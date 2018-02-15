@@ -166,8 +166,10 @@ class ResumesController extends Controller
         $user = \Auth::user();
         $skills = Resume_skill::all();
         $resume = Common::get_master_resume();
-        $educations = $resume->educations();
-
+        $educations = $resume->educations()->get();
+        $experiences = $resume->experiences()->get();
+        $cr = $resume->character_references()->get();
+        // dd($educations);
         if($resume){
             // $resume = Resume::where('user_id', $user->id)->where('is_active', 1)->where('is_master', 1)->get()->first();
             $languages_ids = $resume->has_skill()->get()->lists('id')->toArray();
@@ -176,7 +178,7 @@ class ResumesController extends Controller
             $languages_ids = array();
         }
 
-        return view('resumes.edit', compact('user', 'skills', 'resume', 'languages_ids', 'educations'));
+        return view('resumes.edit', compact('user', 'skills', 'resume', 'languages_ids', 'educations', 'experiences', 'cr'));
 
     }
 
