@@ -96,7 +96,14 @@
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
             </div>
             <div class="li-content text-wrapper">
-                {{ $opening->company->address1 }}
+
+                {{$opening->address1}},
+                {{$opening->address2}},
+                @foreach($provinces as $province)
+                    {{$province->iso_code === $opening->province_code ? $province->name : ''}}
+                @endforeach
+                {{$opening->postal}}
+
             </div>
         </li>
         <li class="ellipsis padding-right-110">
