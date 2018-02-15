@@ -50,7 +50,7 @@
                     </div>
 
                 {{-- <form role="form"> --}}
-                    {!!Form::open(['action' => 'ResumesController@store', 'method' => 'POST', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+                    {!!Form::open(['action' => 'ResumesController@update', 'method' => 'POST', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
                         <div class="tab-content">
                                 <div class="tab-pane active wizard-step" role="tabpanel" id="step1">
                                     {!! csrf_field() !!}
@@ -201,9 +201,9 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     {{-- {!!Form::label('gender', 'Gender:')!!}<br> --}}
-                                                    <input name="gender" type="radio" checked value="male">&nbsp;&nbsp;male&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input name="gender" type="radio" value="male">&nbsp;&nbsp;male&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <input name="gender" type="radio" value="female">&nbsp;&nbsp;female&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <input name="gender" type="radio" value="no-answer">&nbsp;&nbsp;no answer
+                                                    <input name="gender" type="radio" checked value="no-answer">&nbsp;&nbsp;no answer
                                                 </div>
                                             </div>
                                         </div>
@@ -228,9 +228,9 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     {{-- {!!Form::label('civil_status', 'Marital Status:')!!}<br> --}}
-                                                    <input name="marital_status" type="radio" checked value="single">&nbsp;&nbsp;single&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input name="marital_status" type="radio" value="single">&nbsp;&nbsp;single&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <input name="marital_status" type="radio" value="married">&nbsp;&nbsp;married&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <input name="marital_status" type="radio" value="no-answer">&nbsp;&nbsp;no answer
+                                                    <input name="marital_status" type="radio" checked value="no-answer">&nbsp;&nbsp;no answer
                                                 </div>
                                             </div>
                                         </div>
@@ -271,330 +271,64 @@
                                         </div>
                                     </div>
 
-                                    <style media="screen">
-                                        .default-hide{
-                                            display: none;
-                                            overflow: hidden;
-                                            height: 0;
-                                        }
+                                    @for ($i=0; $i < 6; $i++)
+                                        <?php $number_ed = $i + 1 ?>
 
-                                        .ed-margin{
-                                            margin-top: 10px;
-                                        }
-                                    </style>
+                                        @if (count($educations) == 0 && $i == 0)
+                                            <div id="educational{{$number_ed}}" class="ed-margin">
+                                        @elseif  ($i < count($educations))
+                                            <div id="educational{{$number_ed}}" class="ed-margin">
+                                        @else
+                                            <div id="educational{{$number_ed}}" class="ed-margin default-hide-ed">
+                                        @endif
 
-
-                                    <div id="educational1">
-                                        <h4 class="form-heading required-label">Educational Background 1</h4>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-md-offset-1 col-md-11">
-                                                <div class="col-md-4">
-                                                    <div class="form-group required">
-                                                        {!!Form::label('ed_university', 'University', ['class' => 'required-label'])!!}
-                                                        {!!Form::text('ed_university_1', null, ['class' => 'form-control'])!!}
+                                            <h4 class="form-heading required-label">Educational Background {{$number_ed}}</h4>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-offset-1 col-md-11">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group required">
+                                                            {!!Form::label('ed_university', 'University', ['class' => 'required-label'])!!}
+                                                            {!!Form::text("ed_university_{$number_ed}", $educations[$i]->ed_university ?? '', ['class' => 'form-control'])!!}
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!!Form::label('ed_field_of_study', 'Field of study')!!}
-                                                        {!!Form::text('ed_field_of_study_1', null, ['class' => 'form-control'])!!}
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {!!Form::label('ed_field_of_study', 'Field of study')!!}
+                                                            {!!Form::text("ed_field_of_study_{$number_ed}", $educations[$i]->ed_field_of_study ?? '', ['class' => 'form-control'])!!}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!!Form::label('ed_program_of_study', 'Program of study')!!}
-                                                        {!!Form::text('ed_program_of_study_1', null, ['class' => 'form-control'])!!}
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {!!Form::label('ed_program_of_study', 'Program of study')!!}
+                                                            {!!Form::text("ed_program_of_study_{$number_ed}", $educations[$i]->ed_program_of_study ?? '', ['class' => 'form-control'])!!}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-md-offset-1 col-md-11">
-                                                <div class="col-md-8">
-                                                    <div class="form-group required">
-                                                        {!!Form::label('duration', 'Duration', ['class' => 'required-label'])!!}<br>
-                                                        {!!Form::select('ed_from_month_1', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                        {!!Form::select('ed_from_year_1', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                        &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
-                                                        {!!Form::select('ed_to_month_1', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                        {!!Form::select('ed_to_year_1', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
+                                            <div class="row">
+                                                <div class="col-md-offset-1 col-md-11">
+                                                    <div class="col-md-8">
+                                                        <div class="form-group required">
+                                                            {!!Form::label('duration', 'Duration', ['class' => 'required-label'])!!}<br>
+                                                            {!!Form::select("ed_from_month_{$number_ed}", month_array(), $educations[$i]->ed_from_month ?? '', ['class' => 'ui dropdown single-select parent-form-group'])!!},
+                                                            {!!Form::select("ed_from_year_{$number_ed}", year_array(), $educations[$i]->ed_from_year ?? '', ['class' => 'ui dropdown single-select parent-form-group'])!!}
+                                                            &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+                                                            {!!Form::select("ed_to_month_{$number_ed}", month_array(), $educations[$i]->ed_to_month ?? '', ['class' => 'ui dropdown single-select parent-form-group'])!!},
+                                                            {!!Form::select("ed_to_year_{$number_ed}", year_array(), $educations[$i]->ed_to_year ?? '', ['class' => 'ui dropdown single-select parent-form-group'])!!}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            {!!Form::hidden("hidden_{$number_ed}", $educations[$i]->id ?? '')!!}
                                         </div>
-                                    </div>
-
-                                    <div id="educational2" class="ed-margin default-hide">
-                                        <h4 class="form-heading ">Educational Background 2</h4>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-md-offset-1 col-md-11">
-                                                <div class="col-md-4">
-                                                    <div class="form-group required">
-                                                        {!!Form::label('ed_university', 'University', ['class' => ''])!!}
-                                                        {!!Form::text('ed_university_2', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!!Form::label('ed_field_of_study', 'Field of study')!!}
-                                                        {!!Form::text('ed_field_of_study_2', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!!Form::label('ed_program_of_study', 'Program of study')!!}
-                                                        {!!Form::text('ed_program_of_study_2', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-offset-1 col-md-11">
-                                                <div class="col-md-8">
-                                                    <div class="form-group required">
-                                                        {!!Form::label('duration', 'Duration', ['class' => ''])!!}<br>
-                                                        {!!Form::select('ed_from_month_2', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                        {!!Form::select('ed_from_year_2', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                        &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
-                                                        {!!Form::select('ed_to_month_2', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                        {!!Form::select('ed_to_year_2', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="educational3" class="ed-margin default-hide">
-                                        <h4 class="form-heading ">Educational Background 3</h4>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-md-offset-1 col-md-11">
-                                                <div class="col-md-4">
-                                                    <div class="form-group required">
-                                                        {!!Form::label('ed_university', 'University', ['class' => ''])!!}
-                                                        {!!Form::text('ed_university_3', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!!Form::label('ed_field_of_study', 'Field of study')!!}
-                                                        {!!Form::text('ed_field_of_study_3', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!!Form::label('ed_program_of_study', 'Program of study')!!}
-                                                        {!!Form::text('ed_program_of_study_3', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-offset-1 col-md-11">
-                                                <div class="col-md-8">
-                                                    <div class="form-group required">
-                                                        {!!Form::label('duration', 'Duration', ['class' => ''])!!}<br>
-                                                        {!!Form::select('ed_from_month_3', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                        {!!Form::select('ed_from_year_3', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                        &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
-                                                        {!!Form::select('ed_to_month_3', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                        {!!Form::select('ed_to_year_3', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="educational4" class="ed-margin default-hide">
-                                        <h4 class="form-heading ">Educational Background 4</h4>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-md-offset-1 col-md-11">
-                                                <div class="col-md-4">
-                                                    <div class="form-group required">
-                                                        {!!Form::label('ed_university', 'University', ['class' => ''])!!}
-                                                        {!!Form::text('ed_university_4', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!!Form::label('ed_field_of_study', 'Field of study')!!}
-                                                        {!!Form::text('ed_field_of_study_4', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!!Form::label('ed_program_of_study', 'Program of study')!!}
-                                                        {!!Form::text('ed_program_of_study_4', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-offset-1 col-md-11">
-                                                <div class="col-md-8">
-                                                    <div class="form-group required">
-                                                        {!!Form::label('duration', 'Duration', ['class' => ''])!!}<br>
-                                                        {!!Form::select('ed_from_month_4', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                        {!!Form::select('ed_from_year_4', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                        &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
-                                                        {!!Form::select('ed_to_month_4', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                        {!!Form::select('ed_to_year_4', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="educational5" class="ed-margin default-hide">
-                                        <h4 class="form-heading ">Educational Background 5</h4>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-md-offset-1 col-md-11">
-                                                <div class="col-md-4">
-                                                    <div class="form-group required">
-                                                        {!!Form::label('ed_university', 'University', ['class' => ''])!!}
-                                                        {!!Form::text('ed_university_5', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!!Form::label('ed_field_of_study', 'Field of study')!!}
-                                                        {!!Form::text('ed_field_of_study_5', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!!Form::label('ed_program_of_study', 'Program of study')!!}
-                                                        {!!Form::text('ed_program_of_study_5', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-offset-1 col-md-11">
-                                                <div class="col-md-8">
-                                                    <div class="form-group required">
-                                                        {!!Form::label('duration', 'Duration', ['class' => ''])!!}<br>
-                                                        {!!Form::select('ed_from_month_5', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                        {!!Form::select('ed_from_year_5', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                        &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
-                                                        {!!Form::select('ed_to_month_5', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                        {!!Form::select('ed_to_year_5', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="educational6" class="ed-margin default-hide">
-                                        <h4 class="form-heading ">Educational Background 6</h4>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-md-offset-1 col-md-11">
-                                                <div class="col-md-4">
-                                                    <div class="form-group required">
-                                                        {!!Form::label('ed_university', 'University', ['class' => ''])!!}
-                                                        {!!Form::text('ed_university_6', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!!Form::label('ed_field_of_study', 'Field of study')!!}
-                                                        {!!Form::text('ed_field_of_study_6', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        {!!Form::label('ed_program_of_study', 'Program of study')!!}
-                                                        {!!Form::text('ed_program_of_study_6', null, ['class' => 'form-control'])!!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-offset-1 col-md-11">
-                                                <div class="col-md-8">
-                                                    <div class="form-group required">
-                                                        {!!Form::label('duration', 'Duration', ['class' => ''])!!}<br>
-                                                        {!!Form::select('ed_from_month_6', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                        {!!Form::select('ed_from_year_6', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                        &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
-                                                        {!!Form::select('ed_to_month_6', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                        {!!Form::select('ed_to_year_6', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endfor
 
                                     <div class="row">
-                                        <button type="button" id="add_ed" class="btn btn-primary pull-right">add Educational Background</button>
+                                        <button type="button" id="add_ed" class="btn btn-primary pull-right">Add Educational Background</button>
                                     </div>
-
-                                    <script type="text/javascript">
-                                        (function(){
-                                            'use strict';
-                                            var ed1 = document.getElementById('educational1');
-                                            var ed2 = document.getElementById('educational2');
-                                            var ed3 = document.getElementById('educational3');
-                                            var ed4 = document.getElementById('educational4');
-                                            var ed5 = document.getElementById('educational5');
-                                            var ed6 = document.getElementById('educational6');
-                                            var add_btn = document.getElementById('add_ed');
-                                            var time;
-                                            var clone = ed2.cloneNode(true);
-                                            ed2.parentNode.appendChild(clone);
-                                            clone.style.cssText = "display:block; height:auto; visibility:hidden;";
-                                            var clone_height = clone.offsetHeight;
-                                            ed2.parentNode.removeChild(clone);
-                                            // add_btn.onclick = console.log('ume');
-                                            // console.log('seto');
-                                            add_btn.addEventListener('click', function() {
-                                                var hide = document.getElementsByClassName('default-hide');
-                                                if(hide.length > 0){
-                                                    console.log(hide[0].id);
-
-                                                    var a = document.getElementById(hide[0].id);
-                                                    var a_height = a.offsetHeight;
-                                                    a.style.display = 'block';
-                                                    slide_down(a_height);
-                                                    function slide_down(a_height){
-                                                        if (a_height < clone_height) {
-                                                            a_height += 5;
-                                                            a.style.height = a_height + "px";
-                                                            time = setTimeout(function () {
-                                                                slide_down(a_height)
-                                                            }, 1);
-                                                        }else {
-                                                            clearTimeout(time);
-                                                            hide[0].classList.remove('default-hide');
-                                                        }
-                                                    }
-                                                    if (hide.length == 1) {
-                                                        this.classList.add('default-hide');
-                                                    }
-                                                }
-                                            });
-
-
-
-                                        })();
-                                    </script>
 
                                     <hr>
 
@@ -612,11 +346,12 @@
                                         <div class="col-md-offset-1 col-md-11">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    {!!Form::textarea('summary', null, ['class' => 'form-control'])!!}
+                                                    {!!Form::textarea('summary', $resume->summary, ['class' => 'form-control'])!!}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    {{$resume->id}}
                                                 {{-- {{ resume_skill_array('PHP') }} --}}
                                                 {{-- {!!Form::select('skills[]', resume_skill_array('PHP'), resume_skill_array('PHP'), ['class' => 'ui fluid normal dropdown multi-select', 'multiple' => 'multiple'])!!} --}}
 
@@ -631,7 +366,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "PHP")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -645,7 +380,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "Ruby")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -659,7 +394,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "Java")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -677,7 +412,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "C++")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -691,7 +426,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "Python")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -705,7 +440,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "Swift")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -723,7 +458,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "Go")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -738,7 +473,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "C#")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -752,7 +487,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "Javascript")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -770,7 +505,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "Node.js")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -784,7 +519,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "versioncontrol")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -798,7 +533,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "CSSframework")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -816,7 +551,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "CSSpreprocessors/postprocessors")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -830,7 +565,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "Cloudhosting")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -844,7 +579,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "Mobileappprogramming")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -862,7 +597,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "Database")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -876,7 +611,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "otherlanguages")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -890,7 +625,7 @@
                                                         <option value="">Select</option>
                                                         @for($i=0; $i < count($skills) ; $i++)
                                                             @if($skills[$i]->language == "othertools")
-                                                                <option value={{$skills[$i]->id}}>{{$skills[$i]->category}}</option>
+                                                                @include('inc.dropdown-content')
                                                             @endif
                                                         @endfor
                                                     </select>
@@ -905,7 +640,7 @@
                                         <div class="col-md-offset-1 col-md-11">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    {!!Form::textarea('other_skills', null, ['class' => 'form-control'])!!}
+                                                    {!!Form::textarea('other_skills', $resume->other_skills, ['class' => 'form-control'])!!}
                                                 </div>
                                             </div>
                                         </div>
@@ -917,56 +652,81 @@
                                         <div class="col-md-offset-1 col-md-11">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    {!!Form::textarea('websites', null, ['class' => 'form-control'])!!}
+                                                    {!!Form::textarea('websites', $resume->websites, ['class' => 'form-control'])!!}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <h4 class="form-heading">Experience</h4>
+
+
+                                    @for ($i=0; $i < 10; $i++)
+                                        <?php $number_ex = $i + 1 ?>
+
+                                        @if (count($experiences) == 0 && $i == 0)
+                                            <div id="experience{{$number_ex}}" class="ex-margin">
+                                        @elseif  ($i < count($experiences))
+                                            <div id="experience{{$number_ex}}" class="ex-margin">
+                                        @else
+                                            <div id="experience{{$number_ex}}" class="ex-margin default-hide-ex">
+                                        @endif
+
+                                            <h4 class="form-heading">Experience {{$number_ex}}</h4>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-offset-1 col-md-11">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {!!Form::label('ex_company', 'Company:')!!}
+                                                            {!!Form::text("ex_company_{$number_ex}", $experiences[$i]->ex_company ?? '', ['class' => 'form-control'])!!}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {!!Form::label('ex_position', 'Position:')!!}
+                                                            {!!Form::text("ex_position_{$number_ex}", $experiences[$i]->ex_postion ?? '', ['class' => 'form-control'])!!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-offset-1 col-md-11">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {!!Form::label('duration', 'Duration:')!!}<br>
+                                                            {!!Form::select("ex_from_month_{$number_ex}", month_array(), $experiences[$i]->ex_from_month ?? '', ['class' => 'ui dropdown single-select'])!!},
+                                                            {!!Form::select("ex_from_year_{$number_ex}", year_array(), $experiences[$i]->ex_from_year ?? '', ['class' => 'ui dropdown single-select'])!!}
+                                                            &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+                                                            {!!Form::select("ex_to_month_{$number_ex}", month_array(), $experiences[$i]->ex_to_month ?? '', ['class' => 'ui dropdown single-select'])!!},
+                                                            {!!Form::select("ex_to_year_{$number_ex}", year_array(), $experiences[$i]->ex_to_year ?? '', ['class' => 'ui dropdown single-select'])!!}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {!!Form::label('ex_explanation', 'Responsibilities:')!!}
+                                                            {!!Form::textarea('ex_explanation', $experiences[$i]->ex_explanation ?? '', ['class' => 'form-control'])!!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endfor
+
+                                    <div class="row">
+                                        <button type="button" id="add_ex" class="btn btn-primary pull-right">Add Experience</button>
+                                    </div>
+
                                     <hr>
-                                    <div class="row">
-                                        <div class="col-md-offset-1 col-md-11">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {!!Form::label('ex_company', 'Company:')!!}
-                                                    {!!Form::text('ex_company', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {!!Form::label('ex_position', 'Position:')!!}
-                                                    {!!Form::text('ex_position', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
+                                    <div class="row progress-buttons">
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-default prev-step">Previous</button>
+                                            <button type="button" class="btn btn-primary next-step">Save and continue</button>
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-offset-1 col-md-11">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {!!Form::label('duration', 'Duration:')!!}<br>
-                                                    {!!Form::select('ex_from_month', month_array(), null, ['class' => 'ui dropdown single-select'])!!},
-                                                    {!!Form::select('ex_from_year', year_array(), null, ['class' => 'ui dropdown single-select'])!!}
-                                                    &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
-                                                    {!!Form::select('ex_to_month', month_array(), null, ['class' => 'ui dropdown single-select'])!!},
-                                                    {!!Form::select('ex_to_year', year_array(), null, ['class' => 'ui dropdown single-select'])!!}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {!!Form::label('ex_explanation', 'Responsibilities:')!!}
-                                                    {!!Form::textarea('ex_explanation', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <ul class="list-inline pull-right">
-                                        <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                                        <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
-                                    </ul>
                                 </div>
                                 <div class="tab-pane wizard-step" role="tabpanel" id="step3">
                                     <h4 class="form-heading required-label">Objective</h4>
@@ -1011,145 +771,76 @@
                                         </div>
                                     </div>
 
-                                    <h4 class="form-heading">Character Reference1</h4>
+
+
+                                    @for ($i=0; $i < 10; $i++)
+                                        <?php $number_cr = $i + 1 ?>
+
+                                        @if (count($cr) == 0 && $i == 0)
+                                            <div id="cr{{$number_cr}}" class="ex-margin">
+                                        @elseif  ($i < count($cr))
+                                            <div id="cr{{$number_cr}}" class="ex-margin">
+                                        @else
+                                            <div id="cr{{$number_cr}}" class="ex-margin default-hide-cr">
+                                        @endif
+
+                                            <h4 class="form-heading">Character Reference {{$number_cr}}</h4>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-offset-1 col-md-11">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {!!Form::label('cr_company', 'Company:', ['class' => 'required-label'])!!}
+                                                            {!!Form::text("cr_company_{$number_cr}", $cr[$i]->cr_company_or_university ?? '', ['class' => 'form-control'])!!}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {!!Form::label('cr_position', 'Position:')!!}
+                                                            {!!Form::text("cr_position_{$number_cr}", $cr[$i]->cr_position ?? '', ['class' => 'form-control'])!!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-offset-1 col-md-11">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {!!Form::label('cr_name', 'Name:', ['class' => 'required-label'])!!}
+                                                            {!!Form::text('cr_name_{$number_cr}', $cr[$i]->cr_name ?? '', ['class' => 'form-control'])!!}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {!!Form::label('cr_phone_number', 'Phone number:', ['class' => 'required-label'])!!}
+                                                            {!!Form::text('cr_phone_number', $cr[$i]->cr_phone_number ?? '', ['class' => 'form-control'])!!}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {!!Form::label('cr_email', 'Email address:')!!}
+                                                            {!!Form::text('cr_email', $cr[$i]->cr_email ?? '', ['class' => 'form-control'])!!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endfor
+
+                                    <div class="row">
+                                        <button type="button" id="add_cr" class="btn btn-primary pull-right">Add Character References</button>
+                                    </div>
+
                                     <hr>
-                                    <div class="row">
-                                        <div class="col-md-offset-1 col-md-11">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_company', 'Company:', ['class' => 'required-label'])!!}
-                                                    {!!Form::text('cr_company', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_position', 'Position:')!!}
-                                                    {!!Form::text('cr_position', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-offset-1 col-md-11">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_name', 'Name:', ['class' => 'required-label'])!!}
-                                                    {!!Form::text('cr_name', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_phone_number', 'Phone number:', ['class' => 'required-label'])!!}
-                                                    {!!Form::text('cr_phone_number', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_email', 'Email address:')!!}
-                                                    {!!Form::text('cr_email', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <h4 class="form-heading">Character Reference2</h4>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-md-offset-1 col-md-11">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_company_2', 'Company:')!!}
-                                                    {!!Form::text('cr_company_2', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_position_2', 'Position:')!!}
-                                                    {!!Form::text('cr_position_2', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-offset-1 col-md-11">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_name_2', 'Name:')!!}
-                                                    {!!Form::text('cr_name_2', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_phone_number_2', 'Phone number:')!!}
-                                                    {!!Form::text('cr_phone_number_2', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_email_2', 'Email address:')!!}
-                                                    {!!Form::text('cr_email_2', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <h4 class="form-heading">Character Reference3</h4>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-md-offset-1 col-md-11">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_company_3', 'Company:')!!}
-                                                    {!!Form::text('cr_company_3', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_position_3', 'Position:')!!}
-                                                    {!!Form::text('cr_position_3', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-offset-1 col-md-11">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_name_3', 'Name:')!!}
-                                                    {!!Form::text('cr_name_3', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_phone_number_3', 'Phone number:')!!}
-                                                    {!!Form::text('cr_phone_number_3', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    {!!Form::label('cr_email_3', 'Email address:')!!}
-                                                    {!!Form::text('cr_email_3', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     {!! Form::hidden('is_active', 1) !!}
                                     {!! Form::hidden('is_master', 1) !!}
 
-                                    <p>This is step 3</p>
                                     <ul class="list-inline pull-right">
                                         <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
                                         <!-- <li><button type="button" class="btn btn-default next-step">Skip</button></li> -->

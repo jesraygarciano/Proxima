@@ -62,7 +62,7 @@
                 <div class="col-md-12 cover-info">
                     <div class="cover-image">
                           @if(!empty($company->background_photo))
-                               <img src="{{ $company->background_photo }}" alt="{{ $company->company_name}} Cover photo" />
+                               <img src="/storage/{{ $company->background_photo }}" alt="{{ $company->company_name}} Cover photo" />
                           @else
                               <img src="{{ asset('img/default-opening.jpg') }}" class="bg-img">
                           @endif                        
@@ -111,8 +111,13 @@
                         {{ $company->what }}
                     </p>
                     <h3>Why join us?:</h3>
-                        <img src="{{ $company->what_photo1 }}" alt="{{ $company->company_name}}" />
-                    <p>
+
+                          @if(!empty($company->what_photo1))
+                               <img style="height:100%;width:100%;" src="/storage/{{ $company->what_photo1 }}" alt="{{ $company->company_name}} Cover photo" />
+                          @else
+                                <img style="width: 100%;" src="http://www.pek-cy.com/sites/default/files/default-image.png" class="bg-img">
+                          @endif
+                    <p style="padding-top:1rem;">
                         {{ $company->what_photo1_explanation }}
                     </p>
 
@@ -146,7 +151,7 @@
                         </li>
                         <li>
                             <div class="field-name">Language spoken</div>
-                            <div class="field-value">{{ $company->language }}</div>
+                            <div class="field-value">{{ $company->spoken_language }}</div>
                         </li>
                     </ul>
                 </div>

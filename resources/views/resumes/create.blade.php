@@ -64,14 +64,14 @@
                                                     {!!Form::text('f_name', $user->f_name, ['class' => 'form-control'])!!}
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     {!!Form::label('m_name', 'Middle Name')!!}
                                                     {!!Form::text('m_name', $user->m_name, ['class' => 'form-control'])!!}
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-4">
                                                 <div class="form-group required">
                                                     {!!Form::label('l_name', 'Last Name', ['class' => 'required-label'])!!}
@@ -79,7 +79,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>                            
+                                    </div>
 
                                     <h4 class="form-heading required-label">Phone Number</h4>
                                     <hr>
@@ -185,12 +185,13 @@
                                                 <div class="form-group">
                                                     {{-- {!!Form::label('gender', 'Gender:')!!}<br> --}}
                                                     <input name="gender" type="radio" checked value="male">&nbsp;&nbsp;male&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <input name="gender" type="radio" value="female">&nbsp;&nbsp;female
+                                                    <input name="gender" type="radio" value="female">&nbsp;&nbsp;female&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input name="gender" type="radio" checked value="no-answer">&nbsp;&nbsp;no answer
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-        {{-- 
+        {{--
                                     <h4 class="form-heading">Religion</h4>
                                     <hr>
                                     <div class="row">
@@ -211,7 +212,8 @@
                                                 <div class="form-group">
                                                     {{-- {!!Form::label('civil_status', 'Marital Status:')!!}<br> --}}
                                                     <input name="marital_status" type="radio" checked value="single">&nbsp;&nbsp;single&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <input name="marital_status" type="radio" value="married">&nbsp;&nbsp;married
+                                                    <input name="marital_status" type="radio" value="married">&nbsp;&nbsp;married&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input name="marital_status" type="radio" checked value="no-answer">&nbsp;&nbsp;no answer
                                                 </div>
                                             </div>
                                         </div>
@@ -267,46 +269,64 @@
                                         </div>
                                     </div>
 
-                                    <h4 class="form-heading required-label">Educational Background</h4>
+                                    @for ($i=0; $i < 6; $i++)
+                                        <?php $number_ed = $i + 1 ?>
+
+                                        @if ($i == 0)
+                                            <div id="educational{{$number_ed}}" class="ed-margin">
+                                        @else
+                                            <div id="educational{{$number_ed}}" class="ed-margin default-hide-ed">
+                                        @endif
+
+                                            <h4 class="form-heading required-label">Educational Background {{$number_ed}}</h4>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-offset-1 col-md-11">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group required">
+                                                            {!!Form::label('ed_university', 'University', ['class' => 'required-label'])!!}
+                                                            {!!Form::text("ed_university_{$number_ed}", null, ['class' => 'form-control'])!!}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {!!Form::label('ed_field_of_study', 'Field of study')!!}
+                                                            {!!Form::text("ed_field_of_study_{$number_ed}", null, ['class' => 'form-control'])!!}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {!!Form::label('ed_program_of_study', 'Program of study')!!}
+                                                            {!!Form::text("ed_program_of_study_{$number_ed}", null, ['class' => 'form-control'])!!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-offset-1 col-md-11">
+                                                    <div class="col-md-8">
+                                                        <div class="form-group required">
+                                                            {!!Form::label('duration', 'Duration', ['class' => 'required-label'])!!}<br>
+                                                            {!!Form::select("ed_from_month_{$number_ed}", month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
+                                                            {!!Form::select("ed_from_year_{$number_ed}", year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
+                                                            &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+                                                            {!!Form::select("ed_to_month_{$number_ed}", month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
+                                                            {!!Form::select("ed_to_year_{$number_ed}", year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endfor
+
+                                    <div class="row">
+                                        <button type="button" id="add_ed" class="btn btn-primary pull-right">Add Educational Background</button>
+                                    </div>
+
                                     <hr>
-                                    <div class="row">
-                                        <div class="col-md-offset-1 col-md-11">
-                                            <div class="col-md-4">
-                                                <div class="form-group required">
-                                                    {!!Form::label('ed_university', 'University', ['class' => 'required-label'])!!}
-                                                    {!!Form::text('ed_university', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
 
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    {!!Form::label('ed_field_of_study', 'Field of study')!!}
-                                                    {!!Form::text('ed_field_of_study', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    {!!Form::label('ed_program_of_study', 'Program of study')!!}
-                                                    {!!Form::text('ed_program_of_study', null, ['class' => 'form-control'])!!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-offset-1 col-md-11">
-                                            <div class="col-md-8">
-                                                <div class="form-group date-range required">
-                                                    {!!Form::label('duration', 'Duration', ['class' => 'required-label'])!!}<br>
-                                                    {!!Form::select('ed_from_month', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                    {!!Form::select('ed_from_year', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                    &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
-                                                    {!!Form::select('ed_to_month', month_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!},
-                                                    {!!Form::select('ed_to_year', year_array(), null, ['class' => 'ui dropdown single-select parent-form-group'])!!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="row">
                                         <button type="button" class="btn btn-primary pull-right next-step">Save and continue</button>
                                     </div>
@@ -861,7 +881,7 @@
                                         <!-- <li><button type="button" class="btn btn-default next-step">Skip</button></li> -->
                                         <li><button type="button" class="btn btn-primary btn-info-full next-step">Save and continue</button></li>
                                     </ul>
-                                </div>                   
+                                </div>
                                 <div class="tab-pane wizard-step" role="tabpanel" id="complete">
                                     <h3>Complete</h3>
                                     <p>You have successfully completed all steps.</p>

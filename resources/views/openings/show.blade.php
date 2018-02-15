@@ -118,16 +118,49 @@
                         </div>
                     </div>
 
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="ui form">
+                                <label>Primary address:</label>
+                                <div class="info">
+                                    {{$opening->address1}}                            
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="ui form">
+                                <label>Secondary address:</label>
+                                <div class="info">
+                                    {{$opening->address2}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="ui form">
-                        <label>Address</label>
+                        <label>City/Province:</label>
                         <div class="info">
+                            @foreach($provinces as $province)                        
+                                {{$province->iso_code === $opening->province_code ? $province->name : ''}}
+                            @endforeach
+                            {{ $opening->city }}                             
+                        </div>
+                    </div>
 
-                        {{$opening->address1}},
-                        {{$opening->address2}},
-                        {{$opening->province_code}},
-                        {{$opening->country_code}}
-                        {{$opening->postal}}
+                    <div class="ui form">
+                        <label>Postal:</label>
+                        <div class="info">
+                            {{$opening->postal}}                            
+                        </div>
+                    </div>
 
+                    <div class="ui form">
+                        <label>Country:</label>
+                        <div class="info">
+                            @foreach($countries as $country)
+                                {{$country->iso_alpha3 === $opening->country_code ? $country->name : ''}}
+                            @endforeach                            
                         </div>
                     </div>
 

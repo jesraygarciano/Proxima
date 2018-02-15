@@ -3,9 +3,14 @@
 @section('content')
 
 <style type="text/css">
+  *{
+    line-height: initial!important;
+  }
+
   .landing-image{
     background:url("https://images.unsplash.com/photo-1448932223592-d1fc686e76ea?ixlib=rb-0.3.5&s=990bfb15aef2718e2488c1c36452afc4&auto=format&fit=crop&w=1498&q=80") center center / cover no-repeat fixed rgba(0, 0, 0, 0.7); height:450px;
     margin-top: -20px;
+    position: relative;
   }
 
   .pricing-panel{
@@ -38,11 +43,11 @@
     left: 50%;
     top:50%;
     transform: translateY(-50%) translateX(-50%);
-    width: 100%;
   }
 
   .max-width-500{
     max-width: 500px;
+    width: 100%;
   }
 
   .price-tile{
@@ -87,6 +92,13 @@
     color: #1679a3;
   }
 
+  .pricing-tile .dash{
+    font-size: 100px;
+    color:#cecece;
+    margin-top: -60px;
+    margin-bottom: -30px;
+  }
+
   .pricing .price-num{
     font-size: 50px;
   }
@@ -98,9 +110,17 @@
     font-weight: bold;
     border-radius: 5px;
   }
+
+  .eee-bg-text{
+    display: inline;
+    background: #eee;
+  }
 </style>
 
 <div class="landing-image">
+  <div class="absolut-center">
+    <span class="eee-bg-text" style="font-size: 50px; padding:10px; font-weight: bold;">Hire faster and effeciently.</span>
+  </div>
 </div>
 <div class="container" style="text-align: center; margin-top:20px;">
   <div style="max-width: 800px; margin:auto;">
@@ -139,11 +159,11 @@
         <div class="col-md-3">
           <div class="price-tile">
             <h3>MONTHLY</h3>
-            <div style="font-size: 100px; transform: translateY(-10px); color:#cecece;">-</div>
+            <div class="dash">-</div>
             <br>
             <div class="pricing">
               <div class="currency">
-                ₱
+                â‚±
               </div>
               <div class="price-num">100</div>
             </div>
@@ -161,11 +181,11 @@
         <div class="col-md-3">
           <div class="price-tile">
             <h3>MONTHLY</h3>
-            <div style="font-size: 100px; transform: translateY(-10px); color:#cecece;">-</div>
+            <div class="dash">-</div>
             <br>
             <div class="pricing">
               <div class="currency">
-                ₱
+                â‚±
               </div>
               <div class="price-num">100</div>
             </div>
@@ -183,11 +203,11 @@
         <div class="col-md-3">
           <div class="price-tile">
             <h3>MONTHLY</h3>
-            <div style="font-size: 100px; transform: translateY(-10px); color:#cecece;">-</div>
+            <div class="dash">-</div>
             <br>
             <div class="pricing">
               <div class="currency">
-                ₱
+                â‚±
               </div>
               <div class="price-num">100</div>
             </div>
@@ -205,11 +225,11 @@
         <div class="col-md-3">
           <div class="price-tile">
             <h3>MONTHLY</h3>
-            <div style="font-size: 100px; transform: translateY(-10px); color:#cecece;">-</div>
+            <div class="dash">-</div>
             <br>
             <div class="pricing">
               <div class="currency">
-                ₱
+                â‚±
               </div>
               <div class="price-num">100</div>
             </div>

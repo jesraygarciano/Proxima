@@ -27,6 +27,7 @@
             <link rel="stylesheet" href="{{ asset('css/carosel.css') }}">
         @endif
 
+        <link rel="stylesheet" href="{{ asset('css/form.css') }}">
         <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/components/opening-component.css') }}">
         <link rel="stylesheet" href="{{ asset('css/components/applied-component.css') }}">
@@ -74,6 +75,8 @@
 
         {{-- @endif --}}
         <!-- Semantic UI css end-->
+
+        @yield('css')
 
     </head>
     <body>
@@ -152,6 +155,7 @@
         <script type="text/javascript" src="{{asset('js/progress_bar.js')}}"></script>
         <script type="text/javascript" src="{{asset('js/photo_update.js')}}"></script>
         <script type="text/javascript" src="{{asset('js/croppie.min.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/form.js')}}"></script>
 
 
         @if(Request::path() == 'resumes/create' || Request::path() == 'openings' || Request::url('/resumes/{id}/edit'))
@@ -165,5 +169,7 @@
         @include('inc.image-cropper')
         @include('inc.marker')
         @include('inc.programming-skills-modal')
+
+        @yield('scripts')
     </body>
 </html>

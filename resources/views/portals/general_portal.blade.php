@@ -318,19 +318,6 @@
           width: 180px;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     </style>
 
     <div class="general-hero" style="margin-top:-30px;">
@@ -485,7 +472,13 @@
                                         </i>
                                     </div>
                                     <div class="li-content text-wrapper">
-                                        {{ $opening->company->address1 }}
+                                        {{$opening->address1}},
+                                        {{$opening->address2}},
+                                        @foreach($provinces as $province)                        
+                                            {{$province->iso_code === $opening->province_code ? $province->name : ''}}
+                                        @endforeach
+                                        {{$opening->postal}}
+                                        
                                     </div>
                                 </li>
                                 <li>

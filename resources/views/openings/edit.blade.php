@@ -5,6 +5,7 @@
 <?php 
     $skills = return_resume_Skills();
     $current_opening_skills = $opening ? $opening->skill_requirements()->lists('opening_skills.id')->toArray() : [];
+
 ?>
 
 <style type="text/css">
@@ -15,6 +16,34 @@
     .page-header .fa{
         color: #0f739b;
     }
+    fieldset.scheduler-border {
+        border: 1px groove rgba(34, 36, 38, 0.15) !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow:  0px 0px 0px 0px #000;
+                box-shadow:  0px 0px 0px 0px #000;
+    }
+
+        legend.scheduler-border {
+            font-size: 1em !important;
+            font-weight: bold !important;
+            text-align: left !important;
+            width:auto;
+            padding:0 10px;
+            border-bottom:none;
+        }
+
+        #opening_city{
+            padding: 1.1rem 1rem;
+        }
+        #postal-code-add{
+            padding: 1.1rem 1rem;
+        }
+        #expiredate{
+            font-weight: bold;
+            color: #962525;
+            font-size: 13px;            
+        }        
 </style>
 
 
@@ -50,33 +79,6 @@
                 </div>
             </div>
 
-        <style type="text/css">
-        fieldset.scheduler-border {
-            border: 1px groove rgba(34, 36, 38, 0.15) !important;
-            padding: 0 1.4em 1.4em 1.4em !important;
-            margin: 0 0 1.5em 0 !important;
-            -webkit-box-shadow:  0px 0px 0px 0px #000;
-                    box-shadow:  0px 0px 0px 0px #000;
-        }
-
-            legend.scheduler-border {
-                font-size: 1em !important;
-                font-weight: bold !important;
-                text-align: left !important;
-                width:auto;
-                padding:0 10px;
-                border-bottom:none;
-            }
-
-            #opening_city{
-                padding: 1.1rem 1rem;
-            }
-            #postal-code-add{
-                padding: 1.1rem 1rem;
-            }
-
-        </style>
-
             <br />
             <fieldset class="scheduler-border">
                 <legend class="scheduler-border">Location</legend>
@@ -90,75 +92,84 @@
                         </div>
 
             <br />
+
             <div id="tab" class="btn-group" data-toggle="buttons">
-                <a href="#prices" class="btn btn-default active" id="domestic">
+                @if(!empty($opening->province_code))
+                <a href="#prices" class="btn btn-default active" data-toggle="tab">
+                @else
+                <a href="#prices" class="btn btn-default" data-toggle="tab">                
+                @endif
                     <input type="radio" />Domestic</a>
-                <a href="#features" class="btn btn-default" id="international">
+
+                @if(!empty($opening->country_code) && !$opening->country_code='PHL')
+                <a href="#features" class="btn btn-default active" data-toggle="tab">
+                @else
+                <a href="#features" class="btn btn-default" data-toggle="tab">
+                @endif
                     <input type="radio" />International</a>
             </div>
 
             <div class="tab-content">
+                @if(!empty($opening->province_code))
                 <div class="tab-pane active" id="prices">
-                        <div class="row" id="domestic-address">
-                            <div class="col-md-6">
-                                <div class="ui form">
-                                    <label>Province:</label>
+                @else
+                <div class="tab-pane" id="prices">
+                @endif
 
-                                    <!--  fluid normal dropdown multi-select  -->
-                                    <select class="form-control provinceopening" name="province" id="province">
-                                        <option value="" checked>Province</option>
-                                        
-                                        @foreach($provinces as $province)
-                                            <option data-value="{{$province->iso_code}}" value="{{ $opening ? $opening->iso_code : null }}">{{$province->name}}</option>
-                                        @endforeach
+                    <div class="row" id="domestic-address">
+                        <div class="col-md-6">
+                            <div class="ui form">
+                                <label>Province:</label>
+                                <!--  fluid normal dropdown multi-select  -->
+                                <select class="form-control provinceopening" name="province" id="province">
+                                    <option value="" checked>Province</option>
+                                    
+                                    @foreach($provinces as $province)
+                                        <option data-value="{{$province->iso_code}}" value="{{$province->iso_code ?? old('iso_code')}}" {{$province->iso_code === $opening->province_code ? 'selected' : ''}}>{{$province->name}}</option>
+                                    @endforeach
 
-                                    </select>
-                                </div>
+                                </select>
                             </div>
-                            <div class="col-md-4">
-                                <div class="ui form">
-                                    <label>Postal Code</label>
-                                    <input type="number" value="{{ $opening->postal ?? old('postal') }}" name="postal" id="postal-code-add">
-                                </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ui form">
+                                <label>Postal Code</label>
+                                <input type="number" value="{{ $opening->postal ?? old('postal') }}" name="postal" id="postal-code-add">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if(!empty($opening->country_code) && !$opening->country_code='PHL')
+                <div class="tab-pane active" id="features">
+                @else
+                <div class="tab-pane" id="features">                
+                @endif
+                    <div class="row" id="international-address">
+                        <div class="col-md-6">
+                            <div class="ui form">
+                                <label>Countries:</label>
+                                <!--  fluid normal dropdown multi-select  -->
+                                <select class="form-control opening_country" name="country" id="country">
+                                    <option value="" checked>Select Country</option>
+                                    @foreach($countries as $country)
+                                        <option data-value="{{$country->iso_alpha3}}" value="{{$country->iso_alpha3 ?? old('iso_alpha3')}}" {{$country->iso_alpha3 === $opening->country_code ? 'selected' : ''}} >{{$country->name}}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
-                        <div class="row" id="international-address">
-                            <div class="col-md-6">
-                                <div class="ui form">
-                                    <label>Countries:</label>
-                                    <!--  fluid normal dropdown multi-select  -->
-                                    <select class="form-control opening_country" name="country" id="country" style="border:1px solid #dededf;color:#dededf;" disabled>
-                                        <option value="" checked>Select Country</option>
-                                        @foreach($countries as $country)
-                                            <option data-value="{{$country->iso_alpha3}}" value="{{$country->iso_alpha3}}">{{$country->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                        <div class="col-md-6">
+                            <div class="ui form">
+                                <label>City:</label>
+                                    <input type="text" id="opening_city" value="{{ $opening->city ?? old('city') }}" name="city">
                             </div>
-
-                            <div class="col-md-6">
-                                <div class="ui form">
-                                    <label>City:</label>
-                                        <input type="text" id="opening_city" value="{{ $opening->city ?? old('city') }}" name="city" disabled="true" disabled>
-                                </div>
-                            </div>
-                        </div>                        
+                        </div>
+                    </div>
                 </div>
 
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        $('#province').val("{{$_GET['province'] ?? ''}}");
-                    });
-                </script>
-
-                <div class="tab-pane" id="features">
-
-                </div>
             </div>
-
-
-
             </fieldset>
 
             <div class="ui form">
@@ -177,20 +188,49 @@
             @if(date('Y-m-d\TH:i') > $opening->from_post)
                 <div class="ui form">
                     <label>Start date</label>
-                    <input style="font-size: 1.5em;color:#a9a9a9" type="datetime-local" 
+                    <input style="font-size: 1em;color:#a9a9a9" type="datetime-local" 
                     min="{{ date('Y-m-d\TH:i') }}" max="" value="{{ date('Y-m-d\TH:i',strtotime($opening->from_post)) }}"
                             disabled="disabled"
                      name="from_post">
                 </div>
+
+                <br />
+                <div class="ui form">
+                    <label for="" id="expiredate-label">Expire date</label>
+                    <h4 id="expiredate" style="font-size: 1em;color:#a9a9a9">
+                        {{ date(' m/j/Y, h:i A',strtotime($opening->until_post)) }}                        
+                    </h4>        
+                </div>                
+
             @else
                 <div class="ui form">
                     <label>Start date</label>
-                    <input style="font-size: 1.5em;" type="datetime-local" 
+                    <input style="font-size: 1.1em;" type="datetime-local" 
                     min="{{ date('Y-m-d\TH:i') }}" max="" value="{{ date('Y-m-d\TH:i',strtotime($opening->from_post)) }}"
                      name="from_post">
                 </div>
 
+                <br />
+                <div class="ui form">
+                    <label for="" id="expiredate-label" style="display:none;">Expire date</label>
+                    <h4 id="expiredate"></h4>
+                </div>
             @endif
+
+            <script type="text/javascript">
+                $("input[type=datetime-local]").change(function(){
+                    // $("#expiredate").innerHTML(this.value);
+                    function addDays(theDate, days){
+                        return new Date(theDate.getTime()+days*24*60*60*1000);
+                    }
+                    var inputDate = dateFormat(addDays(new Date(this.value), 30),"mm/dd/yyyy, h:MM TT");
+
+                    // var inputDate =  dateFormat(new Date(), "mm/dd/yy, h:MM:ss TT");
+                    $("#expiredate-label").show();                    
+                    $("#expiredate").text(inputDate);
+                        // inputDate.setDate(inputDate.getDate()+7);                                                    
+                });
+            </script>
 
             {{-- @endif
 
