@@ -98,7 +98,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function getNameAttribute(){
-        return $this->attributes['f_name'].' '.$this->attributes['l_name'];
+        $name = $this->attributes['f_name'].' '.$this->attributes['l_name'];
+
+        return trim($name,' ') != '' ? $name : 'Unknown';
     }
 
     public function getPhotoAttribute(){

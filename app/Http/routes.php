@@ -156,7 +156,7 @@ Route::get('fire', function () {
 });
 
 
-Route::group(['prefix'=>'messaging'], function(){
+Route::group(['prefix'=>'messaging', 'middleware'=>'auth'], function(){
 	Route::get('index',function(){
 		return view('messaging.index');
 	});
@@ -165,6 +165,8 @@ Route::group(['prefix'=>'messaging'], function(){
 	Route::group(['prefix'=>'json'], function(){
 		Route::get('fetch/user/messages', ['as'=>'json_return_user_messages', 'uses'=>'MessagerController@json_return_user_messages']);
 		Route::get('fetch/chatable/users', ['as'=>'json_return_chatable_users', 'uses'=>'MessagerController@json_return_chatable_users']);
+		Route::post('save/sent/message', ['as'=>'json_save_sent_message', 'uses'=>'MessagerController@json_save_sent_message']);
+		Route::post('mark/message/seen', ['as'=>'json_mark_message_seen', 'uses'=>'MessagerController@json_mark_message_seen']);
 	});
 });
 

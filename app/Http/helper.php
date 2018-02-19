@@ -114,7 +114,6 @@ function month_array() {
 
 function salary_ranges() {
     $salary_ranges = array(
-            ""   => "Select Range",
             "1" => "less than Php 9,000",
             "2" => "Php 10,000 ~ Php 14,999",
             "3" => "Php 15,000 ~ Php 19,999",

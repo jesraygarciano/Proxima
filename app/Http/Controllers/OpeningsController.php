@@ -54,7 +54,6 @@ class OpeningsController extends Controller
     {
 
         // revise
-
         $openings = Opening::query()->where('is_active', 1)->orderBy('created_at','desc');
         $provinces = \DB::table('provinces')->get();
         $countries = \DB::table('countries')->get();
@@ -192,11 +191,21 @@ class OpeningsController extends Controller
         $this->validate($request, [
             'title' => 'required',
             // 'picture' => 'required',
+            'hiring_type' => 'required',
             'skills' => 'required',
             'salary_range' => 'required',
             'details' => 'required',
             'requirements' => 'required',
-        ]);
+        ],
+        [
+            'title.required' => 'Please input the Job title',
+            'skills.required' => 'Please choose atleast one skill requirement',
+            'hiring_type.required' => 'Please choose the type of job',            
+            'salary_range.required' => 'Please select salary range',
+            'details.required' => 'Please provide details on new Opening Job',
+            'requirements.required' => 'Please provide requirements for this Opening job',
+        ]
+    );
 
         // Handle file upload
         // if($request->hasFile('picture')){
@@ -347,10 +356,19 @@ class OpeningsController extends Controller
         $this->validate($request, [
             'title' => 'required',
             // 'picture' => 'required',
+            'hiring_type' => 'required',
             'skills' => 'required',
             'salary_range' => 'required',
             'details' => 'required',
             'requirements' => 'required',
+        ],
+        [
+            'title.required' => 'Please input the Job title',
+            'skills.required' => 'Please choose atleast one skill requirement',
+            'hiring_type.required' => 'Please choose the type of job',            
+            'salary_range.required' => 'Please select salary range',
+            'details.required' => 'Please provide details on new Opening Job',
+            'requirements.required' => 'Please provide requirements for this Opening job',
         ]);
 
         // Handle file upload

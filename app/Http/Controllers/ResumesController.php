@@ -57,10 +57,11 @@ class ResumesController extends Controller
 
         // dd($request->skills);
         $this->validate($request, [
-            // 'f_name' => 'required',
-            // 'm_name' => 'required',
-            // 'l_name' => 'required',
-            // 'email' => 'required',
+            'f_name' => 'required',
+            // 'picture' => 'required',
+        ],
+        [
+            'f_name.required' => 'Please input First name',
         ]);
 
 
@@ -119,7 +120,6 @@ class ResumesController extends Controller
                 $resume->has_skill()->attach($resume_skill_id);
             }
         }
-
         return redirect('resumes/show')->with('success', 'Registerd you resume');
     }
 
@@ -131,7 +131,6 @@ class ResumesController extends Controller
      */
     public function show()
     {
-
         $user = \Auth::user();
         $resume = Resume::where('user_id', \Auth::id())->where('is_active', 1)->where('is_master', 1)->get()->first();
         $skill_ids = array();
@@ -146,7 +145,6 @@ class ResumesController extends Controller
         $birth_date = Common::month_converted_date($resume->birth_date);
 
         return view('resumes/show', compact('resume', 'user', 'skill_ids', 'skills', 'age', 'birth_date'));
-
     }
 
     /**

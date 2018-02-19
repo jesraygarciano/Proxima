@@ -44,7 +44,9 @@ class CompaniesController extends Controller
                     }*/
                 // $wordCount = count($openings->title);
                 // dd($openings);
+                $companies_filter = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
                 $companies = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
+
             }
             else{
                 $companies = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
@@ -75,14 +77,7 @@ class CompaniesController extends Controller
      */
 
     public function store(Request $request) {  //
-        $rules = [    // ②
-            'company_name' => 'required',
-            'email' => 'required|unique:companies',
-            // 'url' => 'required',
-            'company_logo' => 'required',
-            // 'background_photo' => 'required',
-            'tel' => 'required',
-        ];
+
         // $request->user_id = Auth::user()->id;
 
         if($request->company_logo){
@@ -91,7 +86,22 @@ class CompaniesController extends Controller
             file_put_contents(public_path('/storage/').$fileNameToStore, $data);
         }
 
-        $this->validate($request, $rules);  // ③
+        $this->validate($request, [    
+            // ②
+            'company_name' => 'required',
+            'email' => 'required|email|unique:companies',
+            'company_logo' => 'required',
+            'tel' => 'required',
+        ],
+        [
+            'company_name.required' => 'Provide company name',
+            'email.email' => 'Please provide valid email address',            
+            'email.required' => 'Please input email address',
+            'email.unique' => 'Email address is already taken',            
+            'company_logo.required' => 'Company logo is required',
+            'tel.required' => 'Company contact# is required',
+        ]);  // ③
+
 
         // Company::create($request->all());
         $request->user()->companies()->create([
@@ -171,11 +181,6 @@ class CompaniesController extends Controller
         $companies_ids = Common::company_ids_that_user_have();
 
         /*Mapper::map(53.381128999999990000, -1.470085000000040000, ['zoom' => 10, 'markers' => ['title' => 'My Location', 'animation' => 'DROP']]);*/
-
-        /*$company_location = Company::select('id', \DB::raw('CONCAT(address1, " ", city, " ", country) AS company_google_map'))
-            ->orderBy('address1')
-            ->lists('company_google_map', 'id');*/
-        // dd($company_location);
 
         if (!empty($company->address1)){
         // Mapper::location($company->city, $company->country); //company_location
@@ -294,16 +299,6 @@ class CompaniesController extends Controller
 
         // // return redirect('companies');
         // return redirect('/');
-        $rules = [    // ②
-            // 'company_name' => 'required',
-            // 'email' => 'required|unique:companies',
-            'email' => 'required',
-            'url' => 'required',
-            'company_logo' => 'required',
-            'background_photo' => 'required',
-            'what_photo1' => 'required',
-            'tel' => 'required',
-        ];
         // $request->user_id = Auth::user()->id;
 
         if($request->company_logo){
@@ -322,7 +317,27 @@ class CompaniesController extends Controller
             file_put_contents(public_path('storage/').$fileNameToStoreWhat, $data);
         }
 
-        $this->validate($request, $rules);  // ③
+        $this->validate($request, [    
+            // ②
+            // 'company_name' => 'required',
+            // 'email' => 'required|unique:companies',
+            'email' => 'required',
+            'url' => 'required',
+            'company_logo' => 'required',
+            'background_photo' => 'required',
+            'what_photo1' => 'required',
+            'company_size' => 'required',
+            'tel' => 'required',
+        ],
+        [
+            'email.required' => 'Please input email address',
+            'url.required' => 'Company URL is required',
+            'company_logo.required' => 'Company logo is required',
+            'background_photo.required' => 'Company cover photo is required',
+            'what_photo1.required' => 'Photo is required',
+            'company_size.required' => 'Please provide company size',
+            'tel.req' => 'Company contact# is required',
+        ]);  // ③
 
         // Company::create($request->all());
         $request->user()->companies()->update([
