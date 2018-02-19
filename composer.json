@@ -12,7 +12,9 @@
         "barryvdh/laravel-debugbar": "^2.4",
         "cornford/googlmapper": "2.*",
         "yajra/laravel-datatables-oracle": "~5.0",
-        "laravel/socialite": "~2.0"
+        "laravel/socialite": "~2.0",
+        "ckeditor/ckeditor": "4.*",
+        "unisharp/laravel-ckeditor": "^4.7"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
