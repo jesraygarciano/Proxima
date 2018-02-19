@@ -1,10 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('errors.form_errors')
     <div class="container">
         <div id="compinfo"> {{--START COMPANYINFO --}}
         <style type="text/css">
+        .error{
+            color:red;
+        }
+        .alert{
+        }
+        .alert-danger{
+            margin: 0 auto 2.5rem auto;
+            padding-left: 3rem;
+        }
+        .alert-danger li{
+            list-style-type: lower-alpha;        
+        }        
         .cover-image{
             position: relative;
             height: 300px;
@@ -12,7 +23,6 @@
             overflow: hidden;
             border: 1px solid #cecece;
         }
-
         .cover-image img{
             position: absolute;
             top: 50%;
@@ -20,7 +30,6 @@
             width: 100%;
             left: 0px;
         }
-
         .cover-info .picture{
             padding: 5px;
             background: white;
@@ -46,8 +55,8 @@
 
         </style>
 
-        {!!Form::open(['route' => 'companies.update', 'method' => 'PATCH', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
-
+        {!!Form::open(['route' => 'companies.update', 'method' => 'PATCH', 'files' => true, 'enctype' => 'multipart/form-data', 'id' => 'form-validate']) !!}
+       @include('errors.form_errors')
         {!! csrf_field() !!}
         <div class="row text-center">
 
@@ -188,7 +197,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="ui form">
-                                <textarea type="text" name="what_photo1_explanation">{{ $company->what_photo1_explanation ?? old('what_photo1_explanation') }}</textarea>                                    
+                                <textarea type="text" name="what_photo1_explanation"></textarea>                                    
                                 </div>
                             </div>
                         </div>
@@ -311,4 +320,88 @@
         {!!Form::close()!!}
     </div>
 </div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+    $('#form-validate').validate({ // initialize the plugin
+        rules: {
+            email: {
+                required: true,
+                maxlength: 70,
+                minlength: 5
+            },
+            tel: {
+                required: true,
+                minlength: 3
+            },
+            address1: {
+                required: true,
+            },
+            what: {
+                required: true,
+            },
+            what_photo1_explanation: {
+                required: true,
+            },            
+            established_at: {
+                required: true,
+            },
+            url: {
+                required: true,
+            },
+            company_size: {
+                required: true,
+            },
+            city: {
+                required: true,
+            },
+            country: {
+                required: true,
+            },
+            spoken_language: {
+                required: true
+            }
+        },
+        messages: {
+            email: {
+                required: Please enter email address,
+            },
+            tel: {
+                required: Company contact# is required,
+            },
+            address1: {
+                required: Please add company address,
+            },
+            what: {
+                required: This field is required,
+            },
+            what_photo1_explanation: {
+                required: This field is required,
+            },            
+            established_at: {
+                required: Dates is required,
+            },
+            url: {
+                required: Company URL is required,
+            },
+            company_size: {
+                required: Please provide company size,
+            },
+            city: {
+                required: Please provide address,
+            },
+            country: {
+                required: Please provice country,
+            },
+            spoken_language: {
+                required: Please provice country,
+            }
+       }
+    });
+
+});
+</script>
+
 @endsection

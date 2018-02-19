@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container" id="power">
 	<div class="profile-container" style="margin-top:-30px;">
 		<div class="cover-container">
 			<img class="d-c-img" src="{{asset('img/bg-banner.png')}}">
@@ -24,5 +24,20 @@
 	</div>
 </div>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script>
+    // var socket = io('http://localhost:3000');
+    var socket = io('http://192.168.10.10:3000');
+    socket.on("test-channel:App\\Events\\Broadcaster", function(message){
+        console.log(message);
+        // increase the power everytime we load test route
+        $('#power').text(parseInt($('#power').text()) + parseInt(message.data.power));
+    });
+
+   	socket.on('send-private-message',function(){
+
+   	});
+</script>
 
 @endsection

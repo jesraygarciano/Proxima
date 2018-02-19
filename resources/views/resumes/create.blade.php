@@ -59,9 +59,11 @@
                                     <div class="row">
                                         <div class="col-md-offset-1 col-md-11">
                                             <div class="col-md-4">
+                                                <div class="uie form">
                                                 <div class="form-group required">
                                                     {!!Form::label('f_name', 'First Name', ['class' => 'required-label'])!!}
                                                     {!!Form::text('f_name', $user->f_name, ['class' => 'form-control'])!!}
+                                                </div>
                                                 </div>
                                             </div>
 
