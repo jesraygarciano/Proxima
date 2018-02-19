@@ -111,7 +111,7 @@
                 <i class="fa fa-file-text" aria-hidden="true"></i>
             </div>
             <div class="li-content text-wrapper">
-                {{ $opening->details }}
+                {!! $opening->requirements !!}
             </div>
         </li>
         <li class="ellipsis padding-right-110">

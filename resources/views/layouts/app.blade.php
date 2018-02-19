@@ -157,6 +157,9 @@
         <script type="text/javascript" src="{{asset('js/croppie.min.js')}}"></script>
         <script type="text/javascript" src="{{asset('js/form.js')}}"></script>
 
+        <!-- validator -->
+        <script type="text/javascript" src="{{asset('js/jquery.validate.min.js')}}"></script>
+
 
         @if(Request::path() == 'resumes/create' || Request::path() == 'openings' || Request::url('/resumes/{id}/edit'))
 
@@ -171,5 +174,12 @@
         @include('inc.programming-skills-modal')
 
         @yield('scripts')
+
+        <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+        <script>
+            CKEDITOR.replace( 'detail-ckeditor' );
+            // CKEDITOR.replace( 'requirement-ckeditor' );
+        </script>
+
     </body>
 </html>

@@ -1,9 +1,10 @@
 @if ($errors->any())
-    <!-- <ul class="alert alert-danger">
+	 <ul class="alert alert-danger">
+	 	<h5 style="color: #900606;">Kindly fill up the following:</h5>
         @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
         @endforeach
-    </ul> -->
+    </ul>
 
     <script type="text/javascript">
     	$(document).ready(function(){
