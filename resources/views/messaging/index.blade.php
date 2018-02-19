@@ -19,6 +19,9 @@
 	$('#threads').unickMessenging({
 		fetch_user_messages_url:"{{route('json_return_user_messages')}}",
 		fetch_chatables_url:"{{route('json_return_chatable_users')}}",
+		save_message_url:"{{route('json_save_sent_message')}}",
+		mark_message_seen:"{{route('json_mark_message_seen')}}",
+		csrf_token:'{{ csrf_token() }}',
 		auth_id:{{\Auth::user()->id}}
 	});
 </script>

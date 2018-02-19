@@ -9,6 +9,7 @@
 		</div>
 		<div class="infoer">
 			<img src="{{asset('img/member-placeholder.png')}}">
+			<div class="active-icon"></div>
 			<div class="text">
 				<div class="title">asdasd</div>
 				<div class="description">descscscac</div>
