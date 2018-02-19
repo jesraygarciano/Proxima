@@ -163,7 +163,7 @@
             <br>
             <div class="pricing">
               <div class="currency">
-                â‚±
+                ₱
               </div>
               <div class="price-num">100</div>
             </div>
@@ -185,7 +185,7 @@
             <br>
             <div class="pricing">
               <div class="currency">
-                â‚±
+                ₱
               </div>
               <div class="price-num">100</div>
             </div>
@@ -207,7 +207,7 @@
             <br>
             <div class="pricing">
               <div class="currency">
-                â‚±
+                ₱
               </div>
               <div class="price-num">100</div>
             </div>
@@ -229,7 +229,7 @@
             <br>
             <div class="pricing">
               <div class="currency">
-                â‚±
+                ₱
               </div>
               <div class="price-num">100</div>
             </div>

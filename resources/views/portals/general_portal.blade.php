@@ -438,22 +438,24 @@
                         <div class="info-container">
                             <div>
                                 <ul class="ribbon_style_list">
-                                @if($opening->featured_status == 1)
-                                    <li class="job-position featured">Featured</li>
-                                @endif
-                                @if($opening->hiring_type == 0)
-                                    <li class="job-position intern">Intern</li>
-                                @elseif($opening->hiring_type == 1)
-                                    <li class="job-position regular">Regular</li>
-                                @elseif($opening->hiring_type == 2)
-                                    <li class="job-position intern">Temporary</li>
-                                @endif
+                                  @if($opening->featured_status == 1)
+                                      <li class="job-position featured">Featured</li>
+                                  @endif
+                                  @if($opening->hiring_type == 0)
+                                      <li class="job-position intern">Intern</li>
+                                  @elseif($opening->hiring_type == 1)
+                                      <li class="job-position regular">Regular</li>
+                                  @elseif($opening->hiring_type == 2)
+                                      <li class="job-position intern">Temporary</li>
+                                  @endif
                                 </ul>
                             </div>
                             <div class="job-title ellipsis">
                                 <a href="{{ url('openings', $opening->id) }}"> {{ $opening->title }} </a>
                             </div>
-                            <div class="company-name ellipsis"><a href="{{ url('companies', $opening->company->id) }}"> {{$opening->company->company_name}} </a></div>
+                            <div class="company-name ellipsis">
+                              <a href="{{ url('companies', $opening->company->id) }}"> {{$opening->company->company_name}} </a>
+                            </div>
                             <div style="/*height: 130px; width: 130px; */position:absolute; right:3px; top:80px;" class="photo-wrapper pull-right">
                                 <span class="contain" style="background-image: url('{{ $opening->company->company_logo }}')"></span>
                             </div>
@@ -463,7 +465,7 @@
                                         <i class="info-icon fa fa-file-text" aria-hidden="true"></i>
                                     </div>
                                     <div class="li-content text-wrapper">
-                                        {{ $opening->details }}
+                                        {!! $opening->requirements !!}
                                     </div>
                                 </li>
                                 <li>
@@ -541,7 +543,6 @@
                                       @if (Auth::check() && (!Auth::user()->role == 1))
                                         @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
                                       @endif
-
                                     </div>
                                 </div>
                                 <div class="clear" style="clear: both;"></div>
@@ -552,11 +553,11 @@
                 </div>
             </div>
             <ul class="indicators">
-                <li class="active"><div class="indecator-item"></div></li>
-                <li><div class="indecator-item"></div></li>
-                <li><div class="indecator-item"></div></li>
-                <li><div class="indecator-item"></div></li>
-                <li><div class="indecator-item"></div></li>
+              <li class="active"><div class="indecator-item"></div></li>
+              <li><div class="indecator-item"></div></li>
+              <li><div class="indecator-item"></div></li>
+              <li><div class="indecator-item"></div></li>
+              <li><div class="indecator-item"></div></li>
             </ul>
             <!-- <div style="text-align: center;">
                 <a href="{{ url('openings') }}" type="button" class="btn btn-info">See All</a>
@@ -724,11 +725,10 @@
                 <hr>
             </div>
         </div>
-
         <h3 id="or-search">
-            <a href="{{ url('companies') }}">
-                Companies
-            </a>
+          <a href="{{ url('companies') }}">
+              Companies
+          </a>
         </h3>
         <hr>
         <div class="row">
@@ -807,7 +807,7 @@
                               <hr style="margin-top: 7px; margin-bottom: 7px;">
                               <div id="company-bookmark">
                                 <div class="d-flex align-self-end ml-3" style="text-align: right;">
-        <!--                                             <a href="">
+                                    <!--<a href="">
                                       <i class="fa fa-star-o " aria-hidden="true"></i>
                                       Follow
                                     </a> -->
@@ -878,11 +878,7 @@
             </div>
             <div class="col-md-8">
                 <hr>
-                Maxime harum dolor doloremque ipsam a distinctio.
-                Maxime harum dolor doloremque ipsam a distinctio.
-                Maxime harum dolor doloremque ipsam a distinctio.
-                Maxime harum dolor doloremque ipsam a distinctio.
-                Maxime harum dolor doloremque ipsam a distinctio.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui alias facere eum dolorum obcaecati corrupti minima, aspernatur ut delectus harum unde tempore, exercitationem est natus adipisci quisquam fugiat numquam ipsum voluptates earum, et mollitia assumenda sapiente reiciendis? Ipsam delectus, nobis error perspiciatis nihil, sed cumque consectetur laudantium deleniti! Doloribus impedit maxime aut, deleniti quis explicabo ducimus voluptatibus aliquid quos numquam alias, quaerat! Quis quod cupiditate vel architecto, consequatur repellendus, alias.
             </div>
         </div>
     </div>
