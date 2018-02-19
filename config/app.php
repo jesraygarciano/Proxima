@@ -153,6 +153,8 @@ return [
         // Google maps
         Cornford\Googlmapper\MapperServiceProvider::class,
 
+        // CK Editor
+        Unisharp\Ckeditor\ServiceProvider::class,
 
     ],
 
