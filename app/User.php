@@ -228,4 +228,50 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     // {
     //     return $this->hasManyThrough('App\Resume', 'App\Opening');
     // }
+
+    public function requestMessage($data){
+        if(!$this->contactExist($data->contact_id))
+        {
+            Contact::create(
+                [
+                    'user_id'=>$this->attributes['id'],
+                    'contact_id'=>$data->contact_id,
+                    'status'=>'requesting'
+                ]
+            );
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function contactExist($id){
+        if($this->contacts()->where('contact_id',$id)->exists()){
+            return true;
+        }
+        else if($this->contactRequests()->where('contact_id',$id)->exists()){
+            return true;
+        }
+
+        return false;
+    }
+
+    public function contacts(){
+        return $this->hasMany('App\Contact')->where('status','approved');
+    }
+
+    public function contactRequests(){
+        return $this->hasMany('App\Contact')->where('status','requesting');
+    }
+
+    public function receivedContactRequests(){
+        return $this->hasMany('App\Contact','contact_id')->where('status','requesting');
+    }
+
+
+    // scopes
+    public function scopeSearchKey($query,$keyword){
+        return $query->whereRaw('(concat(f_name," ",l_name) like "%'.$keyword.'%")')->where('id','<>',\Auth::user()->id);
+    }
 }

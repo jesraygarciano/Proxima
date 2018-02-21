@@ -89,13 +89,46 @@ class Opening extends Model
         // dd($follower_ids);
 
         foreach ($follower_ids as $id) {
-            \App\OpeningNotification::create([
+            $notification = \App\OpeningNotification::create([
                 // 
                 'opening_id'=>$this->attributes['id'],
                 'user_id'=>$id,
                 'company_id'=>$this->attributes['company_id'],
             ]);
+
+            event(new \App\Events\NotificationEvent(
+                [
+                    'type'=>'new opening',
+                    'user_id'=>$notification->user_id
+                ]
+            ));
         }
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function($model)
+        {
+            $follower_ids = \DB::table('follow_companies')->where('company_id',$model->company->id)->lists('user_id');
+            foreach ($follower_ids as $id) {
+                $notification = \App\OpeningNotification::create([
+                    // 
+                    'opening_id'=>$model->attributes['id'],
+                    'user_id'=>$id,
+                    'company_id'=>$model->attributes['company_id'],
+                ]);
+
+                event(new \App\Events\NotificationEvent(
+                    [
+                        'type'=>'new opening',
+                        'event'=>'created',
+                        'user_id'=>$id
+                    ]
+                ));
+            }
+        });
     }
 
 }

@@ -27,4 +27,35 @@ class Scout extends Model
         return date('M. d, Y',strtotime($this->attributes['created_at']));
     }
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function($model)
+        {
+            event(new \App\Events\NotificationEvent(
+                [
+                    'type'=>'scout',
+                    'event'=>'created',
+                    'user_id'=>$model->user_id
+                ]
+            ));
+        });
+
+        static::updating(function($model){
+
+            // detect if seen field has been updated
+            if($model->seen != $model->getOriginal('price')){
+                event(new \App\Events\NotificationEvent(
+                [
+                    'type'=>'scout',
+                    'event'=>'seen',
+                    'user_id'=>$model->user_id
+                ]
+            ));
+            }
+
+        });
+    }
+
 }

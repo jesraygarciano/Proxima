@@ -19,4 +19,24 @@ class OpeningNotification extends Model
     public function company(){
     	return $this->belongsTo('\App\Company');
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::updating(function($model){
+
+            // detect if seen field has been updated
+            if($model->seen != $model->getOriginal('seen')){
+                event(new \App\Events\NotificationEvent(
+                    [
+                        'type'=>'new opening',
+                        'event'=>'seen',
+                        'user_id'=>$model->user_id
+                    ]
+                ));
+            }
+
+        });
+    }
 }

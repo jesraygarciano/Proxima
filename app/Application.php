@@ -51,4 +51,39 @@ class Application extends Model
             ->get();
         return $applied_application_openings;
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function($model)
+        {
+
+            $receiver = $model->opening->company->user;
+
+            event(new \App\Events\NotificationEvent(
+                [
+                    'type'=>'application',
+                    'event'=>'created',
+                    'user_id'=>$receiver->id
+                ]
+            ));
+        });
+
+
+        static::updating(function($model){
+            $receiver = $model->opening->company->user;
+            // detect if seen field has been updated
+            if($model->seen != $model->getOriginal('seen')){
+                event(new \App\Events\NotificationEvent(
+                [
+                    'type'=>'application',
+                    'event'=>'seen',
+                    'user_id'=>$receiver->id
+                ]
+            ));
+            }
+
+        });
+    }
 }
