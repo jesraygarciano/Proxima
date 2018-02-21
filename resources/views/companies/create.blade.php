@@ -73,7 +73,18 @@
              </div>
             </div>
         </div>
-
+        <br />
+        <div class="row">
+           <div class="col-md-6">
+           <div class="ui form">
+                <div class="form-group">
+                    {!!Form::label('established_at', 'Date established')!!}
+                    {!!Form::date('established_at', null, ['class' => 'form-control'])!!}
+                </div>
+            </div>                
+            </div>
+        </div>
+        <br />
         <div class="row">
             <div class="form-group">
                 {!!Form::submit('Register Company', ['class' => 'btn btn-primary'])!!}
@@ -100,6 +111,9 @@
             company_logo: {
                 required: true
             },
+            established_at: {
+                required: true
+            },            
             tel: {
                 required: true
             }
@@ -117,7 +131,10 @@
             },
             tel: {
                 required: Provide comapany tel#
-            }
+            },
+            established_at: {
+                required: Provide company established date
+            }            
        }
     });
 

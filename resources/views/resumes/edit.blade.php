@@ -2,13 +2,32 @@
 
 @section('content')
 
+<style type="text/css">
+    .error{
+        color:red;
+    }
+    .alert{
+    }
+    .alert-danger{
+        margin: 0 auto 2.5rem auto;
+        padding-left: 3rem;
+    }
+    .alert-danger li{
+        list-style-type: square;        
+    }
+    .crop-control .error-label{
+        position: absolute;
+    }
+    .ui.form{
+        font-size: 12px;
+    }
+</style>
+
     <div class="container">
-    @include('inc.message')
+    {{--@include('inc.message')--}}
     @include('errors.form_errors')
 
-
     <h1>Updating your resume</h1>
-
     <hr/>
 
         <div class="row">
@@ -50,7 +69,7 @@
                     </div>
 
                 {{-- <form role="form"> --}}
-                    {!!Form::open(['action' => 'ResumesController@update', 'method' => 'POST', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+                    {!!Form::open(['action' => 'ResumesController@update', 'method' => 'PATCH', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
                         <div class="tab-content">
                                 <div class="tab-pane active wizard-step" role="tabpanel" id="step1">
                                     {!! csrf_field() !!}
@@ -255,7 +274,7 @@
                                     {{-- <div class="page-header"> --}}
                                         <div class="col-md-offset-1 col-md-11">
                                             <div class="col-md-6">
-                                                <div class="form-group">
+                                                <!--<div class="form-group">
                                                     {{-- {!!Form::file('photo')!!} --}}
                                                     <div class="imagePreview"></div>
                                                     <div class="input-group">
@@ -266,7 +285,22 @@
                                                         </label>
                                                         <input type="text" class="form-control" readonly="">
                                                     </div>
-                                                </div>
+                                                </div> -->
+                                                <div class="crop-control" style="height: 200px; width: 200px;">
+                                                  <div class="image-container">
+                                                    <img src="{{ $resume->photo }}" alt="{{ $resume->photo}}" />
+                                                    <label for="photo" class="input-trigger hover-div">
+                                                      <p>
+                                                        <i class="fa fa-file-image-o fa-5x" aria-hidden="true"></i>
+                                                        <br>
+                                                        Upload
+                                                      </p>
+                                                    </label>
+                                                  </div>
+                                                  <div class="input-container" id="photo-container">
+                                                    <input type="file" id="photo" name="photo" accept="image/*" />
+                                                  </div>
+                                                </div>                                                
                                             </div>
                                         </div>
                                     </div>
@@ -351,7 +385,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{$resume->id}}
+                                    {{--{{$resume->id}}--}}
                                                 {{-- {{ resume_skill_array('PHP') }} --}}
                                                 {{-- {!!Form::select('skills[]', resume_skill_array('PHP'), resume_skill_array('PHP'), ['class' => 'ui fluid normal dropdown multi-select', 'multiple' => 'multiple'])!!} --}}
 
@@ -737,7 +771,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     {{-- {!!Form::label('objective', 'Objective:')!!} --}}
-                                                    {!!Form::textarea('objective', null, ['class' => 'form-control'])!!}
+                                                    {!!Form::textarea('objective', $resume->objective, ['class' => 'form-control'])!!}
                                                 </div>
                                             </div>
                                         </div>
@@ -847,10 +881,9 @@
                                         <li><button type="button" class="btn btn-primary btn-info-full next-step">Save and continue</button></li>
                                     </ul>
                                 </div>
-                                <div class="tab-pane wizard-step" role="tabpanel" id="complete">
+                                <div class="tab-pane wizard-step text-center" role="tabpanel" id="complete">
                                     <h3>Complete</h3>
                                     <p>You have successfully completed all steps.</p>
-                                    <p>Please click submit button.</p>
                                     <br>
                                     <button type="submit" class="btn btn-primary btn-info-full">Submit</button>
                                 </div>
@@ -870,15 +903,6 @@
             rules:{
 
                     // step 1 requirements
-                    photo:{
-                        identifier:'photo',
-                        rules: [
-                            {
-                                type:'file',
-                                prompt:'Photo required'
-                            }
-                        ]
-                    },
                     f_name:{
                         identifier:'f_name',
                         rules: [
@@ -1068,15 +1092,15 @@
                             }
                         ]
                     },
-                    cr_phone_number:{
-                        identifier:'cr_phone_number',
-                        rules:[
-                            {
-                                type:'empty',
-                                prompt:'Company personnel number required'
-                            }
-                        ]
-                    },
+                    // cr_phone_number:{
+                    //     identifier:'cr_phone_number',
+                    //     rules:[
+                    //         {
+                    //             type:'empty',
+                    //             prompt:'Company personnel number required'
+                    //         }
+                    //     ]
+                    // },
                 }
             }
         );

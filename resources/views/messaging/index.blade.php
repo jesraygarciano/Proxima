@@ -13,14 +13,17 @@
 @endsection
 
 @section('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script type="text/javascript" src="{{asset('js/unickMessenger.js')}}"></script>
 <script type="text/javascript">
 	$('#threads').unickMessenging({
+		// socket_address:"http://5ab21ea1.ngrok.io",
 		fetch_user_messages_url:"{{route('json_return_user_messages')}}",
 		fetch_chatables_url:"{{route('json_return_chatable_users')}}",
 		save_message_url:"{{route('json_save_sent_message')}}",
 		mark_message_seen:"{{route('json_mark_message_seen')}}",
+		search_contacts:"{{route('json_search_contact')}}",
+		request_contact:"{{route('json_request_contact')}}",
+		accept_contact:"{{route('json_accept_contact')}}",
 		csrf_token:'{{ csrf_token() }}',
 		auth_id:{{\Auth::user()->id}}
 	});

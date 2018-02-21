@@ -359,13 +359,13 @@
 
 .contain {
     display: inline-block;
-    background-color: #ccc;
+    /*background-color: #ccc;*/
     background-position: center center;
     background-repeat: no-repeat;
     margin: 5px;
     width: 110px;
     height: 110px;
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
     background-size: contain;
     border-radius:4px;
 }

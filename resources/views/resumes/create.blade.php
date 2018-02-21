@@ -2,8 +2,29 @@
 
 @section('content')
 
+<style type="text/css">
+    .error{
+        color:red;
+    }
+    .alert{
+    }
+    .alert-danger{
+        margin: 0 auto 2.5rem auto;
+        padding-left: 3rem;
+    }
+    .alert-danger li{
+        list-style-type: square;        
+    }
+    .crop-control .error-label{
+        position: absolute;
+    }
+    .ui.form{
+        font-size: 12px;
+    }
+</style>
+
     <div class="container">
-    @include('inc.message')
+    {{--@include('inc.message')--}}
     @include('errors.form_errors')
 
     <h1>Creating your resume</h1>
@@ -59,11 +80,9 @@
                                     <div class="row">
                                         <div class="col-md-offset-1 col-md-11">
                                             <div class="col-md-4">
-                                                <div class="uie form">
                                                 <div class="form-group required">
                                                     {!!Form::label('f_name', 'First Name', ['class' => 'required-label'])!!}
                                                     {!!Form::text('f_name', $user->f_name, ['class' => 'form-control'])!!}
-                                                </div>
                                                 </div>
                                             </div>
 
@@ -90,7 +109,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group required">
                                                     {{-- {!!Form::label('phone_number', 'Phone number:')!!} --}}
-                                                    {!!Form::text('phone_number', null, ['class' => 'form-control'])!!}
+                                                    {!!Form::number('phone_number', null, ['class' => 'form-control'])!!}
                                                 </div>
                                             </div>
                                         </div>
@@ -161,7 +180,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group required">
                                                     {!!Form::label('postal', 'Postal Code', ['class' => 'required-label'])!!}
-                                                    {!!Form::text('postal', null, ['class' => 'form-control'])!!}
+                                                    {!!Form::number('postal', null, ['class' => 'form-control'])!!}
                                                 </div>
                                             </div>
                                         </div>
@@ -220,7 +239,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <h4 class="form-heading required-label">Spoken Languages</h4>
                                     <hr>
                                     <div class="row">
@@ -263,13 +281,15 @@
                                                       </p>
                                                     </label>
                                                   </div>
-                                                  <div class="input-container">
+                                                  <div class="input-container" id="photo-container">
                                                     <input type="file" id="photo" name="photo" accept="image/*" />
                                                   </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <br />
+
 
                                     @for ($i=0; $i < 6; $i++)
                                         <?php $number_ed = $i + 1 ?>
@@ -290,7 +310,6 @@
                                                             {!!Form::text("ed_university_{$number_ed}", null, ['class' => 'form-control'])!!}
                                                         </div>
                                                     </div>
-
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             {!!Form::label('ed_field_of_study', 'Field of study')!!}
@@ -884,10 +903,10 @@
                                         <li><button type="button" class="btn btn-primary btn-info-full next-step">Save and continue</button></li>
                                     </ul>
                                 </div>
-                                <div class="tab-pane wizard-step" role="tabpanel" id="complete">
+                                <div class="tab-pane wizard-step text-center" role="tabpanel" id="complete">
                                     <h3>Complete</h3>
                                     <p>You have successfully completed all steps.</p>
-                                    <p>Please click submit button.</p>
+                                    <!-- <p>Please click submit button.</p> -->
                                     <br>
                                     <button type="submit" class="btn btn-primary btn-info-full">Submit</button>
                                 </div>
@@ -905,7 +924,6 @@
     $(document).ready(function(){
         unickwizard($('#resume-wizard'),{
             rules:{
-
                     // step 1 requirements
                     photo:{
                         identifier:'photo',
@@ -966,7 +984,7 @@
                         rules: [
                             {
                                 type:'empty',
-                                prompt:'Please enter your address1'
+                                prompt:'Please enter your first address'
                             }
                         ]
                     },
@@ -975,7 +993,7 @@
                         rules: [
                             {
                                 type:'empty',
-                                prompt:'Please enter your address2'
+                                prompt:'Please enter your secondary address'
                             }
                         ]
                     },

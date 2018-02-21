@@ -66,11 +66,17 @@ input[type="checkbox"]:focus{
                     {!!Form::open(['action' => 'CompaniesController@index', 'method' => 'GET', 'class' => 'form-wrapper cf' , 'role' => 'search']) !!}
                           {{-- {!!Form::label('opening_search', '')!!} --}}
                           {{ csrf_field() }}
-                          {!!Form::text('company_name', old('company_name'), ['class' => 'company-search form-control', 'placeholder' => 'Search companies'])!!}
+
+                          <input type="text" class="company-search form-control" name="company_name" value="{{$_GET['company_name'] ?? ''}}" placeholder="Search companies"> 
+
                             <button type="submit">Search</button>
                           <label class="checkbox-inline">
-                            {!!Form::checkbox('w_hiring_info', 2, null, ['class' => 'with_hiring'])!!}
+                            {{-- {!!Form::checkbox('w_hiring_info', 2, null, ['class' => 'with_hiring'])!!} --}}
+                            <input type="checkbox" class="with_hiring" name="w_hiring_info" value="2" 
+                            <?php if(isset($_GET['w_hiring_info'])) echo "checked='checked'"; ?>
+                            />
                             <h5 class="with_hiring_text">With hiring information</h5>
+
                           </label>
                     {!!Form::close()!!}
 

@@ -39,6 +39,14 @@
         @yield('content')
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+        <script type="text/javascript">
+            (function(){
+                $.socket = io("{{url('/')}}:3000");
+                $.socket.emit('client add',{{\Auth::user()->id}});
+            })(jQuery)
+        </script>
+        <script type="text/javascript" src="{{asset('js/notifier.js')}}"></script>
         @yield('scripts')
     </body>
 </html>

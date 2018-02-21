@@ -1,26 +1,23 @@
 <div class="side-bar">
 	<div class="thread-list">
 		<div class="infoer">
-			<img src="{{asset('img/member-placeholder.png')}}">
-			<div class="text">
-				<div class="title">asdasd</div>
-				<div class="description">descscscac</div>
+			<div class="col pdd-5">
+				<img src="{{asset('img/member-placeholder.png')}}">
 			</div>
-		</div>
-		<div class="infoer">
-			<img src="{{asset('img/member-placeholder.png')}}">
-			<div class="active-icon"></div>
-			<div class="text">
-				<div class="title">asdasd</div>
-				<div class="description">descscscac</div>
+			<div class="col prio">
+				<div class="text">
+					<div class="title">asdasd</div>
+					<div class="description">descscscac</div>
+				</div>
 			</div>
+			<div class="col pdd-5"><button type="button" class="btn btn-primary btn-xs"><i class="fa fa-user-plus"></i></button></div>
 		</div>
 	</div>
 	<div class="footer">
 		<div class="search-box">
 			<div style="display: table-row;">
 				<div class="box">
-					<input type="" placeholder="search user" class="box" name="">
+					<input type="" placeholder="search user" name="">
 				</div>
 				<div class="button">
 					<a href="#!">

@@ -195,7 +195,7 @@
                     <label>Start date</label>
                     <input style="font-size: 1em;color:#a9a9a9" type="datetime-local" 
                     min="{{ date('Y-m-d\TH:i') }}" max="" value="{{ date('Y-m-d\TH:i',strtotime($opening->from_post)) }}"
-                            disabled="disabled"
+                    disabled="disabled"
                      name="from_post">
                 </div>
 
@@ -204,7 +204,7 @@
                     <label for="" id="expiredate-label">Expire date</label>
                     <h4 id="expiredate" style="font-size: 1em;color:#a9a9a9">
                         {{ date(' m/j/Y, h:i A',strtotime($opening->until_post)) }}
-                    </h4>        
+                    </h4>
                 </div>                
 
             @else

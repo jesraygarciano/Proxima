@@ -128,7 +128,6 @@
                                         <div class = "col-sm-7">
                                             <div class="ui form">
                                                 <input type="text" value="{{ $company->address1 ?? old('address1') }}" name="address1">
-
                                             </div>
                                         </div>
                                     </div>
@@ -138,8 +137,12 @@
                                     <div class="form-group">
                                         {!! Form::label('established_at', 'Established date:', ['class' => 'col-sm-4 control-label']) !!}
                                         <div class = "col-sm-7">
-                                            {{-- {!!Form::label('birth_date', 'Birth Date:')!!} --}}
-                                            {!!Form::date('established_at', old('established_at'), ['class' => 'form-control', 'placeholder'=>$company->established_at])!!}
+                                            {{-- {!!Form::label('birth_date', 'Birth Date:')!!} 
+                                            {!!Form::date('established_at', old('established_at'), ['class' => 'form-control', 'placeholder'=>$company->established_at])!!} --}}
+
+                                            <input type="date" min="" max="{{ date('Y-m-d') }}" value="{{ date('Y-m-d',strtotime($company->established_at)) }}"
+                                             name="established_at" class="form-control">
+
                                         </div>
                                     </div>
                                 </div>
@@ -149,7 +152,6 @@
                 </div>
             </div>
         </div>
-
         <hr>
         <div class="row">
             <div class="col-md-7">
@@ -197,7 +199,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="ui form">
-                                <textarea type="text" name="what_photo1_explanation"></textarea>                                    
+                                <textarea type="text" name="what_photo1_explanation">{{ $company->what_photo1_explanation ?? old('what_photo1_explanation') }}</textarea> 
                                 </div>
                             </div>
                         </div>

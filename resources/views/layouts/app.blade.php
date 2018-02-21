@@ -42,6 +42,8 @@
         <link rel="stylesheet" href="{{ asset('css/progress_bar.css') }}">
         <link rel="stylesheet" href="{{ asset('css/main_tabs.css') }}">
         <link rel="stylesheet" href="{{ asset('css/croppie.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/media-query.css') }}">
+
         @if(Request::path() == 'resumes/show' || Request::path() == 'openings')
             <link rel="stylesheet" href="{{ asset('css/resume_show.css') }}">
         @endif
@@ -69,6 +71,13 @@
 
         <!-- js dependencies -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+        {{-- <script type="text/javascript">
+            (function(){
+                $.socket = io("{{url('/')}}:3000");
+                $.socket.emit('client add',{{\Auth::user()->id}});
+            })(jQuery)
+        </script> --}}
 
         <!-- Semantic UI css -->
         {{-- @if( Request::path() == 'resumes/create') --}}
@@ -156,6 +165,7 @@
         <script type="text/javascript" src="{{asset('js/photo_update.js')}}"></script>
         <script type="text/javascript" src="{{asset('js/croppie.min.js')}}"></script>
         <script type="text/javascript" src="{{asset('js/form.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/notifier.js')}}"></script>
 
         <!-- validator -->
         <script type="text/javascript" src="{{asset('js/jquery.validate.min.js')}}"></script>
@@ -180,6 +190,7 @@
             CKEDITOR.replace( 'detail-ckeditor' );
             // CKEDITOR.replace( 'requirement-ckeditor' );
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
 
     </body>
 </html>

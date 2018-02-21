@@ -161,7 +161,7 @@
 		application_panel.html('<br><br><center><div class="loader"></div></center>');
 		$.ajax({
 			url:'{{route("json_get_application_notification")}}',
-			data:{'company_id':"{{\Auth::user()->companies->first()->id ?? 0}}"},
+			data:{'company_id':"{{\Auth::user()->companies()->latest('companies.created_at')->where('companies.is_active', 1)->first()->id ?? 0}}"},
 			success:function(data){
 				application_panel.html('')
 				for(var i = 0; i < data.length; i++){

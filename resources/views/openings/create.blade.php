@@ -476,7 +476,7 @@
 
     $(document).ready(function () {
 
-    $('#form-validate').validate({ // initialize the plugin
+    $('#form-validate').validate({ // initialize the plugin        
         rules: {
             title: {
                 required: true,
@@ -547,8 +547,9 @@
             country: {
               required: "Please input country"
             }
-       }
+       }       
     });
+
 
 });
 </script>

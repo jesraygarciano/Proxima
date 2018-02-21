@@ -78,10 +78,26 @@
 .infoer{
   position: relative;
   height: 50px;
-  padding-left: 50px;
   border-bottom:1px solid #f6f6f6;
   background: white;
   cursor: pointer;
+  display: table;
+  width: 100%;
+  height: 50px;
+}
+
+.cursor-norm{
+  cursor: default;
+}
+
+.infoer .col{
+  display: table-cell;
+  position: relative;
+  vertical-align: middle;
+}
+
+.infoer .prio{
+  width: 100%;
 }
 
 .infoer .active-icon{
@@ -102,17 +118,17 @@
 
 .infoer img{
   height: 40px;
-  position: absolute;
   width: 40px;
-  top: 50%;
   border-radius: 50%;
-  transform:translateY(-50%);
   border:1px solid #cecece;
-  left: 10px;
 }
 
 .infoer .text{
   padding: 5px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
 }
 
 .infoer .text .title{
@@ -276,4 +292,8 @@
   right: 20px;
   font-size: 30px;
   color: #646464;
+}
+
+.pdd-5{
+  padding: 5px;
 }

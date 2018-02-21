@@ -244,6 +244,8 @@ unickwizard = function($this,options){
 		}
 		else{
 			$(element).parent().addClass('has-error');
+			window.scrollTo(0, 0);
+	        swal('Please fill in required data', 'Missing data...', 'warning');
 		}
 	}
 }

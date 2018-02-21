@@ -162,21 +162,22 @@
                         {!! Mapper::render() !!}
                 </div>
             @endif
-<!--             <style>
+             <!--<style>
               #map { position:absolute; top:0; bottom:0; width:100%; height: 500px; }
-            </style>
-            <div class="row text-center">
-                <div class="col-md-12">
-                    <div id='map'></div>
-                    <script>
-                    L.mapbox.accessToken = 'pk.eyJ1IjoibGFib25ldHdvcmsiLCJhIjoiY2pkMnFzcXN6MmNnYzJ5cW9kN2FwYXBrdiJ9.yIp-cDl8ipzrnO_9NGtXVA';
-                    var map = L.mapbox.map('map', 'mapbox.streets')
-                        .setView([40, -74.50], 9);
-                    </script>                
+                </style>
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <div id='map'></div>
+                        <script>
+                        L.mapbox.accessToken = 'pk.eyJ1IjoibGFib25ldHdvcmsiLCJhIjoiY2pkMnFzcXN6MmNnYzJ5cW9kN2FwYXBrdiJ9.yIp-cDl8ipzrnO_9NGtXVA';
+                        var map = L.mapbox.map('map', 'mapbox.streets')
+                            .setView([40, -74.50], 9);
+                        </script>                
+                    </div>
                 </div>
-            </div>  -->
+              -->
 
-
+              
             @if (!Auth::guest())
                 @if (Auth::user()->role == 1)
                     @if (in_array(Auth::user()->id, $companies_ids))

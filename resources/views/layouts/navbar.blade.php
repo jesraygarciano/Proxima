@@ -166,45 +166,31 @@
                             @endif
                         </div>
                     </li>
+                    <li class="noti-bell" id="message-noti">
+                        <a href="{{url('messaging/index')}}?tab=scout_notifications">
+                            <i class="fa fa-envelope"></i>
+                        </a>
+                        <div class="num-icon" style="display: none;">
+                            <div>0</div>
+                        </div>
+                    </li>
                     @endif
                     <li><a href="/auth/logout">Logout</a></li>
                 @endif
             </ul>
             @if(\Auth::check())
             <script type="text/javascript">
-                fetch_notification();
 
-                $('#noti-bell').hover(function(){
-                    fetch_notification();
-                });
-
-                function fetch_notification(){
-                    $.ajax({
-                        url:"{{route('json_get_stat_notification')}}",
-                        type:"GET",
-                        data:{
-                            user_id:{{\Auth::user()->id}},
-                            company_id:{{\Auth::user()->companies->first()->id ?? 0}},
-                        },
-                        success:function(data){
-                            var bell_container = $('#noti-bell');
-                            var total_not = data.applications+data.scouts+data.openings;
-                            bell_container.find('.applications').html(data.applications).css('display',data.applications < 1 ? 'none' : '');
-                            bell_container.find('.scouts').html(data.scouts).css('display',data.scouts < 1 ? 'none' : '');
-                            bell_container.find('.new_openings').html(data.openings).css('display',data.openings < 1 ? 'none' : '');
-                            bell_container.find('.num-icon div').html(total_not).parent().css('display',total_not < 1 ? 'none' : '');
-                        }
+                $(document).ready(function(){
+                    $('#message-noti').messageNotifier({
+                        auth_id:{{\Auth::user()->id}},
                     });
-                }
-
-                autoload_notification();
-
-                function autoload_notification(){
-                    setTimeout(function(){
-                        fetch_notification()
-                        autoload_notification();
-                    },60000);
-                }
+                    $('#noti-bell').bellNotifier({
+                        auth_id:{{\Auth::user()->id}},
+                        fetch_not_stats:"{{route('json_get_stat_notification')}}",
+                        company_id:{{\Auth::user()->companies()->latest('companies.created_at')->where('companies.is_active', 1)->first()->id ?? 0}}
+                    });
+                });
             </script>
             @endif
         </div><!-- /.navbar-collapse -->

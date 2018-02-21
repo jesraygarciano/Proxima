@@ -12,13 +12,9 @@
 
 		var loading = false;
 
-		var socket = io('http://192.168.10.10:3000');
-
 		var $this = $(this);
 
 		fetchChatables();
-
-		socket.emit('client add',settings.auth_id);
 
 		$this.find('.send_message').click(function(){
 			sendMessage();
@@ -35,7 +31,17 @@
 			seenUnseenMessages();
 		});
 
-		socket.on('r-p-m', function(data){
+		$this.find('.search-box .button').click(function(){
+			search_contacts($this.find('.search-box .box input').val());
+		});
+
+		$this.find('.search-box .box input').keydown(function(ev){
+			if(ev.which == 13){
+				search_contacts($this.find('.search-box .box input').val());
+			}
+		});
+
+		$.socket.on('r-p-m', function(data){
 			// 
 			var scrollHeight = $this.find(".message-list")[0].scrollHeight;
 			var height = $this.find(".message-list").height();
@@ -59,32 +65,32 @@
 			console.log(data.socket);
 		});
 
-		socket.on('user online', function(data){
+		$.socket.on('user online', function(data){
 			markOnline(data.id,true);
 		});
 
-		socket.on('user offline', function(data){
+		$.socket.on('user offline', function(data){
 			markOnline(data.id,false);
 			if($this.find('.send_message').data('r-id') == data.id){
 				chatHeadOnline(false);
 			}
 		});
 
-		socket.on('connect',function(){
+		$.socket.on('connect',function(){
 			// 
 		});
 
-		socket.on('disconnect', function () {
+		$.socket.on('disconnect', function () {
 			// 
 		});
 
-		socket.on('reconnect', function () {
+		$.socket.on('reconnect', function () {
 			// if (username) {
 			//   socket.emit('add user', username);
 			// }
 		});
 
-		socket.on('reconnect_error', function () {
+		$.socket.on('reconnect_error', function () {
 			// 
 		});
 
@@ -92,7 +98,7 @@
 			var messsage = $this.find('.message-box').find('.box').val();
 
 			if(messsage.trim() != ""){
-				socket.emit('s-p-m',{reciever:$this.find('.send_message').data('r-id'),msg:messsage, s_id:settings.auth_id});
+				$.socket.emit('s-p-m',{reciever:$this.find('.send_message').data('r-id'),msg:messsage, s_id:settings.auth_id});
 				aMoMlS({message:messsage, formated_date: returnFormated(new Date()) });
 				$this.find('.message-box').find('.box').val('');
 
@@ -105,9 +111,143 @@
 						// say something
 					}
 				});
-			}
 
-			scrollBottomIfScrollBottom();
+				scrollBottomIfScrollBottom();
+			}
+		}
+
+		function search_contacts(keyword){
+			$this.find('.thread-list').html('<center><div class="loader"></div></center>');
+			$.ajax({
+				url:settings.search_contacts,
+				type:"GET",
+				data:{keyword:keyword},
+				success:function(data){
+					// 
+					$this.find('.thread-list').html('');
+					for(var index in data.contacts){
+						$this.find('.thread-list').append(
+							'<div class="infoer" data-id="'+data.contacts[index].id+'">'
+							+'<div class="col pdd-5">'
+							+'	<img src="'+data.contacts[index].photo+'"><div class="active-icon"></div>'
+							+'</div>'
+							+'<div class="col prio">'
+							+'	<div class="text">'
+							+'		<div class="title">'+data.contacts[index].name+'</div>'
+							+'		<div class="description"></div>'
+							+'	</div>'
+							+'</div>'
+							+'<div class="col pdd-5">'
+							+'</div>'
+							+'</div>'
+							+'</div>'
+							);
+
+						setThreadItemEvent($this.find('.thread-list .infoer:last-child'),data.contacts[index]);
+					}
+
+					for(var index in data.recieved_request){
+						$this.find('.thread-list').append(
+							'<div class="infoer cursor-norm" cursor-norm data-id="'+data.recieved_request[index].id+'">'
+							+'<div class="col pdd-5">'
+							+'	<img src="'+data.recieved_request[index].photo+'"><div class="active-icon"></div>'
+							+'</div>'
+							+'<div class="col prio">'
+							+'	<div class="text">'
+							+'		<div class="title">'+data.recieved_request[index].name+'</div>'
+							+'		<div class="description"></div>'
+							+'	</div>'
+							+'</div>'
+							+'<div class="col pdd-5 add_bttn">'
+							+'<button type="button" class="btn btn-warning btn-xs">Accept Contact</button>'
+							+'</div>'
+							+'</div>'
+							+'</div>'
+							);
+
+						acceptRequestEvent($this.find('.thread-list .infoer:last-child'),data.recieved_request[index]);
+					}
+
+					for( var index in data.requested ){
+						$this.find('.thread-list').append(
+							'<div class="infoer cursor-norm" cursor-norm data-id="'+data.requested[index].id+'">'
+							+'<div class="col pdd-5">'
+							+'	<img src="'+data.requested[index].photo+'"><div class="active-icon"></div>'
+							+'</div>'
+							+'<div class="col prio">'
+							+'	<div class="text">'
+							+'		<div class="title">'+data.requested[index].name+'</div>'
+							+'		<div class="description"></div>'
+							+'	</div>'
+							+'</div>'
+							+'<div class="col pdd-5">'
+							+'<button type="button" class="btn btn-default btn-xs">request sent</button>'
+							+'</div>'
+							+'</div>'
+							+'</div>'
+							);
+					}
+
+					for( var index in data.others ){
+						$this.find('.thread-list').append(
+							'<div class="infoer cursor-norm" data-id="'+data.others[index].id+'">'
+							+'<div class="col pdd-5">'
+							+'	<img src="'+data.others[index].photo+'"><div class="active-icon"></div>'
+							+'</div>'
+							+'<div class="col prio">'
+							+'	<div class="text">'
+							+'		<div class="title">'+data.others[index].name+'</div>'
+							+'		<div class="description"></div>'
+							+'	</div>'
+							+'</div>'
+							+'<div class="col pdd-5 add_bttn">'
+							+'<button type="button" class="btn btn-primary btn-xs"><i class="fa fa-user-plus"></i></button>'
+							+'</div>'
+							+'</div>'
+							+'</div>'
+							);
+
+						setRequestEvent($this.find('.thread-list .infoer:last-child'),data.others[index]);
+					}
+
+					if(data.contacts.length < 1 && data.requested < 1 && data.others < 1){
+						$this.find('.thread-list').html('<div style="padding:5px; color:#808080;">No Result</div>');
+					}
+				}
+			});
+		}
+
+		function setRequestEvent(elm, data){
+			elm.find('.add_bttn .btn').click(function(){
+				$.ajax({
+					url:settings.request_contact,
+					type:"POST",
+					data:{contact_id:data.id},
+					headers: { 'X-CSRF-TOKEN': settings.csrf_token },
+					success:function(data){
+						elm.find('.add_bttn').html('');
+						elm.find('.add_bttn').append('<button type="button" class="btn btn-default btn-xs">request sent</button>');
+					}
+				});
+			});
+		}
+
+		function acceptRequestEvent(elm, data){
+			elm.find('.add_bttn .btn').click(function(){
+				$.ajax({
+					url:settings.accept_contact,
+					type:"POST",
+					data:{contact_id:data.id},
+					headers: { 'X-CSRF-TOKEN': settings.csrf_token },
+					success:function(_data){
+						elm.find('.add_bttn').html('');
+						elm.removeClass('cursor-norm');
+						setThreadItemEvent(elm,data);
+
+						elm.trigger('click');
+					}
+				});
+			});
 		}
 
 		function indecateUnseenThreads(data,focused){
@@ -134,21 +274,52 @@
 					$this.find('.thread-list').html('');
 					for(var index in data.users){
 						$this.find('.thread-list').append(
-							'<div class="infoer" data-id="'+data.users[index].id+'">'
-							+'	<img src="'+data.users[index].photo+'"><div class="active-icon"></div>'
+							'<div class="infoer" data-id="'+data.users[index].contact.id+'">'
+							+'<div class="col pdd-5">'
+							+'	<img src="'+data.users[index].contact.photo+'"><div class="active-icon"></div>'
+							+'</div>'
+							+'<div class="col prio">'
 							+'	<div class="text">'
-							+'		<div class="title">'+data.users[index].name+'</div>'
-							+'		<div class="description">latest message</div>'
+							+'		<div class="title">'+data.users[index].contact.name+'</div>'
+							+'		<div class="description"></div>'
 							+'	</div>'
+							+'</div>'
+							+'<div class="col pdd-5">'
+							+'</div>'
+							+'</div>'
 							+'</div>'
 							);
 
-						setThreadItemEvent($this.find('.thread-list .infoer:last-child'),data.users[index]);
+						setThreadItemEvent($this.find('.thread-list .infoer:last-child'),data.users[index].contact);
+					}
+
+					for(var index in data.recieved_request){
+						$this.find('.thread-list').append(
+							'<div class="infoer cursor-norm" cursor-norm data-id="'+data.recieved_request[index].user.id+'">'
+							+'<div class="col pdd-5">'
+							+'	<img src="'+data.recieved_request[index].user.photo+'"><div class="active-icon"></div>'
+							+'</div>'
+							+'<div class="col prio">'
+							+'	<div class="text">'
+							+'		<div class="title">'+data.recieved_request[index].user.name+'</div>'
+							+'		<div class="description"></div>'
+							+'	</div>'
+							+'</div>'
+							+'<div class="col pdd-5 add_bttn">'
+							+'<button type="button" class="btn btn-warning btn-xs">Accept Contact</button>'
+							+'</div>'
+							+'</div>'
+							+'</div>'
+							);
+
+						acceptRequestEvent($this.find('.thread-list .infoer:last-child'),data.recieved_request[index].user);
+					}
+
+					if(data.recieved_request.length < 1 && data.users.length < 1){
+						$this.find('.thread-list').html('<div style="padding:5px; color:#808080;">You don\'t have any contact at the moment.<p> Please add contact first. </p></div>')
 					}
 
 					loading = false;
-
-					$this.find('.thread-list .infoer:first-child').trigger('click');
 
 					fetchOnlines();
 				}
@@ -174,7 +345,7 @@
 				$this.find('.message-box .r_picture').html(data.photo);
 				$this.find('.thread-list .infoer').removeClass('active');
 
-				chatHeadOnline(data.id,$this.find('.infoer[data-id='+data.id+']').hasClass('online'));
+				chatHeadOnline($this.find('.infoer[data-id='+data.id+']').hasClass('online'));
 
 				$(this).addClass('active');
 				$.ajax({
@@ -210,11 +381,13 @@
 		}
 
 		function fetchOnlines(){
-			socket.emit('fetch online',{},function(data){
+			$.socket.emit('fetch online',{},function(data){
 				console.log(data);
 				for(var index in data){
 					markOnline(data[index],true);
 				}
+
+				$this.find('.thread-list .infoer:first-child').trigger('click');
 			});
 		}
 
@@ -259,7 +432,9 @@
 						type:"POST",
 						headers: { 'X-CSRF-TOKEN': settings.csrf_token },
 						data:{reciever:$this.find('.send_message').data('r-id')},
-						success:function(data){}
+						success:function(data){
+							$.socket.emit('p-m-snn',{s_id:$this.find('.send_message').data('r-id'), reciever:settings.auth_id});
+						}
 					});
 				}
 			}

@@ -1,6 +1,6 @@
 @if ($errors->any())
 	 <ul class="alert alert-danger">
-	 	<h5 style="color: #900606;">Kindly fill up the following:</h5>
+	 	<h5 style="color: #900606;">Kindly fill in the following:</h5>
         @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
         @endforeach
