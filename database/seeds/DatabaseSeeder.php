@@ -40,7 +40,6 @@ class DatabaseSeeder extends Seeder
             $this->call('JoiningOpeningSkillsTableSeeder');
             $this->call('OpeningsFillCountryProvinceColumnSeeder');
 
-
         Model::reguard();
     }
 }

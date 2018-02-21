@@ -153,9 +153,13 @@ class OpeningsController extends Controller
     }
 
     public function bookmark_lists(){
+        $provinces = \DB::table('provinces')->get();
+        $countries = \DB::table('countries')->get();
 
         $bookmarks = Auth::user()->bookmarkings;
-        return view('openings.bookmarked_list')->with('bookmarks', $bookmarks);
+        // return view('openings.bookmarked_list')->with('bookmarks', $bookmarks);
+        return view('openings.bookmarked_list', compact('bookmarks','countries','provinces'));
+
     }
 
     /**
@@ -277,11 +281,6 @@ class OpeningsController extends Controller
         $opening->until_post = Carbon::parse($request->from_post)->AddDays(30);
         $opening->save();
         $opening->register_skill($request->skills);
-
-        if(!$request->opening_id)
-        {
-            $opening->notifySubscribedApplicants();
-        }
 
         // $openings_skills = \App\Opening_skill::where('language',$request->language)->get();
 
@@ -426,10 +425,6 @@ class OpeningsController extends Controller
         $opening->save();
         $opening->register_skill($request->skills);
 
-        if(!$request->opening_id)
-        {
-            $opening->notifySubscribedApplicants();
-        }
         // $openings_skills = \App\Opening_skill::where('language',$request->language)->get();
 
         return redirect('hiring_portal');

@@ -58,10 +58,52 @@ class ResumesController extends Controller
         // dd($request->skills);
         $this->validate($request, [
             'f_name' => 'required',
+            'l_name' => 'required',
+            'phone_number' => 'required',
+            'email' => 'required',
+            'birth_date' => 'required',
+            'photo' => 'required',
+            'address1' => 'required',
+            'address2' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+            'postal' => 'required',
+            'spoken_language' => 'required',
+            // 'ed_university' => 'required',
+            // 'ed_from_month' => 'required',
+            // 'ed_from_year' => 'required',
+            // 'ed_to_month' => 'required',
+            // 'ed_to_year' => 'required',
+            'summary' => 'required',
+            'objective' => 'required',
+            'cr_company' => 'required',
+            'cr_name' => 'required',
+            'cr_phone_number' => 'required',
             // 'picture' => 'required',
         ],
         [
-            'f_name.required' => 'Please input First name',
+            'f_name.required' => 'Please enter your first name',
+            'l_name.required' => 'Please enter your last name',
+            'phone_number.required' => 'Please enter your valid phone number',
+            'email.required' => 'Please enter valid email address',
+            'birth_date.required' => 'Please enter your birthdate',
+            'photo.required' => 'Photo required',
+            'address1.required' => 'Please enter your first address',
+            'address2.required' => 'Please enter your secondary address',
+            'city.required' => 'Please enter your city',
+            'country.required' => 'Please enter your country',
+            'postal.required' => 'Please enter your postal',
+            'spoken_language.required' => 'Please enter your spoken language',
+            // 'ed_university.required' => 'Please enter your university',
+            // 'ed_from_month.required' => 'month start',
+            // 'ed_from_year.required' => 'year start',
+            // 'ed_to_month.required' => 'month end',
+            // 'ed_to_year.required' => 'year end',
+            'summary.required' => 'Skill/Experience Summary required',
+            'objective.required' => 'Objective required',
+            'cr_company.required' => 'Company / University name required',
+            'cr_name.required' => 'Company personnel name required',
+            'cr_phone_number.required' => 'Company personnel number required',
         ]);
 
 
@@ -70,7 +112,6 @@ class ResumesController extends Controller
             $fileNameToStore = time().'.png';
             file_put_contents(public_path('/storage/').$fileNameToStore, $data);
         }
-
 
         // // Handle file upload
         // if($request->hasFile('photo')){
@@ -120,7 +161,7 @@ class ResumesController extends Controller
                 $resume->has_skill()->attach($resume_skill_id);
             }
         }
-        return redirect('resumes/show')->with('success', 'Registerd you resume');
+        return redirect('resumes/show')->with('success', 'Registered you resume');
     }
 
     /**
@@ -155,13 +196,15 @@ class ResumesController extends Controller
      */
 
     // public function edit($resume_id)
-    public function edit()
+    public function edit($id)
     {
-/*        $resume = Resume::findOrFail($resume_id);
+        /*$resume = Resume::findOrFail($resume_id);
         $languages_ids = $resume->has_skill()->get()->lists('id')->toArray();
         return view('resumes.edit', compact('resume', 'languages_ids'));
-*/
+        */
         $user = \Auth::user();
+        // $user = Resume::findOrFail($id);
+        // dd($user);                
         $skills = Resume_skill::all();
         $resume = Common::get_master_resume();
         $educations = $resume->educations()->get();
@@ -192,9 +235,50 @@ class ResumesController extends Controller
 
         $this->validate($request, [
             'f_name' => 'required',
-            'm_name' => 'required',
             'l_name' => 'required',
+            'phone_number' => 'required',
             'email' => 'required',
+            'birth_date' => 'required',
+            'address1' => 'required',
+            'address2' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+            'postal' => 'required',
+            'spoken_language' => 'required',
+            // 'ed_university' => 'required',
+            // 'ed_from_month' => 'required',
+            // 'ed_from_year' => 'required',
+            // 'ed_to_month' => 'required',
+            // 'ed_to_year' => 'required',
+            'summary' => 'required',
+            'objective' => 'required',
+            // 'cr_company' => 'required',
+            // 'cr_name' => 'required',
+            // 'cr_phone_number' => 'required',
+            // 'picture' => 'required',
+        ],
+        [
+            'f_name.required' => 'Please enter your first name',
+            'l_name.required' => 'Please enter your last name',
+            'phone_number.required' => 'Please enter your valid phone number',
+            'email.required' => 'Please enter valid email address',
+            'birth_date.required' => 'Please enter your birthdate',
+            'address1.required' => 'Please enter your first address',
+            'address2.required' => 'Please enter your secondary address',
+            'city.required' => 'Please enter your city',
+            'country.required' => 'Please enter your country',
+            'postal.required' => 'Please enter your postal',
+            'spoken_language.required' => 'Please enter your spoken language',
+            // 'ed_university.required' => 'Please enter your university',
+            // 'ed_from_month.required' => 'month start',
+            // 'ed_from_year.required' => 'year start',
+            // 'ed_to_month.required' => 'month end',
+            // 'ed_to_year.required' => 'year end',
+            'summary.required' => 'Skill/Experience Summary required',
+            'objective.required' => 'Objective required',
+            // 'cr_company.required' => 'Company / University name required',
+            // 'cr_name.required' => 'Company personnel name required',
+            // 'cr_phone_number.required' => 'Company personnel number required',
         ]);
 
         $input = $request->except('photo', 'skills', '_token');
@@ -210,7 +294,7 @@ class ResumesController extends Controller
             $resume->has_skill()->attach($resume_skill_id);
         }
 
-        return redirect('resumes/show')->with('success', 'Updated your resume');
+        return redirect('resumes/show')->with('success', 'Updated you resume');
     }
 
     /**

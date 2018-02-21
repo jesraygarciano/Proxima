@@ -29,6 +29,7 @@ class CompaniesController extends Controller
     public function index(Request $request)
     {
 
+
         $searchData = $request->company_name;
         $w_hiring_info = $request->w_hiring_info;
         $openings = Opening::query()->where('is_active', 1)->orderBy('created_at','desc');
@@ -36,14 +37,6 @@ class CompaniesController extends Controller
         if(!empty($searchData)){
             if(!empty($w_hiring_info)){
 
-                // Displays lists of companies have current hiring information
-                /*if(count($openings) > 0){
-                }*/
-                    /*foreach($w_hiring_info as $w_hiring_infos) {
-                        $w_hiring_infos->attach($w_hiring_infos);
-                    }*/
-                // $wordCount = count($openings->title);
-                // dd($openings);
                 $companies_filter = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
                 $companies = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
 
@@ -51,14 +44,20 @@ class CompaniesController extends Controller
             else{
                 $companies = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
             }
-        }else{
+        }elseif(!empty($w_hiring_info)){
+
+                $companies_filter = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
+                $companies = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
+            // dd($companies);
+        }        
+        else{
             $companies = Company::latest('created_at')->where('is_active', "1")->paginate(10);
         }
 
         return view('companies.index', compact('companies'));
         // return view('companies.index', compact('companies','opening_count'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -92,6 +91,7 @@ class CompaniesController extends Controller
             'email' => 'required|email|unique:companies',
             'company_logo' => 'required',
             'tel' => 'required',
+            'established_at' => 'required',            
         ],
         [
             'company_name.required' => 'Provide company name',
@@ -100,6 +100,8 @@ class CompaniesController extends Controller
             'email.unique' => 'Email address is already taken',            
             'company_logo.required' => 'Company logo is required',
             'tel.required' => 'Company contact# is required',
+            'established_at.required' => 'Provide company established date',
+
         ]);  // ③
 
 
@@ -112,6 +114,8 @@ class CompaniesController extends Controller
             'company_logo' => $fileNameToStore,
             // 'background_photo' => $fileNameToStoreCover,
             'tel' => $request->tel,
+            'established_at' => $request->established_at,
+
         ]);
 
         \Session::flash('flash_message', 'created company information');
@@ -172,7 +176,7 @@ class CompaniesController extends Controller
     public function show($id)
     {
         $provinces = \DB::table('provinces')->get();
-        $countries = \DB::table('countries')->get();        
+        $countries = \DB::table('countries')->get();
         $company = Company::findOrFail($id);
 
         $openings = Opening::where('company_id', $company->id)->get();
@@ -301,6 +305,30 @@ class CompaniesController extends Controller
         // return redirect('/');
         // $request->user_id = Auth::user()->id;
 
+
+        $this->validate($request, [    
+            // ②
+            // 'company_name' => 'required',
+            // 'email' => 'required|unique:companies',
+            'email' => 'required',
+            'url' => 'required',
+            'company_logo' => 'required',
+            'background_photo' => 'required',
+            'what_photo1' => 'required',
+            'company_size' => 'required',
+            'tel' => 'required',
+
+        ],
+        [
+            'email.required' => 'Please input email address',
+            'url.required' => 'Company URL is required',
+            'company_logo.required' => 'Company logo is required',
+            'background_photo.required' => 'Company cover photo is required',
+            'what_photo1.required' => 'Photo is required',
+            'company_size.required' => 'Please provide company size',
+            'tel.req' => 'Company contact# is required',
+        ]);  // ③
+
         if($request->company_logo){
             $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->company_logo));
             $fileNameToStore = time().'.png';
@@ -316,28 +344,6 @@ class CompaniesController extends Controller
             $fileNameToStoreWhat = time().'what'.'.png';
             file_put_contents(public_path('storage/').$fileNameToStoreWhat, $data);
         }
-
-        $this->validate($request, [    
-            // ②
-            // 'company_name' => 'required',
-            // 'email' => 'required|unique:companies',
-            'email' => 'required',
-            'url' => 'required',
-            'company_logo' => 'required',
-            'background_photo' => 'required',
-            'what_photo1' => 'required',
-            'company_size' => 'required',
-            'tel' => 'required',
-        ],
-        [
-            'email.required' => 'Please input email address',
-            'url.required' => 'Company URL is required',
-            'company_logo.required' => 'Company logo is required',
-            'background_photo.required' => 'Company cover photo is required',
-            'what_photo1.required' => 'Photo is required',
-            'company_size.required' => 'Please provide company size',
-            'tel.req' => 'Company contact# is required',
-        ]);  // ③
 
         // Company::create($request->all());
         $request->user()->companies()->update([

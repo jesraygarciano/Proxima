@@ -11,6 +11,7 @@ use App\Libs\Common;
 use App\User;
 use App\Message;
 use Carbon\Carbon;
+use App\Contact;
 
 // use Common;
 
@@ -26,11 +27,11 @@ class MessagerController extends Controller
     }
 
     public function json_return_chatable_users(Request $requests){
-        return ['users'=>[User::first(),User::find(301)]];
+        return ['users'=>\Auth::user()->contacts->load('contact'), 'recieved_request'=> \Auth::user()->receivedContactRequests->load('user')];
     }
 
     public function json_save_sent_message(Request $requests){
-        Message::create(
+        $message = Message::create(
             [
                 'user_id'=>\Auth::user()->id,
                 'reciever'=>$requests->reciever,
@@ -38,12 +39,46 @@ class MessagerController extends Controller
             ]
         );
 
-        return 'message saved';
+        return ['message'=>'message saved','data'=>$message];
     }
 
     public function json_mark_message_seen(Request $requests){
         Message::where('reciever',$requests->reciever)->where('user_id',\Auth::user()->id)->update(['seen'=>1]);
 
         return 'message seen';
+    }
+
+    public function json_search_contact(Request $requests){
+        // 
+        $contacts = \Auth::user()->contacts()->lists('contact_id');
+        $requested = \Auth::user()->contactRequests()->lists('contact_id');
+        $recieved_request = \Auth::user()->receivedContactRequests()->lists('user_id');
+
+        $others_users = User::searchKey($requests->keyword)->whereNotIn('id',$requested)->whereNotIn('id',$recieved_request)->whereNotIn('id',$contacts)->limit(5);
+        $requested = User::searchKey($requests->keyword)->whereIn('id',$requested);
+        $recieved_request = User::searchKey($requests->keyword)->whereIn('id',$recieved_request);
+        $contacts = User::whereIn('id',$contacts)->searchKey($requests->keyword);
+
+        return ['contacts'=>$contacts->get() ,'others'=>$others_users->get(), 'requested'=>$requested->get(), 'recieved_request'=>$recieved_request->get() ];
+    }
+
+    public function json_request_contact(Request $requests){
+        \Auth::user()->requestMessage($requests);
+
+        return  'contact requested';
+    }
+
+    public function json_accept_contact(Request $requests){
+        Contact::where('contact_id',\Auth::user()->id)->where('user_id',$requests->contact_id)->update(['status'=>'approved']);
+
+        Contact::create(
+            [
+                    'user_id'=>\Auth::user()->id,
+                    'contact_id'=>$requests->contact_id,
+                    'status'=>'approved'
+            ]
+        );
+
+        return 'contact accepted';
     }
 }
