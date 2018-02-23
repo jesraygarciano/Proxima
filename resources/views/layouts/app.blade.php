@@ -58,6 +58,7 @@
         {{-- font --}}
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 
         {{-- Google --}}
 <!--         <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>

@@ -158,7 +158,7 @@
             </div>
 
             @if(!empty($company->address1))
-                <div class="container text-center" style="padding-top:3rem;height:500px;width:100%;">
+                <div class="container text-center" style="border:1px solid red;padding-top:3rem;height:500px;width:100%;">
                         {!! Mapper::render() !!}
                 </div>
             @endif

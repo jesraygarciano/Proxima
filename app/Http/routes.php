@@ -19,7 +19,11 @@ Route::get('management/companydata','ManagementController@companyData')->name('d
 Route::get('management/openingdata','ManagementController@openingData')->name('datatables.openings');
 
 
+Route::get('portals/hiring-portal', 'PortalController@hiring_portal');
+
 Route::get('hiring_portal/user_index', 'HiringPortalController@user_index');
+
+
 Route::get('hiring_portal/user_index_show/{id}', ['as' => 'hiring_portal.user_index_show', 'uses' => 'HiringPortalController@user_index_show']);
 
 
