@@ -41,6 +41,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsToMany(Opening::class, 'applications', 'user_id', 'opening_id')->withPivot('id', 'description','created_at');
     }
 
+    public function latestMessage(){
+        return $this->recievedMessages()->latest()->limit(1);
+    }
+
+    public function recievedMessages(){
+        return $this->hasMany('\App\Message','reciever');
+    }
+
+    public function unseenMessages(){
+        return $this->recievedMessages()->where('messages.seen',0);
+    }
+
     public function bookmarkings()
     {
         return $this->belongsToMany(Opening::class, 'save_openings', 'user_id', 'opening_id');
