@@ -17,4 +17,13 @@ class Contact extends Model
 	public function contact(){
 		return $this->belongsTo(User::class,'contact_id');
 	}
+
+	public function latestMessage(){
+		return $this->hasMany('\App\Message','user_id','contact_id')->latest()->limit(1);
+	}
+
+	// scopes
+    public function scopeSearchKey($query,$keyword){
+        return $query->leftJoin('users','users.id','=','contacts.user_id')->whereRaw('(concat(users.f_name," ",users.l_name) like "%'.$keyword.'%")');
+    }
 }

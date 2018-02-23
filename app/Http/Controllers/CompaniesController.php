@@ -37,7 +37,11 @@ class CompaniesController extends Controller
         if(!empty($searchData)){
             if(!empty($w_hiring_info)){
 
-                $companies_filter = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
+                // $companies = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
+                // dd($companies);
+                        // paginate(10);
+                // User::find($request->applicant_saved_id)->scouters->count()
+
                 $companies = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
 
             }
@@ -46,7 +50,6 @@ class CompaniesController extends Controller
             }
         }elseif(!empty($w_hiring_info)){
 
-                $companies_filter = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
                 $companies = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
             // dd($companies);
         }        
@@ -54,7 +57,7 @@ class CompaniesController extends Controller
             $companies = Company::latest('created_at')->where('is_active', "1")->paginate(10);
         }
 
-        return view('companies.index', compact('companies'));
+        return view('companies.index', compact('companies','companies_filter'));
         // return view('companies.index', compact('companies','opening_count'));
     }
     

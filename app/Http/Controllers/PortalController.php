@@ -78,8 +78,9 @@ class PortalController extends Controller
 
         $openings = Opening::where('province_code',$code)->get();
         $province = \DB::table('provinces')->where('iso_code',$code)->first();
+        $provinces = \DB::table('provinces')->get();
 
-        return view('openings.map-search-ph', compact('openings','province'));
+        return view('openings.map-search-ph', compact('openings','province','provinces'));
     }
 
     public function portal_ph_division_search($code){
@@ -94,9 +95,10 @@ class PortalController extends Controller
     public function portal_international_search($code){
 
         $openings = Opening::where('country_code',$code)->get();
+        $provinces = \DB::table('provinces')->get();
         $country = \DB::table('countries')->where('iso_alpha3',$code)->first();
 
-        return view('openings.map-search-international', compact('openings','country'));
+        return view('openings.map-search-international', compact('openings','country','provinces'));
     }
 
 

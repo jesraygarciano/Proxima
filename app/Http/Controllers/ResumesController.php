@@ -204,7 +204,7 @@ class ResumesController extends Controller
         */
         $user = \Auth::user();
         // $user = Resume::findOrFail($id);
-        // dd($user);                
+        // dd($user);
         $skills = Resume_skill::all();
         $resume = Common::get_master_resume();
         $educations = $resume->educations()->get();
@@ -281,6 +281,8 @@ class ResumesController extends Controller
             // 'cr_phone_number.required' => 'Company personnel number required',
         ]);
 
+        $resume = Resume::all();
+        dd($resume);
         $input = $request->except('photo', 'skills', '_token');
         $resume = Resume::findOrFail($resume_id);
 

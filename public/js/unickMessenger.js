@@ -29,10 +29,16 @@
 		$this.find('.message-box').click(function(){
 			// 
 			seenUnseenMessages();
+			$this.removeClass('focus-search');
 		});
 
 		$this.find('.search-box .button').click(function(){
-			search_contacts($this.find('.search-box .box input').val());
+			if($this.hasClass('focus-search'))
+			{
+				search_contacts($this.find('.search-box .box input').val());
+				$this.find('.search-box .box input').focus();
+			}
+			$this.addClass('focus-search');
 		});
 
 		$this.find('.search-box .box input').keydown(function(ev){
@@ -40,6 +46,22 @@
 				search_contacts($this.find('.search-box .box input').val());
 			}
 		});
+
+		$this.find('.message-list').scroll(function(){
+			if($(this).scrollTop() == 0){
+				fetchPreviewsMessages();
+			}
+		});
+
+		$this.find('.thread-list').on('click','.cursor-norm',function(){
+			$this.addClass('focus-search');
+		});
+
+
+		// this variable is for setting reference to the first message
+		// that is loaded on the message history
+		var first_loaded = 0;
+		var loaded_last = false;
 
 		$.socket.on('r-p-m', function(data){
 			// 
@@ -126,24 +148,25 @@
 					// 
 					$this.find('.thread-list').html('');
 					for(var index in data.contacts){
+
 						$this.find('.thread-list').append(
-							'<div class="infoer" data-id="'+data.contacts[index].id+'">'
+							'<div class="infoer '+( data.contacts[index].latest_message[0] ? (data.contacts[index].latest_message[0].seen == 0 ? 'unseen':'') : '')+'" data-id="'+data.contacts[index].contact.id+'">'
 							+'<div class="col pdd-5">'
-							+'	<img src="'+data.contacts[index].photo+'"><div class="active-icon"></div>'
+							+'	<img src="'+data.contacts[index].contact.photo+'"><div class="active-icon"></div>'
 							+'</div>'
-							+'<div class="col prio">'
+							+'<div class="col prio hide-728">'
 							+'	<div class="text">'
-							+'		<div class="title">'+data.contacts[index].name+'</div>'
-							+'		<div class="description"></div>'
+							+'		<div class="title">'+data.contacts[index].contact.name+'</div>'
+							+'		<div class="description">'+(data.contacts[index].latest_message[0] ? data.contacts[index].latest_message[0].message : '')+ '</div>'
 							+'	</div>'
 							+'</div>'
-							+'<div class="col pdd-5">'
+							+'<div class="col pdd-5 hide-728">'
 							+'</div>'
 							+'</div>'
 							+'</div>'
 							);
 
-						setThreadItemEvent($this.find('.thread-list .infoer:last-child'),data.contacts[index]);
+						setThreadItemEvent($this.find('.thread-list .infoer:last-child'),data.contacts[index].contact);
 					}
 
 					for(var index in data.recieved_request){
@@ -152,13 +175,13 @@
 							+'<div class="col pdd-5">'
 							+'	<img src="'+data.recieved_request[index].photo+'"><div class="active-icon"></div>'
 							+'</div>'
-							+'<div class="col prio">'
+							+'<div class="col prio hide-728">'
 							+'	<div class="text">'
 							+'		<div class="title">'+data.recieved_request[index].name+'</div>'
 							+'		<div class="description"></div>'
 							+'	</div>'
 							+'</div>'
-							+'<div class="col pdd-5 add_bttn">'
+							+'<div class="col pdd-5 add_bttn hide-728">'
 							+'<button type="button" class="btn btn-warning btn-xs">Accept Contact</button>'
 							+'</div>'
 							+'</div>'
@@ -174,13 +197,13 @@
 							+'<div class="col pdd-5">'
 							+'	<img src="'+data.requested[index].photo+'"><div class="active-icon"></div>'
 							+'</div>'
-							+'<div class="col prio">'
+							+'<div class="col prio hide-728">'
 							+'	<div class="text">'
 							+'		<div class="title">'+data.requested[index].name+'</div>'
 							+'		<div class="description"></div>'
 							+'	</div>'
 							+'</div>'
-							+'<div class="col pdd-5">'
+							+'<div class="col pdd-5 hide-728">'
 							+'<button type="button" class="btn btn-default btn-xs">request sent</button>'
 							+'</div>'
 							+'</div>'
@@ -194,13 +217,13 @@
 							+'<div class="col pdd-5">'
 							+'	<img src="'+data.others[index].photo+'"><div class="active-icon"></div>'
 							+'</div>'
-							+'<div class="col prio">'
+							+'<div class="col prio hide-728">'
 							+'	<div class="text">'
 							+'		<div class="title">'+data.others[index].name+'</div>'
 							+'		<div class="description"></div>'
 							+'	</div>'
 							+'</div>'
-							+'<div class="col pdd-5 add_bttn">'
+							+'<div class="col pdd-5 hide-728 add_bttn">'
 							+'<button type="button" class="btn btn-primary btn-xs"><i class="fa fa-user-plus"></i></button>'
 							+'</div>'
 							+'</div>'
@@ -213,6 +236,8 @@
 					if(data.contacts.length < 1 && data.requested < 1 && data.others < 1){
 						$this.find('.thread-list').html('<div style="padding:5px; color:#808080;">No Result</div>');
 					}
+
+					fetchOnlines(true);
 				}
 			});
 		}
@@ -274,17 +299,17 @@
 					$this.find('.thread-list').html('');
 					for(var index in data.users){
 						$this.find('.thread-list').append(
-							'<div class="infoer" data-id="'+data.users[index].contact.id+'">'
+							'<div class="infoer '+( data.users[index].latest_message[0] ? (data.users[index].latest_message[0].seen == 0 ? 'unseen':'') : '')+'" data-id="'+data.users[index].contact.id+'">'
 							+'<div class="col pdd-5">'
 							+'	<img src="'+data.users[index].contact.photo+'"><div class="active-icon"></div>'
 							+'</div>'
-							+'<div class="col prio">'
+							+'<div class="col prio hide-728">'
 							+'	<div class="text">'
 							+'		<div class="title">'+data.users[index].contact.name+'</div>'
-							+'		<div class="description"></div>'
+							+'		<div class="description">'+(data.users[index].latest_message[0] ? data.users[index].latest_message[0].message : '')+ '</div>'
 							+'	</div>'
 							+'</div>'
-							+'<div class="col pdd-5">'
+							+'<div class="col pdd-5 hide-728">'
 							+'</div>'
 							+'</div>'
 							+'</div>'
@@ -299,13 +324,13 @@
 							+'<div class="col pdd-5">'
 							+'	<img src="'+data.recieved_request[index].user.photo+'"><div class="active-icon"></div>'
 							+'</div>'
-							+'<div class="col prio">'
+							+'<div class="col prio hide-728">'
 							+'	<div class="text">'
 							+'		<div class="title">'+data.recieved_request[index].user.name+'</div>'
 							+'		<div class="description"></div>'
 							+'	</div>'
 							+'</div>'
-							+'<div class="col pdd-5 add_bttn">'
+							+'<div class="col pdd-5 hide-728 add_bttn">'
 							+'<button type="button" class="btn btn-warning btn-xs">Accept Contact</button>'
 							+'</div>'
 							+'</div>'
@@ -334,15 +359,78 @@
 			$this.find('.message-list').scrollTop(scrollHeight - height);
 		}
 
+		function loadMoreIfLoadable(){
+			var scrollHeight = $this.find(".message-list")[0].scrollHeight;
+			var height = $this.find(".message-list").height();
+
+			if(scrollHeight == height){
+				fetchPreviewsMessages();
+			}
+		}
+
+		function fetchPreviewsMessages(){
+			if(!loaded_last && !loading)
+			{
+				loading = true;
+				$this.find(".message-list").prepend('<div class="loading-messages" style="opacity:0.7; position: absolute;background: #bbd2e6;width: 100%;height: 80px;z-index: 3;top: 0px;"><br><center><div class="loader"></div></center></div>');
+				$.ajax({
+					url:settings.get_previews_message,
+					type:"GET",
+					data:{
+						user_id:settings.auth_id,
+						contact_id:$this.find('.send_message').data('r-id'),
+						first_id:first_loaded
+					},
+					success:function(_data){
+						console.log(_data);
+						loading = false;
+
+						$this.find(".message-list .loading-messages").remove();
+
+						var old_scrollHeight = $this.find(".message-list")[0].scrollHeight;
+
+						for(var i = 0; i < _data.messages.length; i++)
+						{
+							if(_data.messages[i].user_id == settings.auth_id){
+								aMoMlS(_data.messages[i],true);
+							}
+							else
+							{
+								aMoMlR(_data.messages[i],true);
+							}
+
+							if(i == _data.messages.length -1)
+							{
+								first_loaded = _data.messages[i].id;
+							}
+						}
+
+						$this.find('.message-list').scrollTop($this.find(".message-list")[0].scrollHeight - old_scrollHeight + $this.find('.message-list').scrollTop());
+
+						if(_data.messages.length > 0)
+						{
+							loadMoreIfLoadable();
+						}
+						else
+						{
+							loaded_last = true;
+						}
+					}
+				});
+			}
+		}
+
 		function setThreadItemEvent(elm, data){
 			elm.click(function(){
 
 				loading = true;
+				$this.removeClass('focus-search');
+
 
 				elm.removeClass('unseen');
 				$this.find('.message-list').html('<br><br><center><div class="loader"></div></center>');
 				$this.find('.message-box .r_name').html(data.name);
-				$this.find('.message-box .r_picture').html(data.photo);
+				$this.find('.message-box .r_picture').attr('src',data.photo);
 				$this.find('.thread-list .infoer').removeClass('active');
 
 				chatHeadOnline($this.find('.infoer[data-id='+data.id+']').hasClass('online'));
@@ -357,12 +445,26 @@
 						for(var i = 0; i < _data.messages.length; i++)
 						{
 							if(_data.messages[i].user_id == settings.auth_id){
-								aMoMlS(_data.messages[i]);
+								aMoMlS(_data.messages[i],true);
 							}
 							else
 							{
-								aMoMlR(_data.messages[i]);
+								aMoMlR(_data.messages[i],true);
 							}
+
+							if(i == _data.messages.length -1)
+							{
+								first_loaded = _data.messages[i].id;
+							}
+						}
+
+						if(_data.messages.length == 0)
+						{
+							loaded_last = true;
+						}
+						else
+						{
+							loaded_last = false;
 						}
 
 						loading = false;
@@ -374,20 +476,25 @@
 						$this.find('.message-box').find('.box').focus();
 
 						seenUnseenMessages();
+
+						loadMoreIfLoadable();
 					}
 				});
 
 			});
 		}
 
-		function fetchOnlines(){
+		function fetchOnlines(not_auto_load){
 			$.socket.emit('fetch online',{},function(data){
 				console.log(data);
 				for(var index in data){
 					markOnline(data[index],true);
 				}
 
-				$this.find('.thread-list .infoer:first-child').trigger('click');
+				if(!not_auto_load)
+				{
+					$this.find('.thread-list .infoer:first-child').trigger('click');
+				}
 			});
 		}
 
@@ -440,12 +547,11 @@
 			}
 		}
 
-		function aMoMlS(data){
+		function aMoMlS(data,prepend){
 
-			$this.find('.message-list').append(
-				'<div>'
+			var html = '<div>'
 				+'<div class="message-item right">'
-				+'	<img src="http://localhost:8000/img/member-placeholder.png">'
+				+'	<img src="'+$this.find('.message-box .r_picture').attr('src')+'">'
 				+'<span class="date_sent">'
 				+data.formated_date
 				+'</span>'
@@ -453,17 +559,25 @@
 				+data.message
 				+'</div>'
 				+'</div>'
-				+'</div>'
-				);
+				+'</div>';
+
+			if(prepend)
+			{
+				$this.find('.message-list').prepend(html);
+			}
+			else
+			{
+				$this.find('.message-list').append(html);
+			}
 
 			seenUnseenMessages();
 		}
 
-		function aMoMlR(data){
-			$this.find('.message-list').append(
-				'<div>'
+		function aMoMlR(data,prepend){
+
+			var html = '<div>'
 				+'<div class="message-item not-seen">'
-				+'	<img src="http://localhost:8000/img/member-placeholder.png">'
+				+'	<img src="'+$this.find('.message-box .r_picture').attr('src')+'">'
 				+'	<div class="text">'
 				+data.message
 				+'</div> '
@@ -471,8 +585,15 @@
 				+data.formated_date
 				+'</span>'
 				+'</div>'
-				+'</div>'
-				);
+				+'</div>';
+
+			if(prepend){
+				$this.find('.message-list').prepend(html);
+			}
+			else
+			{
+				$this.find('.message-list').append(html);
+			}
 		}
 
 		var months = [

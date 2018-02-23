@@ -184,9 +184,10 @@ Route::group(['prefix'=>'messaging', 'middleware'=>'auth'], function(){
 	Route::group(['prefix'=>'json'], function(){
 		Route::get('fetch/user/messages', ['as'=>'json_return_user_messages', 'uses'=>'MessagerController@json_return_user_messages']);
 		Route::get('fetch/chatable/users', ['as'=>'json_return_chatable_users', 'uses'=>'MessagerController@json_return_chatable_users']);
+		Route::get('load/previews/messages', ['as'=>'json_fetch_previews_messages', 'uses'=>'MessagerController@json_fetch_previews_messages']);
+		Route::get('search/contacts', ['as'=>'json_search_contact', 'uses'=>'MessagerController@json_search_contact']);
 		Route::post('save/sent/message', ['as'=>'json_save_sent_message', 'uses'=>'MessagerController@json_save_sent_message']);
 		Route::post('mark/message/seen', ['as'=>'json_mark_message_seen', 'uses'=>'MessagerController@json_mark_message_seen']);
-		Route::get('search/contacts', ['as'=>'json_search_contact', 'uses'=>'MessagerController@json_search_contact']);
 		Route::post('request/contact', ['as'=>'json_request_contact', 'uses'=>'MessagerController@json_request_contact']);
 		Route::post('accept/contact', ['as'=>'json_accept_contact', 'uses'=>'MessagerController@json_accept_contact']);
 	});

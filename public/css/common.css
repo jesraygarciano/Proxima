@@ -54,7 +54,7 @@ a:hover{
   color: #1377a1;
 }
 .nav-tabs-ver>li {
-  text-align: center;
+  text-align: left!important;
   padding: 1em 0.5em 1em;
   border: 1px solid #fff;
   border-top: 5px solid transparent;
