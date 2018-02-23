@@ -3,11 +3,11 @@
 @section('content')
 
 <div class="container">
-    <article>
-        <h3>
-            <h1>Lists of applicants</h1>
-        </h3>
-    </article>
+ <article>
+    <h3>
+        <h1>Lists of applicants</h1>
+    </h3>
+ </article>
     <hr>
     <div class="row">
         <div class="col-md-3" id="opening-search">
@@ -78,7 +78,11 @@
                                 <hr>
                             <button style="margin-bottom: 10px;" type="submit" class="btn btn-primary form-control">Advanced search</button>
                             </div>
-                            <center><a href="javascript:void(0)" id="as_bttn" data-toggle="collapse" data-target="#advance_search">Show Advance Search</a></center>
+                            <center>
+                                <a href="javascript:void(0)" id="as_bttn" data-toggle="collapse" data-target="#advance_search">
+                                    Show Advance Search
+                                </a>
+                            </center>
                             <input type="hidden" name="show_advance_search" value="{{$_GET['show_advance_search'] ?? ''}}">
                             <script type="text/javascript">
                                 $(document).ready(function(){
@@ -214,12 +218,12 @@
                                 <ul class="feature-info-list content-list">
                                     <li class="ellipsis padding-right-110">
                                         <div class="li-content i-wrapper">
-                                            <i class="fa fa-id-card" aria-hidden="true"></i>
+                                            <i class="fa fa-id-card" aria-hidden="true" style="padding:3px;"></i>
                                         </div>
 
                                         <div class="li-content text-wrapper">
-
-                                            <a href="{{ url('hiring_portal/user_index_show', $applicant->id) }}">{{$applicant->f_name.' '.$applicant->l_name}}</a>
+                                            <a href="{{ url('hiring_portal/user_index_show', $applicant->id) }}">{{$applicant->f_name.' '.$applicant->l_name}}
+                                            </a>
                                         </div>
                                     </li>
                                 <!-- </div> -->
@@ -232,10 +236,10 @@
                                              {{$applicant->country.', '.$applicant->city}}
                                         </div>
 
-                                    </li>
+                                     </li>
                                     <li class="ellipsis padding-right-110">
                                         <div class="li-content i-wrapper">
-                                            <i class="fa fa-intersex" aria-hidden="true"></i>
+                                            <i class="fa fa-intersex" aria-hidden="true" style="padding:5px;"></i>
                                         </div>
 
                                         <div class="li-content text-wrapper">

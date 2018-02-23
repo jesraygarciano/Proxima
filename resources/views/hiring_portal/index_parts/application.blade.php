@@ -4,12 +4,10 @@
             @for ($i=0; $i < count($openings); $i++)
                 @if ($i == 0)
                     <li class="active"><a class="ellipsis" href="#application_{{$openings[$i]->id}}" data-toggle="tab">
-                        {{ $openings[$i]->id }}
                         {{ $openings[$i]->title }}
                     </a></li>
                 @else
                     <li><a class="ellipsis" href="#application_{{$openings[$i]->id}}" data-toggle="tab">
-                        {{ $openings[$i]->id }}
                         {{ $openings[$i]->title }}
                     </a></li>
                 @endif

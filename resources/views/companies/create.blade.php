@@ -17,7 +17,10 @@
     }
     .ui.form{
         font-size: 12px;
-    }    
+    }
+    form{
+        padding: 10px;
+    }
 </style>
 <div class="container">
     <h1>Write a New Companies</h1>

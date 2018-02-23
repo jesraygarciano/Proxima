@@ -102,7 +102,7 @@
                                 <ul class="feature-info-list content-list">
                                     <li class="ellipsis padding-right-110">
                                         <div class="li-content i-wrapper">
-                                            <i class="fa fa-id-card" aria-hidden="true"></i>
+                                            <i class="fa fa-id-card" aria-hidden="true" style="padding:3px;"></i>
                                         </div>
 
                                         <div class="li-content text-wrapper">
@@ -123,7 +123,7 @@
                                     </li>
                                     <li class="ellipsis padding-right-110">
                                         <div class="li-content i-wrapper">
-                                            <i class="fa fa-intersex" aria-hidden="true"></i>
+                                            <i class="fa fa-intersex" aria-hidden="true" style="padding:5px;"></i>
                                         </div>
 
                                         <div class="li-content text-wrapper">

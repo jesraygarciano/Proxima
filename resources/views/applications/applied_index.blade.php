@@ -116,11 +116,13 @@
     </div>
 
     @if (count($applied_application_openings) > 0)
-        <div class="col-md-2 well">
+            <div class="col-md-2 well">
     @else
-        <div class="col-md-2 col-md-offset-10 well">
+                <div class="col-md-2 col-md-offset-10 well">
     @endif
             <h4>Advertisement</h4>
-        </div>
+            
+                </div>
+            </div>
 </div>
 @endsection

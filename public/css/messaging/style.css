@@ -5,7 +5,7 @@
 
 #threads{
   position: absolute;
-  top: 50px;
+  top: 60px;
   bottom: 0px;
   overflow: auto;
   width: 100%;
@@ -17,11 +17,14 @@
 
 #threads .side-bar{
   position: absolute;
+  z-index: 1;
   width: 300px;
   left: 0px;
   top: 0px;
   bottom: 0px;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 3px 0 rgba(0,0,0,0.12)!important;
+  background: white;
+  transition: 500ms ease all;
 }
 
 #threads .side-bar .thread-list{
@@ -58,6 +61,9 @@
 #threads .side-bar .footer .search-box .box, #threads .side-bar .footer .search-box .button{
   display: table-cell;
   padding: 10px;
+  height: 50px;
+  vertical-align: middle;
+  text-align: center;
 }
 
 #threads .side-bar .footer .search-box .box input{
@@ -121,6 +127,9 @@
   width: 40px;
   border-radius: 50%;
   border:1px solid #cecece;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .infoer .text{
@@ -170,6 +179,7 @@
   top: 0px;
   left: 300px;
   bottom: 0px;
+  transition: 700ms ease all;
 }
 
 #threads .message-box .header{
@@ -296,4 +306,34 @@
 
 .pdd-5{
   padding: 5px;
+}
+
+@media(max-width: 728px){
+  #threads .message-box{
+    left: initial;
+    width: 85%;
+  }
+
+  #threads .side-bar{
+    width: 15%;
+  }
+
+  .hide-728{
+    display: none!important;
+  }
+
+  #threads.focus-search .side-bar .col{
+    display: table-cell!important;
+  }
+
+  #threads.focus-search .message-box{
+    /*left: initial;
+    width: 200px;*/
+  }
+
+  #threads.focus-search .side-bar{
+    /*width: initial;*/
+    /*right: 90px;*/
+    width: 85%;
+  }
 }
