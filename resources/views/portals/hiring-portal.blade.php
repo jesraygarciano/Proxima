@@ -259,7 +259,7 @@ header{
   color: #fff;
   background-position: right;
   background-repeat: no-repeat;
-  background: linear-gradient(rgba(22, 121, 163, .6), rgba(22, 121, 163, .6)),url("https://images.unsplash.com/photo-1482062364825-616fd23b8fc1?ixlib=rb-0.3.5&s=2d5a29bf54756acf6d32c46cdf60a63d&auto=format&fit=crop&w=1500&q=80");
+  background: linear-gradient(rgba(165, 142, 33, 0.8), rgba(22, 121, 163, .8)),url("https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6726719ee78dabe78033950d9f3f7145&auto=format&fit=crop&w=1500&q=80");
   background-attachment: fixed;
 }
 .get-hired-p{
