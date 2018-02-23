@@ -1,66 +1,3 @@
-<style>
-    ul.content-list{
-    /**/
-    }
-
-    .content-list>li{
-      position:relative;
-      padding-left: 0px !important;
-    }
-
-    .content-list>li>div>.fa-file-text{
-      position:absolute;
-      left:6px;
-      top:4.3px;
-      font-size: 10px;
-    }
-
-    .content-list>li>div>.fa-map-marker{
-      position:absolute;
-      left:6.5px;
-      top:4.3px;
-      font-size: 12px;
-    }
-
-    .content-list>li>div>.fa-dollar{
-      position:absolute;
-      left:6.8px;
-      top:4.2px;
-      font-size: 12px;
-    }
-
-    .content-list>li>div>.fa-code{
-      position:absolute;
-      left:3.5px;
-      top:4px;
-      font-size: 12px;
-    }
-
-    .content-list>li>.li-content{
-      display: inline-block;
-    }
-
-    .content-list>li>.i-wrapper{
-      position: relative;
-      height: 20px;
-      width: 20px;
-      border-radius: 10px;
-      left: 5px;
-      background-color: rgb(31, 89, 149);
-      color: white;
-    }
-
-    .content-list>li>.text-wrapper{
-      position: absolute;
-      top:-1px;
-      left:30px;
-      width: 400px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      /*height:30px;*/
-    }
-</style>
 <div class="job-tile">
     <div>
         <ul class="ribbon_style_list">
@@ -82,13 +19,24 @@
         @endif
     @endif
     <div class="job-title">
-        <a href="{{ url('openings', $opening->id) }}" class="ellipsis padding-right-110" style="display: block;"> {{ $opening->title }} </a>
+        <a href="{{ url('openings', $opening->id) }}" class="ellipsis" style="display: block;"> {{ $opening->title }} </a>
 
         {{-- <img class="pull-right" src="{{ $opening->company->company_logo }}" alt="" border="0" height="100" width="130" style="max-width: 130px;"> --}}
+{{-- <<<<<<< HEAD --}}
+
+        {{-- <span class="contain pull-right photo-adjust" style="background-image: url('{{ $opening->company->company_logo }}');border: 5px solid #ddd; position: absolute; top: -31px;"></span> --}}
+
+        {{-- <span class="contain pull-right photo-adjust" style="background-image: url('{{ $opening->company->company_logo }}'); z-index: 2;"></span> --}}
+
+{{-- ======= --}}
+
         <span class="contain pull-right photo-adjust" style="background-image: url('{{ $opening->company->company_logo }}')"></span>
+
+{{-- >>>>>>> j_0222_fix --}}
         {{-- <div class="clear"></div> --}}
+
     </div>
-    <div class="company-name_opening_list ellipsis padding-right-110"><a href="{{ url('companies', $opening->company->id) }}"> {{$opening->company->company_name}} &nbsp; </a>
+    <div class="company-name_opening_list ellipsis"><a href="{{ url('companies', $opening->company->id) }}"> {{$opening->company->company_name}} &nbsp; </a>
     </div>
     <ul class="opening-feature-info-list content-list">
         <li class="ellipsis padding-right-110">
@@ -127,7 +75,7 @@
             <div class="li-content i-wrapper">
                 <i class="fa fa-code" aria-hidden="true"></i>
             </div>
-            <div class="li-content text-wrapper">
+            <div class="li-content" style="position: absolute; left: 30px;">
                 <?php $x = 0; ?>
                 @foreach(main_languages() as $main_language)
                     @if($match_array = array_intersect($opening->has_skill->lists('id')->toArray(), get_language_ids($main_language)))

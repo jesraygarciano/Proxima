@@ -839,7 +839,7 @@
                 </h3>
                 @foreach($provinces as $province)
                     @if($province->division == 'Luzon')
-                    <a href="{{url('openings').'/?show_advance_search=open&province='.$province->iso_code}}" style="display: inline-block; margin: 5px;" role="button" class="btn label label-primary">
+                    <a href="{{url('openings').'/?show_advance_search=open&province='.$province->iso_code}}" style="display: inline-block; margin: 5px;padding: 7px;" role="button" class="btn label label-primary">
                         {{$province->name.' ('.$province->hirings}})
                     </a>
                     @endif
@@ -851,7 +851,7 @@
                 </h3>
                 @foreach($provinces as $province)
                     @if($province->division == 'Visayas')
-                    <a href="{{url('openings').'/?show_advance_search=open&province='.$province->iso_code}}" style="display: inline-block; margin: 5px;" role="button" class="btn label label-primary">
+                    <a href="{{url('openings').'/?show_advance_search=open&province='.$province->iso_code}}" style="display: inline-block; margin: 5px;padding: 7px;" role="button" class="btn label label-primary">
                         {{$province->name.' ('.$province->hirings}})
                     </a>
                     @endif
@@ -863,7 +863,7 @@
                 </h3>
                 @foreach($provinces as $province)
                     @if($province->division == 'Mindanao')
-                    <a href="{{url('openings').'/?show_advance_search=open&province='.$province->iso_code}}" style="display: inline-block; margin: 5px;" role="button" class="btn label label-primary">
+                    <a href="{{url('openings').'/?show_advance_search=open&province='.$province->iso_code}}" style="display: inline-block; margin: 5px;padding: 7px;" role="button" class="btn label label-primary">
                         {{$province->name.' ('.$province->hirings}})
                     </a>
                     @endif

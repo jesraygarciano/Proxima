@@ -16,10 +16,10 @@
 	<div class="footer">
 		<div class="search-box">
 			<div style="display: table-row;">
-				<div class="box">
+				<div class="box hide-728 col">
 					<input type="" placeholder="search user" name="">
 				</div>
-				<div class="button">
+				<div class="button col">
 					<a href="#!">
 						<i style="font-size: 15px;" class="fa fa-search"></i>
 					</a>

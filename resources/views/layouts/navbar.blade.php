@@ -166,12 +166,13 @@
                             @endif
                         </div>
                     </li>
+                    <?php $unseen_message= \Auth::user()->unseenMessages()->get(); ?>
                     <li class="noti-bell" id="message-noti">
                         <a href="{{url('messaging/index')}}?tab=scout_notifications">
                             <i class="fa fa-envelope"></i>
                         </a>
-                        <div class="num-icon" style="display: none;">
-                            <div>0</div>
+                        <div class="num-icon" style="display: {{$unseen_message->count() > 0 ? '':'none'}};">
+                            <div>{{$unseen_message->count()}}</div>
                         </div>
                     </li>
                     @endif
@@ -184,6 +185,7 @@
                 $(document).ready(function(){
                     $('#message-noti').messageNotifier({
                         auth_id:{{\Auth::user()->id}},
+                        unseen_messages:JSON.parse('{{json_encode($unseen_message)}}'.replace(/&quot;/g,'"'))
                     });
                     $('#noti-bell').bellNotifier({
                         auth_id:{{\Auth::user()->id}},

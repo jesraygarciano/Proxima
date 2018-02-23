@@ -72,12 +72,16 @@
         <!-- js dependencies -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-        {{-- <script type="text/javascript">
+
+        @if(\Auth::check())
+        <script type="text/javascript">
             (function(){
                 $.socket = io("{{url('/')}}:3000");
+                // $.socket = io("http://284a30e7.ngrok.io");
                 $.socket.emit('client add',{{\Auth::user()->id}});
             })(jQuery)
-        </script> --}}
+        </script>
+        @endif
 
         <!-- Semantic UI css -->
         {{-- @if( Request::path() == 'resumes/create') --}}
@@ -100,11 +104,6 @@
 
         @include('layouts.navbar')
 
-        <div style="display: none;">
-            @if( Request::path()!= 'auth/login')
-                @include('layouts.footer')
-            @endif
-        </div>
         <!-- Scripts -->
 
 
@@ -118,6 +117,7 @@
 
                     {{-- コンテンツの表示 --}}
                     @yield('content')
+                    
                 </div>
             </div>
 {{--             <div class="arrow bounce">
