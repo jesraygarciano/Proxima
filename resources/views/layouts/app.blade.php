@@ -44,6 +44,10 @@
         <link rel="stylesheet" href="{{ asset('css/croppie.css') }}">
         <link rel="stylesheet" href="{{ asset('css/media-query.css') }}">
 
+        <!-- LP -->
+        <link rel="stylesheet" href="{{ asset('css/components/itp_landingpage.css') }}">
+
+
         @if(Request::path() == 'resumes/show' || Request::path() == 'openings')
             <link rel="stylesheet" href="{{ asset('css/resume_show.css') }}">
         @endif

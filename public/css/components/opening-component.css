@@ -157,10 +157,9 @@
 
 .photo-adjust{
     position: absolute;
-    bottom:37px;
     right: 12px;
+    top: 85px;
 }
-
 
 .job-card{
     position: relative;
@@ -246,4 +245,21 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   /*height:30px;*/
+}
+
+@media(max-width: 428px){
+  .job-tile .photo-adjust{
+    top:5px;
+    right: 5px;
+    height: 60px!important;
+    width: 60px!important;
+  }
+
+  .content-list>li>.text-wrapper{
+    right: 0px;
+  }
+
+  .job-tile .job-title{
+    margin-top: 30px;
+  }
 }

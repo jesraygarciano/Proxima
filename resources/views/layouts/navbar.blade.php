@@ -41,14 +41,17 @@
                            {{-- @if(Session::get('company')) --}}
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{-- {{ Session::get($company->email) }} --}}
-                                {{ Auth::user()->email }}
+                                <div class="name ellipsis"> 
+                                    {{ Auth::user()->email }}
+                                </div>
                                 <span class="caret"></span>
                             </a>
                             {{-- @endif --}}
                         @else
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->f_name }}
-                                {{ Auth::user()->l_name }}
+                                <div class="name ellipsis"> 
+                                    {{ Auth::user()->name }} 
+                                </div>
                                 <span class="caret"></span>
                             </a>
                         @endif

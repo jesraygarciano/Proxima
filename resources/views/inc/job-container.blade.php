@@ -112,13 +112,19 @@
     <div class="footer">
         <div class="pull-left">
 
-                <div class="foggy-text">
-                    Registed date:
-                    <b>{{ date(' M. j, Y ',strtotime($opening->created_at)) }} </b>
-                </div>
+            <div class="foggy-text">
+                Post Starting date: <!-- date("Y-m-d H:i:s")  -->
+                <b>{{ date(' M. j, Y h:i A',strtotime($opening->from_post)) }} </b>
+            </div>
 
         @if (!Auth::guest())
                 @if(\Auth::user()->canEdit($opening))
+
+                    <div class="foggy-text">
+                        Registed date:
+                        <b>{{ date(' M. j, Y h:i A',strtotime($opening->created_at)) }} </b>
+                    </div>
+
                     <div class="foggy-text">
                         Starting date: <!-- date("Y-m-d H:i:s")  -->
                         <b>{{ date(' M. j, Y h:i A',strtotime($opening->from_post)) }} </b>

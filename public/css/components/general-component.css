@@ -27,7 +27,7 @@
     font-size: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;    
+    white-space: nowrap;
 }
 
 .feature-info-list{
@@ -341,8 +341,8 @@
 }
 
 .landing-page-search{
-    position: absolute; 
-    top:53%; 
+    position: absolute;
+    top:53%;
     left: 50%;
     width: 700px;
     -webkit-transform: translateX(-50%);
@@ -364,13 +364,13 @@
 
 .contain {
     display: inline-block;
-    /*background-color: #ccc;*/
+    background-color: #fcfcfc;
     background-position: center center;
     background-repeat: no-repeat;
     margin: 5px;
     width: 110px;
     height: 110px;
-    /*border: 1px solid #ccc;*/
+    border: 1px solid #f1eeee;
     background-size: contain;
     border-radius:4px;
 }
@@ -403,7 +403,7 @@
     text-align: center;
     left: 50%;
     width: 700px;
-    -webkit-transform: translateX(-50%);    
+    -webkit-transform: translateX(-50%);
 }
 
 .general_heading h2{
@@ -430,6 +430,24 @@
     background-size: cover;
     transition: background-image 3s linear;
     background-blend-mode: darken;
+}
+
+@media(max-width: 480px){
+    .tab-content-wrapper {
+        height: 150px;
+    }
+}
+
+.wrap-tab-content-wrapper{
+    position: relative;
+    overflow: hidden;
+    min-height: 250px;
+}
+
+@media(max-width: 480px){
+    .wrap-tab-content-wrapper{
+        min-height: 150px;
+    }
 }
 
 .ribbon_style_list{
@@ -577,3 +595,13 @@
 .noti-bell:hover .noti-lists{
     display: block;
 }
+
+
+.message-alert{
+    position: fixed;
+    z-index: 1000;
+    top: 10px;
+    right: 10PX;
+    background: white;
+}
+
