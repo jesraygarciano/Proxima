@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Opening;
 use App\Company;
 use App\Resume;
+use App\Opening_skill;
+use App\Joining_opening_skill;
 use App\Libs\Common;
 use Auth;
 use App\User;
@@ -37,7 +39,6 @@ class OpeningsController extends Controller
         return view('openings.index', compact('openings'));
     }
 
-
     // uelmar's
     public function edit_opening_bookmark(Request $request){
 
@@ -50,41 +51,19 @@ class OpeningsController extends Controller
             return ['result'=>'bookmarked','bookmarks'=>Opening::find($request->opening_id)->bookmark_count()];
         }
     }
+
     public function index(Request $request)
     {
-
+        // dd($request);
         // revise
-        $openings = Opening::query()->where('is_active', 1)->orderBy('created_at','desc');
+        $openings = Opening::where('is_active', 1)->orderBy('created_at','desc');
         $provinces = \DB::table('provinces')->get();
         $countries = \DB::table('countries')->get();
 
-        /*$language_lang = strtoupper($request->language);
-        
-        if($language_lang){
-            $openings = collect();
-            $openings_skills = \App\Opening_skill::where('language',$request->language)->get();
-
-            foreach ($openings_skills as $skill) {
-                $openings = $openings->merge($skill->openings);
-            }
-        return view('openings.index',compact('provinces','openings'));
-        }*/
-
-
-        // $curr_date = date('Y-m-d H:i:s');
-        // dd($curr_date);
-        // if ($openings->from_post, '>=', date(' M. j, Y h:i:s A')) {
-        //     # code...
-        // }
-
-        // $post_active = Opening::where('from_post', '>=', $curr_date);
-
         if($request->languages && strlen($request->languages[0]) > 0)
         {
-            $resume_skills = \App\Opening_skill::whereIn('language',$request->languages)->lists('id');
-
-            $pivot_opening_skills = \DB::table('joining_opening_skills')->whereIn('opening_skill_id',$resume_skills)->lists('opening_id');
-
+            $resume_skills = Opening_skill::whereIn('language',$request->languages)->lists('id');
+            $pivot_opening_skills = Joining_opening_skill::whereIn('opening_skill_id',$resume_skills)->lists('opening_id');
             $openings->whereIn('id',$pivot_opening_skills);
         }
 
@@ -111,26 +90,11 @@ class OpeningsController extends Controller
             $openings->where('salary_range',$request->salary_range);
         }
 
-        // $openings = $openings->paginate(6);->where('is_active', 1)
-
         $openings = $openings->where('is_active', 1)
-        // ->where('until_post', '>', date('Y-m-d\TH:i'))
-        ->where(function($query)
-                    {
-                        $query->where('from_post', '<', date('Y-m-d\TH:i'))
-                              ->where('until_post', '>', date('Y-m-d\TH:i'));
-                    })
+        ->whereDate('from_post', '<', date('Y-m-d\TH:i'))
+        ->whereDate('until_post', '>', date('Y-m-d\TH:i'))
         ->paginate(6);
 
-        // $openings = $openings->where(function($query)
-        //     {
-        //         $query->where('from_post', '<', date('Y-m-d\TH:i'))
-        //               ->where('until_post', '>', date('Y-m-d\TH:i'));
-        //     })
-        // ->paginate(6);
-        // dd($openings);
-
-        // $expiredate = $openings->where('is_active', 1)->where( 'created_at', '>', Carbon::now()->addDays(30))->get();
 
         return view('openings.index',compact('provinces','openings'));
     }
@@ -204,7 +168,7 @@ class OpeningsController extends Controller
         [
             'title.required' => 'Please input the Job title',
             'skills.required' => 'Please choose atleast one skill requirement',
-            'hiring_type.required' => 'Please choose the type of job',            
+            'hiring_type.required' => 'Please choose the type of job',
             'salary_range.required' => 'Please select salary range',
             'details.required' => 'Please provide details on new Opening Job',
             'requirements.required' => 'Please provide requirements for this Opening job',
@@ -267,7 +231,7 @@ class OpeningsController extends Controller
         }
 
         if (!empty($request->country)) {
-            $opening->country_code = $request->country;        
+            $opening->country_code = $request->country;
         }
 
         if (!empty($request->city)) {
@@ -306,7 +270,7 @@ class OpeningsController extends Controller
 
         $more_openings = Opening::where('id', '!=', $opening->id)->where('company_id', $company->id)->get();
         // $more_openings = Opening::where('id', '!=', $opening->id)->where('company_id', $company->id)->get();
-        
+
         // dd($more_openings);
         $resume = array();
         if(Auth::check()){
@@ -315,7 +279,7 @@ class OpeningsController extends Controller
         // dd($resume);
 
         /*Mapper::location($opening->$company->address1. " ". $opening->$company->city. " ". $opening->$company->country)->map(['zoom' => 18, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'clusters' => ['size' => 10, 'center' => true, 'zoom' => 30]]);*/
-        
+
         return view('openings.show', compact('opening','company', 'resume', 'more_openings','provinces','countries'));
     }
 
@@ -364,7 +328,7 @@ class OpeningsController extends Controller
         [
             'title.required' => 'Please input the Job title',
             'skills.required' => 'Please choose atleast one skill requirement',
-            'hiring_type.required' => 'Please choose the type of job',            
+            'hiring_type.required' => 'Please choose the type of job',
             'salary_range.required' => 'Please select salary range',
             'details.required' => 'Please provide details on new Opening Job',
             'requirements.required' => 'Please provide requirements for this Opening job',
@@ -413,7 +377,7 @@ class OpeningsController extends Controller
         $opening->address2 = $request->address2;
         $opening->province_code = $request->province;
         $opening->postal = $request->postal;
-        $opening->country_code = $request->country;        
+        $opening->country_code = $request->country;
         $opening->city = $request->city;
 
         $opening->details = $request->details;

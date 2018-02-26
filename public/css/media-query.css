@@ -34,7 +34,6 @@
   ##Screen = B/w 768px to 1024px
 */
 
-
 }
 
 
@@ -145,5 +144,29 @@
     opacity: 0.8;  
 }
     
+}
 
+/*Customized Media Queries*/
+
+@media (max-width: 991px) {
+.nexseed-logos figure a .nex-seedlogo{
+padding-top: 0!important;
+/*display: none;*/
+}
+.nexseed-logos figure a .gscamplogo{
+padding-top: 3.5rem!important;
+/*display: none;*/
+}
+.landing-cont-logos{
+  height: 150px!important;
+}
+
+}
+
+
+@media (max-width: 378px) {
+
+.btn-opposite{
+  margin-top: 1rem;
+}
 }

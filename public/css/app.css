@@ -8,6 +8,17 @@
     margin-right: 0px !important;
   }
 }
+
+#navigation-bar .name{
+  display: inline;
+}
+
+@media(min-width: 728px){
+  #navigation-bar .name{
+    vertical-align: middle; text-align: right; width: 150px; display: inline-block;
+  }
+}
+
 /* line 23, ../../resources/assets/sass/app.scss */
 body {
   /* body-container */

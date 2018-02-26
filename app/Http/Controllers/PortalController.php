@@ -51,9 +51,6 @@ class PortalController extends Controller
 
     public function hiring_portal(){
 
-        // Mapper::map(10.318686,123.90317049999999);
-        Mapper::map(10.318686,123.90317049999999,['zoom' => 19, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'clusters' => ['size' => 10, 'center' => true, 'zoom' => 30]]);
-
         return view('portals.hiring-portal');
     }
 

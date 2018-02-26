@@ -21,6 +21,7 @@ Route::get('management/openingdata','ManagementController@openingData')->name('d
 
 Route::get('portals/hiring-portal', 'PortalController@hiring_portal');
 
+
 Route::get('hiring_portal/user_index', 'HiringPortalController@user_index');
 
 
@@ -197,6 +198,11 @@ Route::group(['prefix'=>'messaging', 'middleware'=>'auth'], function(){
 	});
 });
 
+
+Route::group(['prefix'=>'itp'],function(){
+	Route::get('create',['as'=>'itp_create','uses'=>'InternshipApplicationController@create']);
+});
+Route::get('itp/landing_page', 'InternshipApplicationController@landing_page');
 
 Route::group(['prefix'=>'hiring'], function(){
 	Route::get('index',['as'=>'hiring_index', 'uses'=>'PortalController@hiring_portal']);
