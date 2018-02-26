@@ -40,6 +40,7 @@
 .info{
     font-size: 15px;
     padding-bottom: 20px;
+    overflow-wrap: break-word;
 }
 
 .ui.form{
@@ -124,7 +125,7 @@
                             <div class="ui form">
                                 <label>Primary address:</label>
                                 <div class="info">
-                                    {{$opening->address1}}                            
+                                    {{$opening->address1}}
                                 </div>
                             </div>
                         </div>
@@ -141,17 +142,17 @@
                     <div class="ui form">
                         <label>City/Province:</label>
                         <div class="info">
-                            @foreach($provinces as $province)                        
+                            @foreach($provinces as $province)
                                 {{$province->iso_code === $opening->province_code ? $province->name : ''}}
                             @endforeach
-                            {{ $opening->city }}                             
+                            {{ $opening->city }}
                         </div>
                     </div>
 
                     <div class="ui form">
                         <label>Postal:</label>
                         <div class="info">
-                            {{$opening->postal}}                            
+                            {{$opening->postal}}
                         </div>
                     </div>
 
@@ -160,7 +161,7 @@
                         <div class="info">
                             @foreach($countries as $country)
                                 {{$country->iso_alpha3 === $opening->country_code ? $country->name : ''}}
-                            @endforeach                            
+                            @endforeach
                         </div>
                     </div>
 

@@ -322,7 +322,7 @@
 
     <div class="general-hero" style="margin-top:-30px;">
         <div class="landing-cover">
-            <div style="position: relative; overflow: hidden; min-height: 250px;">
+            <div class="wrap-tab-content-wrapper">
                 <div class="tab-content-wrapper"></div>
             </div>
 
@@ -476,11 +476,11 @@
                                     <div class="li-content text-wrapper">
                                         {{$opening->address1}},
                                         {{$opening->address2}},
-                                        @foreach($provinces as $province)                        
+                                        @foreach($provinces as $province)
                                             {{$province->iso_code === $opening->province_code ? $province->name : ''}}
                                         @endforeach
                                         {{$opening->postal}}
-                                        
+
                                     </div>
                                 </li>
                                 <li>
