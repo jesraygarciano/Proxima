@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
       <div class="panel panel-default">
         <div class="panel-heading">Login</div>
         <div class="panel-body">
@@ -93,9 +93,9 @@
       xfbml      : true,
       version    : 'v2.12'
     });
-      
-    FB.AppEvents.logPageView();   
-      
+
+    FB.AppEvents.logPageView();
+
   };
 
   (function(d, s, id){

@@ -15,7 +15,7 @@
             </div>
           @endif
 
-          <form class="form-horizontal" role="form" method="POST" action="/auth/register/hiring">
+          <form class="form-horizontal" role="form" method="POST" action="{{url('/auth/register/hiring')}}">
             {{-- CSRF対策--}}
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 {{-- 

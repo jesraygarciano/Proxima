@@ -2,6 +2,18 @@
 
 @section('content')
 
+<style type="text/css">
+        .ribbon {
+            position: absolute;
+            right: -27px;
+            bottom: 125px;
+            z-index: 1;
+            overflow: hidden;
+            width: 113px;
+            height: 73px;
+            text-align: right;
+        }    
+</style>
 <div class="container">
     <article>
         <h3>
@@ -89,9 +101,10 @@
                             </div>
                             <div class="pull-right">
                                 <div class="foggy-text">
-                                    <div style="position: relative;bottom: 100px;">
-                                        @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
-                                    </div>                                    
+                                    <!-- <div style="position: relative;bottom: 100px;"> -->
+                                        <div class="ribbon">
+                                            @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
+                                        </div>                                    
                                 </div>
                             </div>
                         </div>
