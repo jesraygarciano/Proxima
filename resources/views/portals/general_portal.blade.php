@@ -317,7 +317,30 @@
           left:30px;
           width: 180px;
         }
-
+        .ribbon {
+        /*  position: absolute;
+          right: -5px; top: -5px;
+          z-index: 1;
+          overflow: hidden;
+          width: 75px; height: 75px;
+          text-align: right;*/
+/*            position: absolute;
+            right: -27px;
+            bottom: 156px;
+            z-index: 1;
+            overflow: hidden;
+            width: 113px;
+            height: 73px;
+            text-align: right;*/
+            position: absolute;
+            right: -7px;
+            bottom: 184px;
+            z-index: 1;
+            overflow: hidden;
+            width: 113px;
+            height: 73px;
+            text-align: right;            
+        }
     </style>
 
     <div class="general-hero" style="margin-top:-30px;">
@@ -541,7 +564,9 @@
                                 <div class="pull-right" style="margin-top: 11px;">
                                     <div class="foggy-text">
                                       @if (Auth::check() && (!Auth::user()->role == 1))
-                                        @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
+                                        <div class="ribbon">
+                                          @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
+                                        </div>
                                       @endif
                                     </div>
                                 </div>
