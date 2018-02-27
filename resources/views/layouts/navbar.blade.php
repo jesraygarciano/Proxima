@@ -26,10 +26,10 @@
 
                 @if (Auth::guest())
                     {{-- ログインしていない時 --}}
-                    <li><a href="/auth/login">Login</a></li>
+                    <li><a href="{{url('/auth/login')}}">Login</a></li>
                     {{-- <li><a href={{route('auth.student_view')}}>Student Register</a></li> --}}
-                    <li><a href="/auth/register/student">Student Register</a></li>
-                    <li><a href="/auth/register/hiring">Hiring Register</a></li>
+                    <li><a href="{{url('/auth/register/student')}}">Student Register</a></li>
+                    <li><a href="{{url('/auth/register/hiring')}}">Hiring Register</a></li>
                 @else
 
                     {{-- ログインしている時 --}}
@@ -98,26 +98,26 @@
                                 </li>
                             @elseif (Auth::user()->role == 1)
                                 <li>
-                                    <a href="/hiring_portal">Management</a>
+                                    <a href="{{url('/hiring_portal')}}">Management</a>
                                 </li>
                                 <li>
-                                    <a href="/hiring_portal/user_index">List of Applicants</a>
+                                    <a href="{{url('/hiring_portal/user_index')}}">List of Applicants</a>
                                 </li>
                                 <li>
-                                    <a href="/saved/applicants/list">
+                                    <a href="{{url('/saved/applicants/list')}}">
                                         {{--{{ Session::get('save_applicants_count') }}--}}
                                         List of Saved Applicants
                                     </a>
                                 </li>
                             @elseif (Auth::user()->role == 2)
                                 <li>
-                                    <a href="/management/users">Manage User </a>
+                                    <a href="{{url('/management/users')}}">Manage User </a>
                                 </li>
                                 <li>
-                                    <a href="/management/companies">Manage Companies </a>
+                                    <a href="{{url('/management/companies')}}">Manage Companies </a>
                                 </li>
                                 <li>
-                                    <a href="/management/openings">Manage Openings </a>
+                                    <a href="{{url('/management/openings')}}">Manage Openings </a>
                                 </li>
                             @endif
                         </ul>

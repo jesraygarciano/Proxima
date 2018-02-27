@@ -1,3 +1,15 @@
+<style type="text/css">
+        .ribbon {
+            position: absolute;
+            right: -27px;
+            bottom: 156px;
+            z-index: 1;
+            overflow: hidden;
+            width: 113px;
+            height: 73px;
+            text-align: right;
+        }
+</style>
 <div class="job-tile">
     <div>
         <ul class="ribbon_style_list">
@@ -38,12 +50,12 @@
     </div>
     <div class="company-name_opening_list ellipsis"><a href="{{ url('companies', $opening->company->id) }}"> {{$opening->company->company_name}} &nbsp; </a>
     </div>
-    <ul class="opening-feature-info-list content-list">
+    <ul class="opening-feature-info-list content-list-forjob">
         <li class="ellipsis padding-right-110">
-            <div class="li-content i-wrapper">
+            <div class="li-content-forjob i-wrapper-forjob">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
             </div>
-            <div class="li-content text-wrapper">
+            <div class="li-content-forjob text-wrapper">
 
                 {{$opening->address1}},
                 {{$opening->address2}},
@@ -55,27 +67,27 @@
             </div>
         </li>
         <li class="ellipsis padding-right-110">
-            <div class="li-content i-wrapper">
+            <div class="li-content-forjob i-wrapper-forjob">
                 <i class="fa fa-file-text" aria-hidden="true"></i>
             </div>
-            <div class="li-content text-wrapper">
+            <div class="li-content-forjob text-wrapper">
                 {!! $opening->requirements !!}
             </div>
         </li>
         <li class="ellipsis padding-right-110">
-            <div class="li-content i-wrapper">
+            <div class="li-content-forjob i-wrapper-forjob">
                 <i class="fa fa-dollar" aria-hidden="true"></i>
             </div>
             <!-- Salary range -->
-            <div class="li-content text-wrapper">
+            <div class="li-content-forjob text-wrapper">
                 {!! salary_ranges()[$opening->salary_range] !!}
             </div>
         </li>
         <li>
-            <div class="li-content i-wrapper">
+            <div class="li-content-forjob i-wrapper-forjob">
                 <i class="fa fa-code" aria-hidden="true"></i>
             </div>
-            <div class="li-content" style="position: absolute; left: 30px;">
+            <div class="li-content-forjob" style="position: absolute; left: 30px;">
                 <?php $x = 0; ?>
                 @foreach(main_languages() as $main_language)
                     @if($match_array = array_intersect($opening->has_skill->lists('id')->toArray(), get_language_ids($main_language)))
@@ -141,7 +153,10 @@
             <div class="pull-right">
                 <div class="foggy-text">
                     @if (Auth::check() && (!Auth::user()->role == 1))
+                        <!-- <div style="position: relative;bottom: 150px;"> -->
+                        <div class="ribbon">
                             @include('openings.opening_bookmark.bookmark_button', ['opening' => $opening])
+                        </div>
                     @endif
 
                     @if (!Auth::guest())
