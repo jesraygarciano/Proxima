@@ -42,7 +42,6 @@ Route::post('hiring_portal/show/{company_id}', ['as' => 'hiring_portal.show', 'u
 
 Route::get('hiring_portal/application/{id}', ['as' => 'hiring_portal.application_detail', 'uses' => 'HiringPortalController@application_detail']);
 
-
 Route::get('companies/companysearch', 'CompaniesController@index');
 
 Route::get('companies', ['as' => 'companies.index', 'uses' => 'CompaniesController@index']);
@@ -199,10 +198,23 @@ Route::group(['prefix'=>'messaging', 'middleware'=>'auth'], function(){
 });
 
 
-Route::group(['prefix'=>'itp'],function(){
-	Route::get('create',['as'=>'itp_create','uses'=>'InternshipApplicationController@create']);
+Route::group(['prefix'=>'itp', 'middleware'=>'auth'],function(){
+
+	Route::get('landing_page', 'InternshipApplicationController@landing_page');
+
+	Route::group(['prefix'=>'applicant'],function(){
+
+		Route::get('profile',['as'=>'profile','uses'=>'InternshipApplicationController@profile']);
+		Route::get('index',['as'=>'index','uses'=>'InternshipApplicationController@create']);
+		Route::get('create',['as'=>'itp_create','uses'=>'InternshipApplicationController@create']);
+		Route::get('list/applications',['as'=>'list_itp_applications','uses'=>'InternshipApplicationController@create']);
+
+		Route::post('save/application',['as'=>'save_application', 'uses'=> 'InternshipApplicationController@save_application']);
+
+		// jsons
+		Route::group(['prefix'=>'json'],function(){});
+	});
 });
-Route::get('itp/landing_page', 'InternshipApplicationController@landing_page');
 
 Route::group(['prefix'=>'hiring'], function(){
 	Route::get('index',['as'=>'hiring_index', 'uses'=>'PortalController@hiring_portal']);
@@ -221,4 +233,9 @@ Route::group(['middleware'=>'auth', 'prefix'=>'user'], function(){
 		Route::get('openings',['as'=>'json_get_opening_notification', 'uses'=>'UserController@json_get_opening_notification']);
 		Route::get('stats',['as'=>'json_get_stat_notification', 'uses'=>'UserController@json_get_stat_notification']);
 	});
+});
+
+Route::get('trigger_migrate',function(){
+	Artisan::call('migrate', ["--force"=> true ]);
+	Artisan::call('db:seed', ["--force"=> true ]);
 });
