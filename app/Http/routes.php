@@ -204,15 +204,17 @@ Route::group(['prefix'=>'itp', 'middleware'=>'auth'],function(){
 
 	Route::group(['prefix'=>'applicant'],function(){
 
-		Route::get('profile',['as'=>'profile','uses'=>'InternshipApplicationController@profile']);
-		Route::get('index',['as'=>'index','uses'=>'InternshipApplicationController@create']);
+		Route::get('profile',['as'=>'applicant_profile','uses'=>'InternshipApplicationController@profile']);
+		// Route::get('index',['as'=>'app','uses'=>'InternshipApplicationController@create']);
 		Route::get('create',['as'=>'itp_create','uses'=>'InternshipApplicationController@create']);
 		Route::get('list/applications',['as'=>'list_itp_applications','uses'=>'InternshipApplicationController@create']);
 
 		Route::post('save/application',['as'=>'save_application', 'uses'=> 'InternshipApplicationController@save_application']);
 
 		// jsons
-		Route::group(['prefix'=>'json'],function(){});
+		Route::group(['prefix'=>'json'],function(){
+		Route::get('itp',['as'=>'json_get_itp_application', 'uses'=>'InternshipApplicationController@json_get_application_datatable']);			
+		});
 	});
 });
 

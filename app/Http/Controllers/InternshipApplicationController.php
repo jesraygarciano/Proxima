@@ -11,6 +11,7 @@ use App\InternshipApplicationSkills;
 use App\InternshipApplication;
 use Auth;
 use Mapper;
+use yajra\Datatables\Datatables;
 
 use Illuminate\Http\Request;
 
@@ -48,7 +49,6 @@ class InternshipApplicationController extends Controller
             'school' => 'required',
             'course' => 'required',
             'preffered_training_date' => 'required',
-            'course' => 'required',
         ]);
 
 // <<<<<<< HEAD
@@ -72,17 +72,48 @@ class InternshipApplicationController extends Controller
             'preffered_training_date'=>$requests->preffered_training_date
         ]);
 
+        // dd($application);
+
         foreach ($requests->skills as $skill) {
             $application->skills()->attach($skill);
         }
 
-        return $application->load('skills');
+        return redirect()->route('applicant_profile');
 
     }
 
+    public function applicant_index(){
+        return view('intership-training-programming.applicant.index');
+    }
+
+// <<<<<<< HEAD
     public function profile(){
 
-        return view('intership-training-programming.applicant.profile');
-    }    
+        // $student = Opening::where('is_active', 1)->orderBy('created_at','desc');            
+        $student = \Auth::user()->intershipApplication()->get();
+        // dd($student);
+        // $skill_ids = array();
+        // $skill_ids = Common::app_skill_ids_get();
+
+
+        return view('intership-training-programming.applicant.profile',compact('student','skill_ids'));
+
+    }
+
+
+// =======
+    public function json_get_application_datatable(Request $requests){
+        $ids = \Auth::user()->intershipApplication()->lists('internship_applications.id');
+
+        // return Datatables::of($companies)->make(true);
+        return Datatables::of(InternshipApplication::query()->leftJoin('users','users.id','=','internship_applications.user_id')
+            ->select(['internship_applications.id',\DB::raw('concat(users.f_name," ",users.l_name) as applicant_name'),'school','preffered_training_date','course'])->whereIn('internship_applications.id',$ids))
+        // ->filterColumn('applicant_name', function($query, $keyword) {
+        //         $sql = "CONCAT(users.l_name,'-',users.l_name)  like ?";
+        //         $query->whereRaw($sql, ["%{$keyword}%"]);
+        //     })
+        ->make(true);
+    }
+// >>>>>>> u_0227_newbranch_2
 
 }
