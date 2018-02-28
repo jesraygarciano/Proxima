@@ -13,7 +13,7 @@ class ModifyCompaniesTableCompanySizeToInteger extends Migration
         public function up()
         {
             Schema::table('companies',function(Blueprint $table){
-                $table->integer('company_size')->change();
+                $table->integer('company_size');
             });
 
             \DB::table('companies')->update(['company_size'=>1]);
@@ -27,7 +27,7 @@ class ModifyCompaniesTableCompanySizeToInteger extends Migration
         public function down()
         {
             Schema::table('companies',function(Blueprint $table){
-                $table->string('company_size')->change();
+                $table->string('company_size');
             });
         }
 }

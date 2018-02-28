@@ -12,9 +12,9 @@ class ModifyCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::table('companies', function (Blueprint $table) {
-            $table->string('company_size');
-        });
+        // Schema::table('companies', function (Blueprint $table) {
+        //     $table->string('company_size');
+        // });
     }
 
     /**
@@ -24,8 +24,8 @@ class ModifyCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::table('companies', function (Blueprint $table) {
-            $table->dropColumn('company_size');
-        });
+        // Schema::table('companies', function (Blueprint $table) {
+        //     $table->dropColumn('company_size');
+        // });
     }
 }

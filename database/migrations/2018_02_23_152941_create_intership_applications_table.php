@@ -13,7 +13,7 @@ class CreateIntershipApplicationsTable extends Migration
     public function up()
     {
         //
-        Schema::create('intership_applications', function(Blueprint $table){
+        Schema::create('internship_applications', function(Blueprint $table){
             $table->increments('id');
             $table->integer('user_id');
             $table->text('objectives');
@@ -32,6 +32,6 @@ class CreateIntershipApplicationsTable extends Migration
     public function down()
     {
         //
-        Schema::drop('intership_applications');
+        Schema::drop('internship_applications');
     }
 }

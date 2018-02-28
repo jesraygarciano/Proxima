@@ -74,6 +74,7 @@ return [
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => 'public',
+            'port'     => 5432,
         ],
 
         'sqlsrv' => [
