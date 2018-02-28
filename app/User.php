@@ -286,4 +286,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function scopeSearchKey($query,$keyword){
         return $query->whereRaw('(concat(f_name," ",l_name) like "%'.$keyword.'%")')->where('id','<>',\Auth::user()->id);
     }
+
+    public function intershipApplication(){
+        return $this->hasMany('App\InternshipApplication');
+    }
 }
