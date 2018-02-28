@@ -5,7 +5,7 @@
 <style type="text/css">
     /* USER PROFILE PAGE */
  .card {
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     padding: 30px;
     background-color: rgba(214, 224, 226, 0.2);
     -webkit-border-top-left-radius:5px;
@@ -20,7 +20,7 @@
 }
 .card.hovercard {
     position: relative;
-    padding-top: 0;
+    /*padding-top: 0;*/
     overflow: hidden;
     text-align: center;
     background-color: #fff;
@@ -30,18 +30,18 @@
     height: 130px;
 }
 .card-background img {
-    -webkit-filter: blur(25px);
-    -moz-filter: blur(25px);
-    -o-filter: blur(25px);
-    -ms-filter: blur(25px);
-    filter: blur(25px);
+    -webkit-filter: blur(7px);
+    -moz-filter: blur(7px);
+    -o-filter: blur(7px);
+    -ms-filter: blur(7px);
+    filter: blur(7px);
     margin-left: -100px;
     margin-top: -200px;
     min-width: 130%;
 }
 .card.hovercard .useravatar {
     position: absolute;
-    top: 15px;
+    top: 45px;
     left: 0;
     right: 0;
 }
@@ -65,7 +65,7 @@
     padding:0 5px;
     font-size: 20px;
     line-height: 1;
-    color: #262626;
+    color: #d8d8d8;
     background-color: rgba(255, 255, 255, 0.1);
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -86,206 +86,222 @@
     -webkit-border-radius:0 !important;
 }
 
+#batch-cont{
+    margin: 2rem;
+    padding: 3.5rem 0rem;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 3px 0 rgba(0,0,0,0.12)!important;
+    border: 1px solid #dddddd;
+    position: relative;    
+}
 
+.app-basic-info{
+    margin: 2rem 2rem 0rem 2rem;
+    padding: 3.5rem 0px 0 0;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 3px 0 rgba(0,0,0,0.12)!important;
+    border: 1px solid #dddddd;
+    position: relative;    
+}
+
+#app-batch-number{
+    padding: .5rem 2rem;
+    position: absolute;
+    background: #1679a3;
+    top: 0;
+    left: -1px;
+    color: #fff;
+}
+.app-objt-p{
+    padding: 1rem;
+}
+#app-batch-border-left{
+    background: #1679a3;
+    height: 100%;
+    width: 9px;
+    position: absolute;
+    top: 0;
+    right: 0;    
+}
+.app-basic-info-2{
+    height: 100px;
+}
 </style>
 <div class="container">
-<div class="row">
-<div class="col-lg-6 col-sm-6">
-    <div class="card hovercard">
-        <div class="card-background">
-            <img class="card-bkimg" alt="" src="https://images.unsplash.com/photo-1469386846711-1df926ac1129?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5e89b87a69696dd6dff1e209bd80d134&auto=format&fit=crop&w=1500&q=80">
-            <!-- http://lorempixel.com/850/280/people/9/ -->
-        </div>
-        <div class="useravatar">
-            <img alt="" src="https://images.unsplash.com/photo-1469386846711-1df926ac1129?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5e89b87a69696dd6dff1e209bd80d134&auto=format&fit=crop&w=1500&q=80">
-        </div>
-        <div class="card-info"> <span class="card-title">Pamela Anderson</span>
-
-        </div>
-    </div>
- 
-    
-    </div>
-<div class="col-lg-6 col-sm-6">
-
-    <div class="single-page" class="container">
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
-                <a data-toggle="tab" href="#compinfo">
-                    Schedule
-                </a>
-            </li>
-            <li role="presentation">
-                <a data-toggle="tab" href="#joblists">
-                    Contact Information
-                </a>
-            </li>
-        </ul>
-
-        <div class="tab-content">
-            <div role="tabpanel" id="compinfo" class="tab-pane active"> {{--START COMPANYINFO --}}
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h2>Company Information</h2>
-                    </div>
+    <div class="row">
+        <div class="col-lg-6 col-sm-6">
+            <div class="card hovercard">
+                <div class="card-background">
+                    <img class="card-bkimg" alt="" src="https://avatars1.githubusercontent.com/u/17306535?s=400&u=823ef75959d37a5f740998f65e3293067191628a&v=4">
+                    <!-- http://lorempixel.com/850/280/people/9/ -->
                 </div>
-                <style type="text/css">
-                    .no-cover-image{
-                        position: relative;
-                        height: 300px;
-                        background: #c8c8c8;
-                        overflow: hidden;
-                        border: 1px solid #cecece;
-                    }
-
-                    .no-cover-image img{
-                        position: absolute;
-                        top: 50%;
-                        transform:translateY(-50%);
-                        width: 100%;
-                        left: 0px;
-                    }
-
-                    .cover-image>img{
-                        width: 100%;
-                    }
-
-                    .cover-info .picture{
-                        padding: 5px;
-                        background: white;
-                        border: 1px solid #cecece;
-                        position: absolute;
-                        bottom:-40px;
-                        left:40px;
-                    }
-
-                    .cover-info .picture img{
-                        width: 100%;
-                    }
-
-                    .cover-info{
-                        position: relative;
-                    }
-
-                    .cover-info img{
-                        border:none!important;
-                    }
-
-                    .under-photo{
-                        margin-top: 40px;
-                    }
-                </style>
-                <div class="row">
-                    <div class="col-md-12 cover-info">
+                <div class="useravatar">
+                    <img alt="" src="https://avatars1.githubusercontent.com/u/17306535?s=400&u=823ef75959d37a5f740998f65e3293067191628a&v=4">
+                </div>
+                <div class="card-info"> <span class="card-title">Pamela Anderson</span>
+                </div>
+            </div>
+                        @foreach($student as $students)
                         <div class="row">
-                              <div class="no-cover-image">
-                                  <img src="{{ asset('img/default-opening.jpg') }}" class="bg-img">
-                              </div>
+                            <div class="col-sm-5 app-basic-info app-basic-info-2">
+                                <p class="app-objt-p">
+                                    {{  $students->school  }}
+                                </p>
+                                <div id="app-batch-number">
+                                    School
+                                </div>
+                            </div>
+                            <div class="col-sm-5 app-basic-info app-basic-info-2">
+                                <p class="app-objt-p">
+                                    {{  $students->course  }}
+                                </p>
+                                <div id="app-batch-number">
+                                    Course
+                                </div>
+                            </div>                            
                         </div>
-                        <div class="row cover-info">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-4">
-                                        <div class="picture">
-                                            <div class="photo-wrapper">
-                                                <img src="{{asset('img/bg-img.png')}}" class="bg-img">
+
+                        <div class="row">
+                            <div class="col-sm-12 app-basic-info">
+                                <p class="app-objt-p">
+                                    {{  $students->objectives  }}
+                                </p>
+                                <div id="app-batch-number">
+                                    Objective for applying
+                                </div>
+                            </div>
+                        </div> 
+                        @endforeach
+
+        </div>
+        <div class="col-lg-6 col-sm-6">
+            <div class="single-page" class="container">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a data-toggle="tab" href="#schedule">
+                            Schedule
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" href="#continfo">
+                            Skills
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" id="schedule" class="tab-pane active"> {{--START COMPANYINFO --}}
+                        <div class="row">
+                            <div class="col-sm-12" id="batch-cont">
+                                <div class="col-sm-4">
+                                    <h3>March 1 - May 21</h3>                                
+                                </div> 
+                                <div class="col-sm-4">
+                                    <h3>Mon-Fri</h3>
+                                </div> 
+                                <div class="col-sm-4">
+                                    <h3>10am - 6pm</h3>
+                                </div>
+                                <div id="app-batch-number">
+                                    Batch 1
+                                </div>
+                                <div id="app-batch-border-left">
+                                </div>                                
+                            </div>
+                        </div>
+                </div> {{-- END COMPANY INFO --}}
+
+                <div id="continfo" class="tab-pane fade">
+                    <h3>Skills</h3>
+                                        <div class="row" id="skill_required">
+                                            <div class="col-md-4">
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                            <div class="col-md-4">
+                                            </div>
+                                            <div class="col-md-4">
+                                            </div>
+                                            <script type="text/javascript">
+                                            $(function(){
+                                                var skill_requirements = JSON.parse("{{json_encode($students->skills)}}".replace(/&quot;/g,'"'));
 
-                                <div class="row under-photo">
-                                    <div class="col-sm-6 col-xs-12">
-                                        <h1>
-                                            <a href="#">
-                                                Test
-                                                <br>
-                                            </a>
-                                        </h1>
-                                    </div>
-                                    <div class="col-sm-6 col-xs-12">
-                                        <h5>
-                                            <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
-                                        </h5>
-                                        <h5>
-                                            <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                                var skills_container = $('#skill_required');
+                                                skills_container.find('.col-md-4').html('');
+                                                var language_added = [];
+                                                var x = 0;
+
+                                                for(var i = 0; i < skill_requirements.length; i++){
+                                                    if(x > 2){
+                                                        x = 0;
+                                                    }
+
+                                                    var lang = skill_requirements[i].language.toLowerCase() == 'c++' ? 'cplus2' : (skill_requirements[i].language.toLowerCase() == "c#" ? 'csharp' : (skill_requirements[i].language.toLowerCase() == 'node.js' ? 'node-js' : skill_requirements[i].language.toLowerCase()) );
+
+                                                    if(language_added.includes(lang)){
+                                                        skills_container.find('.'+lang).parent().find('.body').append('<div class="ellipsis">'+skill_requirements[i].category+'</div>');
+                                                    }
+                                                    else
+                                                    {
+                                                        skills_container.find('.col-md-4').eq(x).append(
+                                                            '<div class="job-card">'
+                                                            +'    <div class="header ellipsis '+lang+'">'+skill_requirements[i].language+'</div>'
+                                                            +'    <div class="body"><div class="ellipsis">'+skill_requirements[i].category+'</div> </div>'
+                                                            +'</div>'
+                                                        );
+                                                        language_added.push(lang)
+                                                        x++;
+                                                    }
+                                                }
+
+                                                if(skill_requirements.length < 1){
+                                                    skill_requirements.html('<div class="col-md-4" style="color:gray;">No skill requirements.</div>');
+                                                }
+                                            });
+                                            </script>
+                                        </div>                        
+                    </div> {{-- END OF ROW --}}
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-8">
-                        <h3>About us:</h3>
-                        <p>
-                        </p>
-                        <h3>Why join us?:</h3>
-
-                        <p style="padding-top:1rem;">
-                        </p>
-                    </div>
-                    <div class="col-md-4">
-                        <h3>Company details:</h3>
-                        <ul class="company-list-info">
-                            <li>
-                                <div class="field-name">Email</div>
-                            </li>
-                            <li>
-                                <div class="field-name">CEO</div>
-                            </li>
-                            <li>
-                                <div class="field-name">Company website URL</div>
-                            </li>
-                            <li>
-                                <div class="field-name">Company size</div>
-                            </li>
-                            <li>
-                                <div class="field-name">Company Tel#</div>
-                            </li>
-                            <li>
-                                <div class="field-name">Company address</div>
-                            </li>
-                            <li>
-                                <div class="field-name">Language spoken</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div> {{-- END COMPANY INFO --}}
-
-            <div id="joblists" class="tab-pane fade">
-                <h3>Opening Job lists</h3>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="row">
-                            Test
-                            </div>
-                        </div>
-                        <div class="col-md-2 well">
-                            <h4>Advertisement</h4>
-                        </div>
-                    </div>
-                </div> {{-- END OF ROW --}}
             </div>
         </div>
     </div>
-
-    </div>
-
 </div>
-</div>
+
+
+    <div class="container" style="padding-top:20px;">
+        <table class="table table-bordered" id="applications-table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>School</th>
+                    <th>Course</th>
+                    <th>Preffered training date</th>
+                </tr>
+            </thead>
+        </table>
+    </div> 
+
     <script>
-        $(document).ready(function() {
-$(".btn-pref .btn").click(function () {
-    $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
-    // $(".tab").addClass("active"); // instead of this do the below 
-    $(this).removeClass("btn-default").addClass("btn-primary");   
-});
-});
+    $(document).ready(function(){
+        $('#applications-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{!! route('json_get_itp_application') !!}',
+            columns: [
+                { data: 'applicant_name', name: 'applicant_name', searchable:false, orderable:false},
+                { data: 'school', name: 'school', },
+                { data: 'course', name: 'course', },
+                { data: 'preffered_training_date', name: 'preffered_training_date', }
+            ],
+            order: [[ 1, 'asc' ]]
+        });
+    });
+
+    //         $(document).ready(function() {
+    // $(".btn-pref .btn").click(function () {
+    //     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+    //     // $(".tab").addClass("active"); // instead of this do the below 
+    //     $(this).removeClass("btn-default").addClass("btn-primary");   
+    // });
+    // });
     </script>
 
 @endsection    

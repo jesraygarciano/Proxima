@@ -1,3 +1,7 @@
+.main-lp-container{
+  margin-top: -50px;
+}
+
  .landing-image{
     background:url("https://images.unsplash.com/photo-1448932223592-d1fc686e76ea?ixlib=rb-0.3.5&s=990bfb15aef2718e2488c1c36452afc4&auto=format&fit=crop&w=1498&q=80") center center / cover no-repeat fixed rgba(0, 0, 0, 0.7); height:450px;
     margin-top: -20px;
@@ -116,7 +120,7 @@
   color:#fff;
 }
 
-.container{
+.container-lp{
   max-width:960px;
   padding-left:1rem;
   padding-right:1rem;
@@ -459,4 +463,34 @@ header{
     line-height: 1.7;
     font-size: 1.4rem;
     color: #e2e2e2;
+}
+
+.lp-photo-container{
+    max-width: 960px;
+    margin: auto;
+    border: #fff solid 3px;
+    background: #fff;
+}
+
+.lg-main-img img, .lp-imgs img {
+  width: 100%;
+}
+
+.lp-imgs{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 5px;
+}
+
+/*Fade IN animation*/
+
+@keyframes fadeIn{
+  to{
+    opacity: 1;
+  }
+}
+
+.fade-in{
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in 1 forwards;
 }
