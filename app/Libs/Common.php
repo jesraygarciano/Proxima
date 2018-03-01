@@ -45,7 +45,7 @@ class Common
                 "11" => "November",
                 "12" => "December"
             );
-        
+
         return $month;
     }
 
@@ -95,9 +95,9 @@ class Common
         if ($month == '00') {
             $date_converted = '';
         } else{
-            $date_converted = $months[$month] . ' ' . $day . ',' . ' ' .$year;    
+            $date_converted = $months[$month] . ' ' . $day . ',' . ' ' .$year;
         }
-        
+
         // dd($date_converted);
         return $date_converted;
 
@@ -182,12 +182,34 @@ class Common
 
     }
 
+    public static function time_str_millisecond() {
 
+        $msStr = substr(explode(".", (microtime(true) . ""))[1], 0, 3);
+        $time_str_millisecond = date("Y_m_d_H_i_s" . "_" . $msStr);
+        return $time_str_millisecond;
 
+    }
 
+    public static function resume_photo_name($resume_id) {
 
+        $resume_photo_name = 'resume_photo_resume_id'. $resume_id . '_' . Common::time_str_millisecond().'.png';
+        return $resume_photo_name;
 
+    }
 
+    public static function company_logo_name($company_id) {
+
+        $company_logo_name = 'company_logo_company_id'. $company_id . '_' . Common::time_str_millisecond().'.png';
+        return $company_logo_name;
+
+    }
+
+    public static function company_background_name($company_id) {
+
+        $company_background_name = 'company_background_company_id'. $company_id . '_' . Common::time_str_millisecond().'.png';
+        return $company_background_name;
+
+    }
 
 
 
