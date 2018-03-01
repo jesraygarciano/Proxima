@@ -179,6 +179,7 @@ Route::get('fire', function () {
 });
 
 
+// this route group is for the messaging functionality
 Route::group(['prefix'=>'messaging', 'middleware'=>'auth'], function(){
 	Route::get('index',function(){
 		return view('messaging.index');
@@ -198,6 +199,7 @@ Route::group(['prefix'=>'messaging', 'middleware'=>'auth'], function(){
 });
 
 
+// this route group is for the intership trainig program management functionality
 Route::group(['prefix'=>'itp', 'middleware'=>'auth'],function(){
 
 	Route::get('landing_page', 'InternshipApplicationController@landing_page');
@@ -205,6 +207,8 @@ Route::group(['prefix'=>'itp', 'middleware'=>'auth'],function(){
 	Route::group(['prefix'=>'applicant'],function(){
 
 		Route::get('profile',['as'=>'applicant_profile','uses'=>'InternshipApplicationController@profile']);
+		Route::get('edit',['as'=>'edit','uses'=>'InternshipApplicationController@edit']);
+
 		// Route::get('index',['as'=>'app','uses'=>'InternshipApplicationController@create']);
 		Route::get('create',['as'=>'itp_create','uses'=>'InternshipApplicationController@create']);
 		Route::get('list/applications',['as'=>'list_itp_applications','uses'=>'InternshipApplicationController@create']);
@@ -216,6 +220,18 @@ Route::group(['prefix'=>'itp', 'middleware'=>'auth'],function(){
 		Route::get('itp',['as'=>'json_get_itp_application', 'uses'=>'InternshipApplicationController@json_get_application_datatable']);			
 		});
 	});
+
+	Route::group(['prefix'=>'management', 'middleware'=>'onlymanagement'],function(){
+		Route::get('index',['as'=>'itp_management_index', 'uses'=>'InternshipApplicationController@manage_batch_index']);
+		Route::get('batch/create/{id?}',['as'=>'get_create_batch', 'uses'=>'InternshipApplicationController@getBatchCreate']);
+		Route::post('batch/create',['as'=>'post_create_batch', 'uses'=>'InternshipApplicationController@postBatchCreate']);
+
+		// jsons
+		Route::group(['prefix'=>'json'],function(){
+			Route::get('get/batches',['as'=>'json_get_batches_datatable', 'uses'=>'InternshipApplicationController@json_get_batches_datatable']);
+			Route::post('delete/batch',['as'=>'json_delete_batch', 'uses'=>'InternshipApplicationController@json_delete_batch']);
+		});
+	});
 });
 
 Route::group(['prefix'=>'hiring'], function(){
@@ -223,7 +239,7 @@ Route::group(['prefix'=>'hiring'], function(){
 });
 
 
-
+// this route group is for notifications functionality (scout, applications and new opening notifications)
 Route::group(['middleware'=>'auth', 'prefix'=>'user'], function(){
 	Route::get('index',['as'=>'user_profile','uses'=>'UserController@index']);
 	Route::get('notifications',['as'=>'user_notifications','uses'=>'UserController@notifications']);

@@ -31,6 +31,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'onlyhiring' => \App\Http\Middleware\OnlyHiring::class,
         'onlyapplicant' => \App\Http\Middleware\OnlyApplicant::class,
+        'onlymanagement' => \App\Http\Middleware\OnlyManagement::class,
         'navbar' => \App\Http\Middleware\NavBar::class,
     ];
 }

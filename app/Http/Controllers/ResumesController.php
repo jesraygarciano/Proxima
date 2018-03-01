@@ -107,36 +107,17 @@ class ResumesController extends Controller
         ]);
 
 
+        $input = $request->except('photo','skills', '_token');
+        $resume = Resume::where('user_id',\Auth::user()->id)->first() ?? new Resume;
+        $resume->photo = $fileNameToStore;
+        $resume->fill($input)->save();
+
         if($request->photo){
             $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->photo));
-            $fileNameToStore = time().'.png';
+            // $fileNameToStore = time().'.png';
+            $fileNameToStore = Common::resume_photo_name($resume->id);
             file_put_contents(public_path('/storage/').$fileNameToStore, $data);
         }
-
-        // // Handle file upload
-        // if($request->hasFile('photo')){
-        //     //  Get filename with the extension
-        //     $filenameWithExt = $request->file('photo')->getClientOriginalName();
-        //     //  Get just filename
-        //     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        //     // Get just text
-        //     $extension = $request->file('photo')->getClientOriginalExtension();
-        //     // Filename to store
-        //     $fileNameToStore = $filename.'_'.time().'.'.$extension;
-        //     // Upload Image
-        //     $path = $request->file('photo')->move(public_path(). '/storage' , $fileNameToStore);
-        // }
-
-        // dd($request);
-        $input = $request->except('photo','skills', '_token');
-        // dd($input);
-        // Resume::create($input);
-        $resume = Resume::where('user_id',\Auth::user()->id)->first() ?? new Resume;
-        // dd($resume);
-
-        $resume->photo = $fileNameToStore;
-
-        $resume->fill($input)->save();
 
         if (\Input::has('ex_company')){
             $experience = new Experience;
@@ -147,14 +128,8 @@ class ResumesController extends Controller
         $education = new Education;
         $education->resume_id = $resume->id;
         $education->fill($input)->save();
-        // $resume->email = $request->input('email');
-        // $resume->user_id = \Auth::id();
-        // $resume->civil_status = $request->input('civil_status');
-        // $resume->is_active = 1;
-        // $resume->is_master = 1;
-        // $resume->save();
-        // $saved_resume_id = Resume::where('user_id', \Auth::id())->where('is_active', 1)->where('is_master', 1)->get()->first()->id;
-        // $resume = Resume::findOrFail($saved_resume_id);
+
+
         if ($request->has('skills')) {
             $resume_skill_ids = $request->input('skills');
             foreach($resume_skill_ids as $resume_skill_id) {
@@ -281,12 +256,16 @@ class ResumesController extends Controller
             // 'cr_phone_number.required' => 'Company personnel number required',
         ]);
 
-        $resume = Resume::all();
-        dd($resume);
         $input = $request->except('photo', 'skills', '_token');
         $resume = Resume::findOrFail($resume_id);
 
-        $resume->photo = $fileNameToStore;
+        if($request->photo){
+            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->photo));
+            $fileNameToStore = Common::resume_photo_name($resume->id);
+            file_put_contents(public_path('/storage/').$fileNameToStore, $data);
+        }
+
+        // $resume->photo = $fileNameToStore;
 
         $resume->fill($input)->save();
 

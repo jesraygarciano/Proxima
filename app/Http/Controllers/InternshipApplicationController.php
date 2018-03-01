@@ -9,6 +9,7 @@ use App\User;
 use App\Resume;
 use App\InternshipApplicationSkills;
 use App\InternshipApplication;
+use App\TrainingBatch;
 use Auth;
 use Mapper;
 use yajra\Datatables\Datatables;
@@ -86,9 +87,13 @@ class InternshipApplicationController extends Controller
         return view('intership-training-programming.applicant.index');
     }
 
-// <<<<<<< HEAD
     public function profile(){
 
+// <<<<<<< HEAD
+    //     return view('intership-training-programming.applicant.profile');
+    // }
+
+// =======
         // $student = Opening::where('is_active', 1)->orderBy('created_at','desc');            
         $student = \Auth::user()->intershipApplication()->get();
         // dd($student);
@@ -100,8 +105,22 @@ class InternshipApplicationController extends Controller
 
     }
 
+    public function edit(Request $request){
+
+        $student_id = $request->student_id;
+
+        $student = $request->student_id ? InternshipApplication::find($request->student_id) : false;
+
+        // dd($student);
+        // $student = \Auth::user()->intershipApplication()->get();
+
+        return view('intership-training-programming.applicant.edit',compact('student'));
+
+    }
+
 
 // =======
+// >>>>>>> j_0228_new_branch
     public function json_get_application_datatable(Request $requests){
         $ids = \Auth::user()->intershipApplication()->lists('internship_applications.id');
 
@@ -114,6 +133,62 @@ class InternshipApplicationController extends Controller
         //     })
         ->make(true);
     }
-// >>>>>>> u_0227_newbranch_2
+
+
+    // management code
+    public function manage_batch_index(){
+        return view('intership-training-programming.management.index');
+    }
+
+    public function getBatchCreate($id = null){
+        $batch = TrainingBatch::find($id);
+        return view('intership-training-programming.management.create-batch', compact('batch'));
+    }
+
+    public function postBatchCreate(Request $requests){
+        $this->validate($requests
+            ,[
+                'name'=>'required',
+                'start_date'=>'required',
+                'regitration_deadline'=>'required',
+                'schedule'=>'required',
+            ]
+        );
+
+        if(!$requests->batch_id)
+        {
+            $batch = TrainingBatch::create([
+                'author_id'=>\Auth::user()->id,
+                'name'=>$requests->name,
+                'start_date'=>$requests->start_date,
+                'regitration_deadline'=>$requests->regitration_deadline,
+                'description'=>$requests->description,
+                'schedule'=>$requests->schedule
+            ]);
+        }
+        else
+        {
+            $batch = TrainingBatch::where('id',$requests->batch_id)->update([
+                'author_id'=>\Auth::user()->id,
+                'name'=>$requests->name,
+                'start_date'=>$requests->start_date,
+                'regitration_deadline'=>$requests->regitration_deadline,
+                'description'=>$requests->description,
+                'schedule'=>$requests->schedule
+            ]);
+        }
+
+        return redirect()->route('itp_management_index');
+    }
+
+    public function json_get_batches_datatable(Request $requests){
+        return Datatables::of(TrainingBatch::query())->make(true);
+    }
+
+    public function json_delete_batch(Request $requests){
+        TrainingBatch::find($requests->batch_id)->delete();
+
+        return 'deleted';
+    }
 
 }

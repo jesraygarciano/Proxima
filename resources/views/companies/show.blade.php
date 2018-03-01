@@ -17,14 +17,18 @@
         </ul>
 
         <div class="tab-content">
-            <div role="tabpanel" id="compinfo" class="tab-pane active"> {{--START COMPANYINFO --}}
+            <div role="tabpanel" id="compinfo" class="tab-pane active">
                 @include('companies.company-single')
-            </div> {{-- END COMPANY INFO --}}
+            </div>
 
             <div id="joblists" class="tab-pane fade">
-                <h3>Opening Job lists</h3>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>Current Hiring Jobs</h2>
+                    </div>
+                </div>
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-10 col-sm-9">
                             <div class="row">
                                 {{ count($openings) ? ' ' : 'No other current hiring.'}}
                                 @if (count($openings) > 0)
@@ -36,8 +40,10 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-md-2 well">
-                            <h4>Advertisement</h4>
+                        <div id="ad-for-opening-show" class="col-md-2 col-sm-3">
+                            <div class="text-center advertisement-2">
+                                Advertisement
+                            </div>
                         </div>
                     </div>
                 </div> {{-- END OF ROW --}}

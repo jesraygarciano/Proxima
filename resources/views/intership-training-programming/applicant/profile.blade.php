@@ -87,13 +87,31 @@
 }
 
 #batch-cont{
-    margin: 2rem;
+    /*margin: 2rem;*/
     padding: 3.5rem 0rem;
     background: #fff;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 3px 0 rgba(0,0,0,0.12)!important;
     border: 1px solid #dddddd;
     position: relative;    
 }
+
+
+#batch-cont .edit-bttn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 0px;
+    overflow: hidden;
+    display: block;
+    transition: 200ms ease all;
+}
+
+#batch-cont:hover .edit-bttn{
+    opacity: 1;
+    width: 30px;
+}
+
+
 
 .app-basic-info{
     margin: 2rem 2rem 0rem 2rem;
@@ -141,167 +159,188 @@
                 <div class="card-info"> <span class="card-title">Pamela Anderson</span>
                 </div>
             </div>
-                        @foreach($student as $students)
-                        <div class="row">
-                            <div class="col-sm-5 app-basic-info app-basic-info-2">
-                                <p class="app-objt-p">
-                                    {{  $students->school  }}
-                                </p>
-                                <div id="app-batch-number">
-                                    School
-                                </div>
-                            </div>
-                            <div class="col-sm-5 app-basic-info app-basic-info-2">
-                                <p class="app-objt-p">
-                                    {{  $students->course  }}
-                                </p>
-                                <div id="app-batch-number">
-                                    Course
-                                </div>
-                            </div>                            
-                        </div>
 
-                        <div class="row">
-                            <div class="col-sm-12 app-basic-info">
-                                <p class="app-objt-p">
-                                    {{  $students->objectives  }}
-                                </p>
-                                <div id="app-batch-number">
-                                    Objective for applying
-                                </div>
-                            </div>
-                        </div> 
-                        @endforeach
-
+    <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+            <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab">
+                <!-- <span class="glyphicon glyphicon-star" aria-hidden="true"></span> -->
+                <i class="fa fa-calendar"></i>
+                <div class="hidden-xs">Schedule</div>
+            </button>
         </div>
-        <div class="col-lg-6 col-sm-6">
-            <div class="single-page" class="container">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
-                        <a data-toggle="tab" href="#schedule">
-                            Schedule
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a data-toggle="tab" href="#continfo">
-                            Skills
-                        </a>
-                    </li>
-                </ul>
+        <div class="btn-group" role="group">
+            <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab">
+                <!-- <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> -->
+                <i class="fa fa-code"></i>
 
-                <div class="tab-content">
-                    <div role="tabpanel" id="schedule" class="tab-pane active"> {{--START COMPANYINFO --}}
-                        <div class="row">
-                            <div class="col-sm-12" id="batch-cont">
-                                <div class="col-sm-4">
-                                    <h3>March 1 - May 21</h3>                                
-                                </div> 
-                                <div class="col-sm-4">
-                                    <h3>Mon-Fri</h3>
-                                </div> 
-                                <div class="col-sm-4">
-                                    <h3>10am - 6pm</h3>
-                                </div>
-                                <div id="app-batch-number">
-                                    Batch 1
-                                </div>
-                                <div id="app-batch-border-left">
-                                </div>                                
-                            </div>
-                        </div>
-                </div> {{-- END COMPANY INFO --}}
+                <div class="hidden-xs">Skills</div>
+            </button>
+        </div>
+    </div>
 
-                <div id="continfo" class="tab-pane fade">
-                    <h3>Skills</h3>
-                                        <div class="row" id="skill_required">
-                                            <div class="col-md-4">
-                                            </div>
-                                            <div class="col-md-4">
-                                            </div>
-                                            <div class="col-md-4">
-                                            </div>
-                                            <script type="text/javascript">
-                                            $(function(){
-                                                var skill_requirements = JSON.parse("{{json_encode($students->skills)}}".replace(/&quot;/g,'"'));
+    @foreach($student as $students)
+    <div class="well">
+      <div class="tab-content">
+        <div class="tab-pane fade in active" id="tab1">
+            <div class="row">
+                <div class="col-sm-12" id="batch-cont">
+                    <div class="col-sm-4">
+                        <h3></h3>                                
+                    </div> 
+                    <div class="col-sm-4">
+                        <h3></h3>
+                    </div> 
+                    <div class="col-sm-4">
+                        <h3></h3>
+                    </div>
+                    <div id="app-batch-number">
+                        Batch 1
+                    </div>
+                    <div id="app-batch-border-left">
+                    </div>
 
-                                                var skills_container = $('#skill_required');
-                                                skills_container.find('.col-md-4').html('');
-                                                var language_added = [];
-                                                var x = 0;
+                    <a href="{{ url('itp/applicant/edit').'/?student_id='.$students->id }}" class="edit-bttn">
+                        <i class="fa fa-2x fa-edit"></i>
+                    </a>
 
-                                                for(var i = 0; i < skill_requirements.length; i++){
-                                                    if(x > 2){
-                                                        x = 0;
-                                                    }
-
-                                                    var lang = skill_requirements[i].language.toLowerCase() == 'c++' ? 'cplus2' : (skill_requirements[i].language.toLowerCase() == "c#" ? 'csharp' : (skill_requirements[i].language.toLowerCase() == 'node.js' ? 'node-js' : skill_requirements[i].language.toLowerCase()) );
-
-                                                    if(language_added.includes(lang)){
-                                                        skills_container.find('.'+lang).parent().find('.body').append('<div class="ellipsis">'+skill_requirements[i].category+'</div>');
-                                                    }
-                                                    else
-                                                    {
-                                                        skills_container.find('.col-md-4').eq(x).append(
-                                                            '<div class="job-card">'
-                                                            +'    <div class="header ellipsis '+lang+'">'+skill_requirements[i].language+'</div>'
-                                                            +'    <div class="body"><div class="ellipsis">'+skill_requirements[i].category+'</div> </div>'
-                                                            +'</div>'
-                                                        );
-                                                        language_added.push(lang)
-                                                        x++;
-                                                    }
-                                                }
-
-                                                if(skill_requirements.length < 1){
-                                                    skill_requirements.html('<div class="col-md-4" style="color:gray;">No skill requirements.</div>');
-                                                }
-                                            });
-                                            </script>
-                                        </div>                        
-                    </div> {{-- END OF ROW --}}
                 </div>
             </div>
+        </div>
+        <div class="tab-pane fade in" id="tab2">
+            <h3>Skills</h3>
+            <div class="row" id="skill_required">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div> 
+        </div>
+      </div>
+    </div>
+
+
+        </div> <!--col-md-6-->
+        <div class="col-lg-6 col-sm-6" id="schedulenskills">
+
+
+            <div class="row">
+                <div class="col-sm-5 app-basic-info app-basic-info-2">
+                    <p class="app-objt-p">
+                        {{  $students->school  }}
+                    </p>
+                    <div id="app-batch-number">
+                        School
+                    </div>
+                </div>
+                <div class="col-sm-5 app-basic-info app-basic-info-2">
+                    <p class="app-objt-p">
+                        {{  $students->course  }}
+                    </p>
+                    <div id="app-batch-number">
+                        Course
+                    </div>
+                </div>                            
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 app-basic-info">
+                    <p class="app-objt-p">
+                        {{  $students->objectives  }}
+                    </p>
+                    <div id="app-batch-number">
+                        Objective for applying
+                    </div>
+                </div>
+            </div> 
+            @endforeach
+
+
+            <script type="text/javascript">
+            $(function(){
+                var skill_requirements = JSON.parse("{{json_encode($students->skills)}}".replace(/&quot;/g,'"'));
+
+                var skills_container = $('#skill_required');
+                skills_container.find('.col-md-4').html('');
+                var language_added = [];
+                var x = 0;
+
+                for(var i = 0; i < skill_requirements.length; i++){
+                    if(x > 2){
+                        x = 0;
+                    }
+
+                    var lang = skill_requirements[i].language.toLowerCase() == 'c++' ? 'cplus2' : (skill_requirements[i].language.toLowerCase() == "c#" ? 'csharp' : (skill_requirements[i].language.toLowerCase() == 'node.js' ? 'node-js' : skill_requirements[i].language.toLowerCase()) );
+
+                    if(language_added.includes(lang)){
+                        skills_container.find('.'+lang).parent().find('.body').append('<div class="ellipsis">'+skill_requirements[i].category+'</div>');
+                    }
+                    else
+                    {
+                        skills_container.find('.col-md-4').eq(x).append(
+                            '<div class="job-card">'
+                            +'    <div class="header ellipsis '+lang+'">'+skill_requirements[i].language+'</div>'
+                            +'    <div class="body"><div class="ellipsis">'+skill_requirements[i].category+'</div> </div>'
+                            +'</div>'
+                        );
+                        language_added.push(lang)
+                        x++;
+                    }
+                }
+
+                if(skill_requirements.length < 1){
+                    skill_requirements.html('<div class="col-md-4" style="color:gray;">No skill requirements.</div>');
+                }
+            });
+            </script>
         </div>
     </div>
 </div>
 
+<div class="container" style="padding-top:20px;">
+    <table class="table table-bordered" id="applications-table" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>School</th>
+                <th>Course</th>
+                <th>Preffered training date</th>
+            </tr>
+        </thead>
+    </table>
+</div> 
 
-    <div class="container" style="padding-top:20px;">
-        <table class="table table-bordered" id="applications-table" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>School</th>
-                    <th>Course</th>
-                    <th>Preffered training date</th>
-                </tr>
-            </thead>
-        </table>
-    </div> 
-
-    <script>
-    $(document).ready(function(){
-        $('#applications-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{!! route('json_get_itp_application') !!}',
-            columns: [
-                { data: 'applicant_name', name: 'applicant_name', searchable:false, orderable:false},
-                { data: 'school', name: 'school', },
-                { data: 'course', name: 'course', },
-                { data: 'preffered_training_date', name: 'preffered_training_date', }
-            ],
-            order: [[ 1, 'asc' ]]
-        });
+<script>
+$(document).ready(function(){
+    $('#applications-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{!! route('json_get_itp_application') !!}',
+        columns: [
+            { data: 'applicant_name', name: 'applicant_name', searchable:false, orderable:false},
+            { data: 'school', name: 'school', },
+            { data: 'course', name: 'course', },
+            { data: 'preffered_training_date', name: 'preffered_training_date', }
+        ],
+        order: [[ 1, 'asc' ]]
     });
 
-    //         $(document).ready(function() {
-    // $(".btn-pref .btn").click(function () {
-    //     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
-    //     // $(".tab").addClass("active"); // instead of this do the below 
-    //     $(this).removeClass("btn-default").addClass("btn-primary");   
-    // });
-    // });
-    </script>
+    $(".btn-pref .btn").click(function () {
+        $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+        // $(".tab").addClass("active"); // instead of this do the below 
+        $(this).removeClass("btn-default").addClass("btn-primary");   
+    });
+
+});
+
+//         $(document).ready(function() {
+// $(".btn-pref .btn").click(function () {
+//     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+//     // $(".tab").addClass("active"); // instead of this do the below 
+//     $(this).removeClass("btn-default").addClass("btn-primary");   
+// });
+// });
+</script>
 
 @endsection    

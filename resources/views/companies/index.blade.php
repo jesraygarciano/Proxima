@@ -96,7 +96,7 @@ input[type="checkbox"]:checked:after {
                     </div>
                 </div>
             </div>
-            <div id="comp-advertisement" class="col-md-2 col-sm-3">
+            <div id="ad-for-opening-list" class="col-md-2 col-sm-3">
                 <div class="text-center advertisement-2">
                     Advertisement
                 </div>
