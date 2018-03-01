@@ -3,28 +3,7 @@
 @section('content')
 
 <style type="text/css">
-.cover-image{
-    position: relative;
-    height: 300px;
-    background: #c8c8c8;
-    overflow: hidden;
-    border: 1px solid #cecece;
-}
 
-.cover-image img{
-    position: absolute;
-    top: 50%;
-    transform:translateY(-50%);
-    width: 100%;
-    left: 0px;
-}
-
-.cover-info .picture{
-    padding: 5px;
-    background: white;
-    border: 1px solid #cecece;
-    position: relative;
-}
 
 .cover-info .picture img{
     width: 100%;
@@ -78,11 +57,16 @@
     <!-- Tab panes -->
     <div class="tab-content">
 
-        <div role="tabpanel" class="tab-pane active" id="jobinfo" style="padding-top:30px;">
+        <div role="tabpanel" class="tab-pane active" id="jobinfo">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>Job Information</h2>
+                </div>
+            </div>
             @if(\Auth::user() ? \Auth::user()->canEdit($opening) : false)
                 <a class="ui blue button massive" href="{{url('openings/edit').'/?opening_id='.$opening->id}}"> Edit </a>
             @endif
-            <div class="row" style="margin-top: 30px;">
+            <div class="row" style="margin-top: 5px;">
                 <div class="col-md-6">
                     <h4 class="page-header"><i class="fa fa-file-text" aria-hidden="true"></i> Basic Job Info</h4>
                     <div class="ui form">
@@ -247,7 +231,11 @@
         </div>
 
         <div id="morehiring" class="tab-pane fade">
-            <h3>Company hiring jobs</h3>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>Other Hiring Jobs</h2>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-10">
                     <div class="row">

@@ -13,7 +13,7 @@
         padding-left: 3rem;
     }
     .alert-danger li{
-        list-style-type: square;        
+        list-style-type: square;
     }
     .crop-control .error-label{
         position: absolute;
@@ -69,7 +69,7 @@
                     </div>
 
                 {{-- <form role="form"> --}}
-                    {!!Form::open(['action' => 'ResumesController@update', 'method' => 'PATCH', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+                    {!!Form::open(['action' => ['ResumesController@update', $resume->id], 'method' => 'PATCH', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
                         <div class="tab-content">
                                 <div class="tab-pane active wizard-step" role="tabpanel" id="step1">
                                     {!! csrf_field() !!}
@@ -300,7 +300,7 @@
                                                   <div class="input-container" id="photo-container">
                                                     <input type="file" id="photo" name="photo" accept="image/*" />
                                                   </div>
-                                                </div>                                                
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

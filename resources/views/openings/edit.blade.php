@@ -69,7 +69,9 @@
     <input type="hidden" name="opening_id" value="{{$_GET['opening_id'] ?? 0}}">
     <div class="row">
         <div class="col-md-7">
-            <h4 class="page-header"><i class="fa fa-file-text" aria-hidden="true"></i> Basic Job Info</h4>
+            <h4 class="page-header">
+                <i class="fa fa-file-text" aria-hidden="true"></i> Basic Job Info
+            </h4>
             <div class="ui form">
                 <label>Job Title</label>
                 <input type="text" value="{{ $opening->title ?? old('title') }}" name="title">

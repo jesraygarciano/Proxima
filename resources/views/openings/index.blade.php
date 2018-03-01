@@ -11,7 +11,7 @@
     <hr>
     <div class="container-fluid" id="opening">
         <div class="row">
-            <div class="col-md-3" id="opening-search">
+            <div class="col-md-3 col-sm-9 col-xs-12" id="opening-search">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h4>General Search:</h4>
@@ -99,7 +99,7 @@
                                         if(prevent_reoccur){
 
                                             $('#advance_search' ).animate({ height : "0px" }, 400 );
-                                            
+
                                             $('[name=show_advance_search]').val('closed');
                                             prevent_reoccur = false;
                                             return false;
@@ -130,7 +130,7 @@
                 </div>
             </div>
 
-            <div class="col-md-7">
+            <div class="col-md-7 col-sm-9 col-xs-12">
                 @if (count($openings) > 0)
                     @foreach ($openings as $opening)
                         @include('inc.job-container')
@@ -141,8 +141,10 @@
                     {{-- {!! $openings->render() !!} --}}
                 @endif
             </div>
-            <div class="col-md-2 well">
-                <h4>Advertisement</h4>
+            <div id="ad-for-opening-list" class="col-md-2 col-sm-3">
+                <div class="text-center advertisement-2">
+                    Advertisement
+                </div>
             </div>
         </div>
     </div>

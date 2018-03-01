@@ -96,6 +96,11 @@
                                         Scouted notification
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="{{ url('itp/applicant/profile') }}">
+                                        ITP Profile
+                                    </a>
+                                </li>                                
                             @elseif (Auth::user()->role == 1)
                                 <li>
                                     <a href="{{url('/hiring_portal')}}">Management</a>
@@ -118,6 +123,9 @@
                                 </li>
                                 <li>
                                     <a href="{{url('/management/openings')}}">Manage Openings </a>
+                                </li>
+                                <li>
+                                    <a href="{{route('itp_management_index')}}">Manage Nexseed Training Program </a>
                                 </li>
                             @endif
                         </ul>

@@ -163,7 +163,7 @@
                 </h4>
             </div>
 
-          <h3>Schedule of Training here!</h3>
+            <h3>Schedule of Training here!</h3>
           </div>        
         </div>
       </div>
@@ -225,7 +225,7 @@
           <br />
           <br />
           <!-- <a href="#" class="btn btn-lg btn-outline">Register</a> -->
-          <a class="btn btn-reg-opposite">Register now!</a>
+          <a href="{{ url('itp/applicant/create') }}" class="btn btn-reg-opposite">Register now!</a>
         </div>
       </section>
   </div>
