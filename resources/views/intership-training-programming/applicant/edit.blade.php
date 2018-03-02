@@ -64,7 +64,7 @@
 </style>
 
 <div class="container" style="padding-top:20px;">
-    {!!Form::open(['route' => 'save_application', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'id' => 'form-validate'])!!}
+    {!!Form::open(['route' => 'update_application', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'id' => 'form-validate'])!!}
         <div class="row">
             <div class="col-md-7">
                 <h4 class="page-header"><i class="fa fa-file-text" aria-hidden="true"></i> Basic Info</h4>

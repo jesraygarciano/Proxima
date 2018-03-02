@@ -59,7 +59,7 @@
     @include('errors.form_errors')
     {!!Form::open(['route' => 'post_create_batch', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'id' => 'form-validate'])!!}
         <input type="hidden" name="batch_id" value="{{@$batch->id}}">
-        <h4 class="page-header"><i class="fa fa-file-text" aria-hidden="true"></i> Basic Info</h4>
+        <h4 class="page-header"><i class="fa fa-file-text" aria-hidden="true"></i> {{ $batch ? 'Update' : 'Create' }} Batch</h4>
         <div class="row">
             <div class="col-md-6">
                 <div class="ui form">

@@ -25,11 +25,13 @@
         @endif
         </ul>
     </div>
-    @if (Auth::guest())
+
+    {{-- @if (Auth::guest()) --}}
         @if(\Auth::user() ? \Auth::user()->canEdit($opening) : false)
             <a href="{{url('openings/edit').'/?opening_id='.$opening->id}}" class="edit-bttn"><i class="fa fa-2x fa-edit"></i></a>
         @endif
-    @endif
+    {{-- @endif --}}
+    
     <div class="job-title">
         <a href="{{ url('openings', $opening->id) }}" class="ellipsis" style="display: block;"> {{ $opening->title }} </a>
 

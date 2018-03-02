@@ -65,6 +65,7 @@
 
 <div class="container" style="padding-top:20px;">
     {!!Form::open(['route' => 'save_application', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'id' => 'form-validate'])!!}
+        <input type="hidden" name="student_id" value="">
         <div class="row">
             <div class="col-md-7">
                 <h4 class="page-header"><i class="fa fa-file-text" aria-hidden="true"></i> Basic Info</h4>
@@ -95,11 +96,25 @@
 
                 <br />
 
-                {{--@if(empty($opening->from_post)) --}}
-                <div class="ui form">
+                 {{--@if(empty($opening->from_post)) --}}
+<!--                 <div class="ui form">
                     <label>Preffered Training Date</label>
                     <input style="font-size: 1.1em;" type="date" min="{{ date('Y-m-d') }}" name="preffered_training_date">
                 </div>
+               
+ -->                <!-- <div class="ui form"> -->
+                <div class="ui form">
+                    <label>I wan't to sign-up for batch:</label>
+                    <select name="course" class="ui dropdown">
+
+
+                        <option value="">Select batch</option>
+                            @foreach($batch as $batches)
+                                <option value="{{ $batches->batch }}">{{ $batches->name }}</option>
+                            @endforeach  
+                    </select>
+                </div>
+
                 <br />
                 <br />
 
