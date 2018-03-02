@@ -34,7 +34,9 @@ class InternshipApplicationController extends Controller
 // <<<<<<< HEAD
         // return view('itp.create');
 // =======
-        return view('intership-training-programming.applicant.create');
+        $batch = TrainingBatch::all();
+
+        return view('intership-training-programming.applicant.create', compact('batch'));
 // >>>>>>> u_0227_newbranch
     }
 
@@ -49,7 +51,7 @@ class InternshipApplicationController extends Controller
             'objective' => 'required',
             'school' => 'required',
             'course' => 'required',
-            'preffered_training_date' => 'required',
+            // 'preffered_training_date' => 'required',
         ]);
 
 // <<<<<<< HEAD
@@ -70,7 +72,9 @@ class InternshipApplicationController extends Controller
             'objectives'=>$requests->objective,
             'school'=>$requests->school,
             'course'=>$requests->course,
-            'preffered_training_date'=>$requests->preffered_training_date
+            // 'batches'=>$requests->batch,            
+            // 'preffered_training_date'=>$requests->preffered_training_date
+
         ]);
 
         // dd($application);
@@ -100,7 +104,6 @@ class InternshipApplicationController extends Controller
         // $skill_ids = array();
         // $skill_ids = Common::app_skill_ids_get();
 
-
         return view('intership-training-programming.applicant.profile',compact('student','skill_ids'));
 
     }
@@ -115,6 +118,41 @@ class InternshipApplicationController extends Controller
         // $student = \Auth::user()->intershipApplication()->get();
 
         return view('intership-training-programming.applicant.edit',compact('student'));
+
+    }
+
+    public function update_application(Request $requests){
+
+        if (!$requests->has('skills')) {
+            $requests->skills = "";
+        }
+
+        // dd($requests->student_id);
+
+        $this->validate($requests,[
+            'skills' => 'required',
+            'objective' => 'required',
+            'school' => 'required',
+            'course' => 'required',
+            // 'preffered_training_date' => 'required',
+        ]);
+
+        // $application = InternshipApplication::update([
+        // $application = InternshipApplication::whereId($requests)->update([        
+        $requests->user()->intershipApplication()->update([
+            'user_id'=>\Auth::user()->id,
+            'objectives'=>$requests->objective,
+            'school'=>$requests->school,
+            'course'=>$requests->course,
+            // 'preffered_training_date'=>$requests->preffered_training_date
+        ]);
+
+        // dd($application);
+
+        // foreach ($requests->skills as $skill) {
+        //     $application->skills()->attach($skill);
+        // }
+        return redirect()->route('applicant_profile');
 
     }
 
@@ -185,10 +223,27 @@ class InternshipApplicationController extends Controller
         return Datatables::of(TrainingBatch::query())->make(true);
     }
 
+    public function json_get_applicants_datatable(Request $requests){
+        return Datatables::of(InternshipApplication::query()
+        ->leftJoin('users','users.id','=','internship_applications.user_id')
+        ->leftJoin('training_batches','training_batches.id','=','internship_applications.training_batch_id')
+        ->select(['internship_applications.id','users.photo',\DB::raw('training_batches.name as training_batch_name'),\DB::raw('concat(users.f_name," ",users.l_name) as applicant_name'),'school','preffered_training_date','course','internship_applications.created_at',"internship_applications.objectives","school","course"])
+        )
+        ->filterColumn('applicant_name', 'whereRaw', "CONCAT(users.f_name,' ',users.l_name) like ? ", ["$1"])
+        ->filterColumn('training_batch_name', 'whereRaw', "training_batches.name like ? ", ["$1"])
+        ->editColumn('photo', function($data) {
+            if(!file_exists('storage/'.$data->photo) || str_replace(' ','',$data->photo) == ''){
+                return asset('img/member-placeholder.png');
+            }
+
+            return asset('storage/'.$data->photo);
+        })
+        ->make(true);
+    }
+
     public function json_delete_batch(Request $requests){
         TrainingBatch::find($requests->batch_id)->delete();
 
         return 'deleted';
     }
-
 }

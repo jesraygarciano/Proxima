@@ -170,3 +170,10 @@ padding-top: 3.5rem!important;
   margin-top: 1rem;
 }
 }
+
+@media (max-width: 768px) {
+
+#schedulenskills{
+  margin-top: 2rem;
+}
+}

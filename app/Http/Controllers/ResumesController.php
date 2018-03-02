@@ -154,7 +154,7 @@ class ResumesController extends Controller
         $skill_ids = Common::resume_skill_ids_get($resume);
         // }
 
-        // $skills = $resume->has_skill()->get();
+        $skills = $resume->has_skill()->get();
         // $skills = $resume->has_skill()->get()->where('language', 'PHP')->get();
 
         $age = Common::cal_age($resume->birth_date);

@@ -542,7 +542,7 @@ body #body-container .single-page .tab-content #companyinfo {
 }
 /* line 558, ../../resources/assets/sass/app.scss */
 body #body-container .single-page .tab-content #companyinfo .row {
-  margin: 0;
+  /*margin: 0;*/
 }
 /* line 560, ../../resources/assets/sass/app.scss */
 body #body-container .single-page .tab-content #companyinfo .row .col-md-3 {

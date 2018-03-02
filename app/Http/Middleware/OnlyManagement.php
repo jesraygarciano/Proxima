@@ -15,11 +15,11 @@ class OnlyManagement
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->role == 2) {
+        if (\Auth::user()->role < 2) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return route('auth.login');
+                return redirect()->route('auth.login');
             }
         }
 
