@@ -104,13 +104,11 @@
                
  -->                <!-- <div class="ui form"> -->
                 <div class="ui form">
-                    <label>I wan't to sign-up for batch:</label>
-                    <select name="course" class="ui dropdown">
-
-
-                        <option value="">Select batch</option>
+                        <label>I wan't to sign-up for batch:</label>
+                    <select name="batch" class="ui dropdown">
+                            <option value="">Select batch</option>
                             @foreach($batch as $batches)
-                                <option value="{{ $batches->batch }}">{{ $batches->name }}</option>
+                                <option data-value="{{ $batches->name }}" value="{{ $batches->name }}">{{ $batches->name }}</option>
                             @endforeach  
                     </select>
                 </div>
@@ -119,6 +117,7 @@
                 <br />
 
             </div>
+            
             <div class="col-md-5">
                 <h4 class="page-header">
                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>

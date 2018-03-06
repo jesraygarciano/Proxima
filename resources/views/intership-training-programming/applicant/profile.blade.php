@@ -185,7 +185,7 @@
             <div class="row">
                 <div class="col-sm-12" id="batch-cont">
                     <div class="col-sm-4">
-                        <h3></h3>                                
+                        <h3>{{  $students->batches  }}</h3>                                
                     </div> 
                     <div class="col-sm-4">
                         <h3></h3>
