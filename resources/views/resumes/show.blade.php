@@ -171,41 +171,6 @@
                                 <div class="clear"></div>
                             </article>
                         </section>
-                        <script type="text/javascript">
-                            $(function(){
-                                var skill = JSON.parse("{{json_encode($resume->has_skill)}}".replace(/&quot;/g,'"'));
-                                console.log(skill);
-                                var skill_wrapper = $("#skill-wrapper").html();
-                                console.log(skill_wrapper);
-                                var lang = [];
-                                var x = 0;
-
-                                for (var i = 0; i < skill.length; i++) {
-
-                                    if (x > 2) {
-                                        x = 0;
-                                    }
-                                    if (lang.includes(skill[i].language.toLowerCase())) {
-                                        // $("#skill-wrapper").find(".col-md-4").has("." + skill[i].language.toLowerCase()).append(
-                                        $(".col-md-4").find("#" + skill[i].language.toLowerCase() + "_id").append(
-                                            "<div class='show_resume_languages'>" + skill[i].category + "</div>"
-                                        );
-                                        console.log(x);
-                                    }else{
-                                        $("#skill-wrapper").find(".col-md-4").eq(x).append(
-                                            "<div id=" + skill[i].language.toLowerCase() + "_id" + " style='border: solid 0.5px black; border-radius:10px;'>"
-                                            + "<div class='show_resume_languages_top " + skill[i].language.toLowerCase() + "'>" + skill[i].language + "</div>"
-                                            + "<div class='show_resume_languages'>" + skill[i].category + "</div>"
-                                            + "</div>"
-                                        );
-
-                                        x += 1;
-                                        lang.push(skill[i].language.toLowerCase());
-                                    }
-                                    // skill[i].language
-                                }
-                            });
-                        </script>
 
                         <section>
                             <article>
@@ -279,6 +244,44 @@
 
     </div>
 
+    <script type="text/javascript">
+        $(function(){
+            var skill = JSON.parse("{{json_encode($resume->has_skill)}}".replace(/&quot;/g,'"'));
+            console.log(skill);
+            var skill_wrapper = $("#skill-wrapper").html();
+            console.log(skill_wrapper);
+            var lang = [];
+            var x = 0;
+
+            for (var i = 0; i < skill.length; i++) {
+
+                if (x > 2) {
+                    x = 0;
+                }
+
+                var lang_lang = skill[i].language.toLowerCase() == 'c++' ? 'cplus2' : (skill[i].language.toLowerCase() == "c#" ? 'csharp' : (skill[i].language.toLowerCase() == 'node.js' ? 'node-js' : skill[i].language.toLowerCase()) );
+
+                if (lang.includes(lang_lang)) {
+                    // $("#skill-wrapper").find(".col-md-4").has("." + lang_lang).append(
+                    $(".col-md-4").find("." + lang_lang).parent().find(".body").append(
+                        '<div class="ellipsis">'+skill[i].category+'</div>'
+                    );
+                    console.log(x);
+                }else{
+                    $("#skill-wrapper").find(".col-md-4").eq(x).append(
+                        '<div class="job-card">'
+                        +'    <div class="header ellipsis '+ lang_lang +'">'+skill[i].language+'</div>'
+                        +'    <div class="body"><div class="ellipsis">'+skill[i].category+'</div> </div>'
+                        +'</div>'
+                    );
+
+                    x += 1;
+                    lang.push(lang_lang);
+                }
+                // skill[i].language
+            }
+        });
+    </script>
 
 </div>
 @endsection

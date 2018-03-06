@@ -32,7 +32,6 @@
                             <div id="advance_search" class="collapse" style="overflow: hidden;">
                                 <br/>
                                 <h4>Advanced Search:</h4>
-
                                 <div class="form-group">
                                     <label for="formGroupExampleInput2">Company:</label>
                                     <input type="text" class="form-control" name="company_name" value="{{$_GET['company_name'] ?? ''}}" placeholder="Company name">
@@ -81,7 +80,9 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <button style="margin-bottom: 10px;" type="submit" class="btn btn-primary form-control">Advanced search</button>
+                                <button style="margin-bottom: 10px;" type="submit" class="btn btn-primary form-control">
+                                    Advanced search
+                                </button>
                             </div>
                             <center><a href="javascript:void(0)" id="as_bttn" data-toggle="collapse" data-target="#advance_search">Show Advance Search</a></center>
                             <input type="hidden" name="show_advance_search" value="{{$_GET['show_advance_search'] ?? ''}}">

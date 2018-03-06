@@ -178,7 +178,6 @@
                             var skill_requirements = JSON.parse("{{json_encode($opening->skill_requirements)}}".replace(/&quot;/g,'"'));
 
                             var skills_container = $('#skill_required');
-                            skills_container.find('.col-md-4').html('');
                             var language_added = [];
                             var x = 0;
 

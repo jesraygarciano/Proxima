@@ -339,7 +339,7 @@
             overflow: hidden;
             width: 113px;
             height: 73px;
-            text-align: right;            
+            text-align: right;
         }
     </style>
 
@@ -456,8 +456,10 @@
             <div class="xtext12"> Featured Jobs </div>
             <div class="post-container" style="overflow: hidden;">
                 <div class="wing">
+                    <?php $p = -1; ?>
                     @foreach( $featured_openings as $opening)
-                    <div class="post-item">
+                    <?php $p++; ?>
+                    <div class="post-item" data-ind="ind_{{$p}}">
                         <div class="info-container">
                             <div>
                                 <ul class="ribbon_style_list">
@@ -603,6 +605,21 @@
         });
     </script>
 
+    <div id="confirm" class="btn btn-primary">
+        confirm
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#confirm").click(function(){
+                var ele_clone = $('#feature-post-carosel').find(".wing .post-item").eq(0);
+                console.log(ele_clone);
+
+                $('#feature-post-carosel').find(".wing").append(ele_clone);
+
+            });
+        });
+    </script>
 
 	<div class="general_portal container" style="margin-bottom:100px;">
 

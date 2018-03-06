@@ -139,7 +139,6 @@
                                                         <option data-value="{{$province->iso_code}}" value="{{$province->iso_code ?? old('iso_code')}}" {{$province->iso_code === $opening->province_code ? 'selected' : ''}}>{{$province->name}}</option>
                                                     @endforeach
                                             </select>
-                                            
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -149,31 +148,29 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="tab-pane" id="features">
-                                    <div class="row" id="international-address">
-                                        <div class="col-md-6">
-                                            <div class="ui form">
-                                                <label>Countries:</label>
-                                                <!--  fluid normal dropdown multi-select  -->
-                                                <select class="form-control opening_country" name="country" id="country">
-                                                    <option value="" checked>Select Country</option>
-                                                        @foreach($countries as $country)
-                                                            <option data-value="{{$country->iso_alpha3}}" value="{{$country->iso_alpha3 ?? old('iso_alpha3')}}" {{$country->iso_alpha3 === $opening->country_code ? 'selected' : ''}} >{{$country->name}}
-                                                            </option>
-                                                        @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="ui form">
-                                                <label>City:</label>
-                                                    <input type="text" id="opening_city" value="{{ $opening->city ?? old('city') }}" name="city">
-                                            </div>
+                                <div class="row" id="international-address">
+                                    <div class="col-md-6">
+                                        <div class="ui form">
+                                            <label>Countries:</label>
+                                            <!--  fluid normal dropdown multi-select  -->
+                                            <select class="form-control opening_country" name="country" id="country">
+                                                <option value="" checked>Select Country</option>
+                                                    @foreach($countries as $country)
+                                                        <option data-value="{{$country->iso_alpha3}}" value="{{$country->iso_alpha3 ?? old('iso_alpha3')}}" {{$country->iso_alpha3 === $opening->country_code ? 'selected' : ''}} >{{$country->name}}
+                                                        </option>
+                                                    @endforeach
+                                            </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="ui form">
+                                            <label>City:</label>
+                                                <input type="text" id="opening_city" value="{{ $opening->city ?? old('city') }}" name="city">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                 </fieldset>
