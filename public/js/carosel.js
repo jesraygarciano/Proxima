@@ -8,6 +8,136 @@ CAROSEL FOR FEATURED JOB POST
 
     var $this = $(this);
 
+    var width = $this.find(".post-item").width();
+    var current_index = 2;
+    var mr = parseInt($this.find(".post-item").css("margin-right").replace("px", ""));
+    $this.find(".wing").css("margin-left", -(width / 2) - mr);
+    $(".post-item").eq(2).addClass('active');
+    var transform_x = String(-width -mr) + "px";
+    // console.log(transform_x);
+    var settings = $.extend({
+      interval: 3000
+    });
+    // var wing = $this.find(".wing");
+    // var first = $this.find(".post-item").eq(0);
+
+    indicator_change(current_index);
+    autoSlideUme();
+
+    function autoSlideUme(){
+      var time = setTimeout(function(){
+        nextSlideUme();
+        autoSlideUme();
+      },settings.interval);
+    }
+
+    function nextSlideUme(){
+      var first = $this.find(".post-item").eq(0);
+      $(".wing").append(first.clone());
+      first.css({"margin-left": transform_x})
+      $(".post-item").removeClass('active');
+      $(".post-item").eq(3).addClass('active');
+      if (current_index < 4) {
+        current_index++;
+      }else{
+        current_index = 0;
+      }
+      indicator_change(current_index);
+      // console.log(current_index);
+      var time = setTimeout(function () {
+        first.remove();
+
+      }, 200);
+    }
+
+    function indicator_change(index){
+      $(".indicators li").removeClass("active");
+      $(".indicators li").eq(index).addClass("active");
+    }
+
+    $(".indicators li").click(function(){
+      var click_ind = $(".indicators li").index(this);
+      var click_ind_div = parseInt($(".wing .post-item").eq(click_ind).data('ind').replace("ind_", ""));
+      var where = $(".wing").find("[data-ind='ind_" + click_ind + "']").index();
+      var ind_position = parseInt($(".wing .post-item.active").data('ind').replace("ind_", ""));
+      //
+      // console.log("indicator number:", click_ind);
+      // console.log("div number according to indicator:", click_ind_div);
+      // console.log("center (active):", ind_position);
+      // console.log("0????????????????:", where);
+
+      var diff = click_ind - ind_position;
+      var post_items = $(".wing .post-item");
+      if (post_items.length == 5) {
+        var first_clone = post_items.eq(0).clone();
+        var second_clone = post_items.eq(1).clone();
+        var third_clone = post_items.eq(3).clone();
+        var fourth_clone = post_items.eq(4).clone();
+        var wing_div = $(".wing");
+        wing_div.append(first_clone);
+        wing_div.append(second_clone);
+        wing_div.prepend(fourth_clone);
+        wing_div.prepend(third_clone);
+        //
+        var wing_div = $(".wing .post-item");
+        for (var i = 0; i < wing_div.length; i++) {
+          // console.log("??");
+          var click_ind2 = $(".indicators li").index(this);
+          var check_number = parseInt(wing_div.eq(i).data("ind").replace("ind_", ""));
+          var bar = (click_ind2 - 2 + 5) % 5
+          console.log("bar", bar);
+          if (bar == check_number) {
+            break;
+          }else{
+            $(".wing .post-item").eq(0).remove();
+          }
+        }
+
+        var post_items = $(".wing .post-item");
+        if (post_items.length != 5) {
+          var diff = post_items.length - 5;
+          for (var i = 0; i < diff; i++) {
+            $(".wing .post-item").last().remove();
+            // $(".wing .post-item").eq(post_items.length - 1).remove();
+          }
+        }
+
+        $(".wing .post-item").removeClass('active');
+        $(".wing .post-item").eq(2).addClass('active');
+        // console.log('after for');
+
+      }
+      // $(".wing .post-item").eq()
+
+    });
+
+    $(".carosel-controls .left").click(function(){
+      $(".wing").prepend($(".wing .post-item").eq(4));
+      var first = $(".wing .post-item").eq(0);
+      $(".post-item").each(function(){
+        $(this).removeClass('active');
+      });
+      $(".post-item").eq(2).addClass('active');
+      first.css({"margin-left": "0px"});
+    });
+
+    $(".carosel-controls .right").click(function(){
+      $(".wing").append($(".wing .post-item").eq(0));
+      var first = $(".wing .post-item").eq(0);
+      $(".post-item").each(function(){
+        $(this).removeClass('active');
+      });
+      $(".post-item").eq(2).addClass('active');
+      first.css({"margin-left": "0px"});
+    });
+    return this;
+  };
+
+
+  $.fn.featuredPostCarosel_specimen = function(options){
+
+    var $this = $(this);
+
     // check first if there are posts
     if($this.find('.post-item').length == 0)
     {
@@ -117,23 +247,6 @@ CAROSEL FOR FEATURED JOB POST
       $this.find('.post-item').removeClass('active');
       $this.find('.post-item').eq(currentIndex).addClass('active');
 
-      // ellipsis other post
-      // $this.find('.post-item').each(function(){
-      //   var text = $(this).find('.requirements').data('requirements');
-      //   var max_description = 50;
-      //   var _result = '';
-
-      //   for(var i = 0; i < max_description; i++){
-      //     if(i < text.length){
-      //       _result += text.charAt(i);
-      //     }
-      //   }
-
-      //   $(this).find('.requirements').html(_result+'...');
-
-      // });
-
-      // remove ellipsis for active element
       var text = $this.find('.post-item').eq(currentIndex).find('.requirements').data('requirements');
       $this.find('.post-item').eq(currentIndex).find('.requirements').html(text);
 

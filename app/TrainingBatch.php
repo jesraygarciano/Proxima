@@ -15,4 +15,8 @@ class TrainingBatch extends Model
     {
     	return $this->belongsTo(User::class);
     }
+
+    public function internshipApplication(){
+    	return $this->hasMany(InternshipApplication::class);
+    }
 }

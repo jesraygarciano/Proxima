@@ -37,11 +37,14 @@ class InternshipApplicationController extends Controller
         $batch = TrainingBatch::all();
 
         return view('intership-training-programming.applicant.create', compact('batch'));
+
 // >>>>>>> u_0227_newbranch
     }
 
     public function save_application(Request $requests){
 
+
+        // dd($requests->batch);
         if (!$requests->has('skills')) {
             $requests->skills = "";
         }
@@ -66,13 +69,13 @@ class InternshipApplicationController extends Controller
 //             $table->string('school');
 //             $table->string('course');
 //             $table->date('preffered_training_date');
-// =======
+
         $application = InternshipApplication::create([
             'user_id'=>\Auth::user()->id,
             'objectives'=>$requests->objective,
             'school'=>$requests->school,
             'course'=>$requests->course,
-            // 'batches'=>$requests->batch,            
+            'batches'=>$requests->batch
             // 'preffered_training_date'=>$requests->preffered_training_date
 
         ]);
@@ -110,6 +113,7 @@ class InternshipApplicationController extends Controller
 
     public function edit(Request $request){
 
+        $batch = TrainingBatch::all();
         $student_id = $request->student_id;
 
         $student = $request->student_id ? InternshipApplication::find($request->student_id) : false;
@@ -117,7 +121,7 @@ class InternshipApplicationController extends Controller
         // dd($student);
         // $student = \Auth::user()->intershipApplication()->get();
 
-        return view('intership-training-programming.applicant.edit',compact('student'));
+        return view('intership-training-programming.applicant.edit',compact('student','batch'));
 
     }
 
@@ -143,7 +147,7 @@ class InternshipApplicationController extends Controller
             'user_id'=>\Auth::user()->id,
             'objectives'=>$requests->objective,
             'school'=>$requests->school,
-            'course'=>$requests->course,
+            'course'=>$requests->course
             // 'preffered_training_date'=>$requests->preffered_training_date
         ]);
 
@@ -224,7 +228,10 @@ class InternshipApplicationController extends Controller
     }
 
     public function json_get_applicants_datatable(Request $requests){
-        return Datatables::of(InternshipApplication::query()
+        $internships = InternshipApplication::query();
+        $internships = $requests->training_batch_id ? $internships->where('training_batch_id',$requests->training_batch_id) : $internships;
+
+        return Datatables::of($internships
         ->leftJoin('users','users.id','=','internship_applications.user_id')
         ->leftJoin('training_batches','training_batches.id','=','internship_applications.training_batch_id')
         ->select(['internship_applications.id','users.photo',\DB::raw('training_batches.name as training_batch_name'),\DB::raw('concat(users.f_name," ",users.l_name) as applicant_name'),'school','preffered_training_date','course','internship_applications.created_at',"internship_applications.objectives","school","course"])
