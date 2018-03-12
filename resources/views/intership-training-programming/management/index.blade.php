@@ -5,12 +5,12 @@
 <div class="container" style="padding-top:20px;">
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
-            <a href="#batches" role="tab" onclick="showScouts()" data-toggle="tab" aria-expanded="true">
+            <a href="#batches" role="tab" data-toggle="tab" aria-expanded="true">
                 Batch
             </a>
         </li>
         <li role="presentation">
-            <a href="#application" role="tab" onclick="showApplications()" data-toggle="tab" aria-expanded="false">
+            <a href="#application" role="tab" data-toggle="tab" aria-expanded="false">
                 Applications
             </a>
         </li>
@@ -96,7 +96,7 @@
     <div class="ui medium image">
         <img src="/images/avatar/large/chris.jpg" style="min-height: 200px;" class="avatar">
         </div>
-        <div class="description">
+        <div class="description" style="flex: auto;">
           <div class="ui header name">We've auto-chosen a profile image for you.</div>
         <p>
             <b>Objective</b> : 
@@ -114,6 +114,16 @@
         <p>
             <b>Batch</b> : 
             <span class="batch"></span>
+        </p>
+        <p>
+            <div class="ui header">Skills</div>
+            <div class="skill_container">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
         </p>
     </div>
   </div>
@@ -203,11 +213,56 @@
     });
 
     function view_applicant(data){
-        $('#view_applicant_modal').find('.avatar').attr('src',data.photo);
-        $('#view_applicant_modal').find('.name').html(data.applicant_name.replace(' ',"") ? data.applicant_name : "Unknown");
+        $('body').append('<div class="front-drop" style="position:fixed; z-index:1000; width:100%; height:100%; top:0px; left:0px;"></div>');
+        $.ajax({
+            url:"{{route('json_view_application')}}",
+            data:{
+                id:data.id
+            },
+            type:"GET",
+            success:function(data){
+                load_applicant(data);
+                $('body .front-drop').remove();
+            }
+        });
+    }
+
+    function load_applicant(data){
+        $('#view_applicant_modal').find('.avatar').attr('src',data.user.photo);
+        $('#view_applicant_modal').find('.name').html(data.user.name.replace(' ',"") ? data.user.name : "Unknown");
+
+        var skills_container = $('#view_applicant_modal .skill_container');
+        skills_container.find('.col-md-4').html('');
+
+        var language_added = [];
+        var x = 0;
+
+        for(var i = 0; i < data.skills.length; i++){
+            if(x > 2){
+                x = 0;
+            }
+
+            var lang = data.skills[i].language.toLowerCase() == 'c++' ? 'cplus2' : (data.skills[i].language.toLowerCase() == "c#" ? 'csharp' : (data.skills[i].language.toLowerCase() == 'node.js' ? 'node-js' : data.skills[i].language.toLowerCase()) );
+
+            if(language_added.includes(lang)){
+                skills_container.find('.'+lang).parent().find('.body').append('<div class="ellipsis">'+data.skills[i].category+'</div>');
+            }
+            else
+            {
+                skills_container.find('.col-md-4').eq(x).append(
+                    '<div class="job-card">'
+                    +'    <div class="header ellipsis '+lang+'">'+data.skills[i].language+'</div>'
+                    +'    <div class="body"><div class="ellipsis">'+data.skills[i].category+'</div> </div>'
+                    +'</div>'
+                );
+                language_added.push(lang)
+                x++;
+            }
+        }
+
         $('#view_applicant_modal').find('.course').html(data.course);
         $('#view_applicant_modal').find('.objectives').html(data.objectives);
-        $('#view_applicant_modal').find('.batch').html(data.training_batch_name);
+        $('#view_applicant_modal').find('.batch').html(data.trainingBatch ? data.trainingBatch.name:'batch removed');
         $('#view_applicant_modal').find('.school').html(data.school);
         $('#view_applicant_modal').modal('show');
     }
