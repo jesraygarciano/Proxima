@@ -234,6 +234,9 @@ Route::group(['prefix'=>'itp', 'middleware'=>'auth'],function(){
 			Route::post('delete/batch',['as'=>'json_delete_batch', 'uses'=>'InternshipApplicationController@json_delete_batch']);
 		});
 	});
+
+	// json
+	Route::get('view/application', ['as'=>'json_view_application', 'uses'=>'InternshipApplicationController@json_view_application']);
 });
 
 Route::group(['prefix'=>'hiring'], function(){

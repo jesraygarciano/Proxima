@@ -248,6 +248,10 @@ class InternshipApplicationController extends Controller
         ->make(true);
     }
 
+    public function json_view_application(Request $requests){
+        return InternshipApplication::find($requests->id)->load('skills')->load('user')->load('trainingBatch');
+    }
+
     public function json_delete_batch(Request $requests){
         TrainingBatch::find($requests->batch_id)->delete();
 

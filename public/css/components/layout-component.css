@@ -28,6 +28,9 @@
     padding-bottom: 30px;
 }
 
+#bs-example-navbar-collapse-1{
+  overflow-x: hidden;
+}
 
 @media (max-width: 992px){
   .main-container{

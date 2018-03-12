@@ -268,6 +268,9 @@ class OpeningsController extends Controller
 
         $company = Company::where('id', $opening->company_id)->get()->first();
 
+        //getting ids of companies that auth user created.
+        $companies_ids = Common::company_ids_that_user_have();
+
         $more_openings = Opening::where('id', '!=', $opening->id)->where('company_id', $company->id)->get();
         // $more_openings = Opening::where('id', '!=', $opening->id)->where('company_id', $company->id)->get();
 
@@ -280,7 +283,7 @@ class OpeningsController extends Controller
 
         /*Mapper::location($opening->$company->address1. " ". $opening->$company->city. " ". $opening->$company->country)->map(['zoom' => 18, 'markers' => ['title' => 'My Location', 'animation' => 'DROP'], 'clusters' => ['size' => 10, 'center' => true, 'zoom' => 30]]);*/
 
-        return view('openings.show', compact('opening','company', 'resume', 'more_openings','provinces','countries'));
+        return view('openings.show', compact('opening','company', 'resume', 'more_openings','provinces','countries','companies_ids'));
     }
 
 

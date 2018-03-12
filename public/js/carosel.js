@@ -232,7 +232,7 @@ CAROSEL FOR FEATURED JOB POST
       mouse_over = true;
     });
 
-    // stop animation when mouse leaves
+    // start animation when mouse leaves
     $this.mouseleave(function(){
       mouse_over = false;
       resetAutoSlide();

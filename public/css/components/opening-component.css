@@ -183,6 +183,7 @@
 .job-card .body > div{
     border-bottom:1px solid #e5e5e5;
     padding: 5px;
+    background: white;
 }
 
 .job-card .body > div::last-child{
