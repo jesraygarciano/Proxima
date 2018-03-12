@@ -8,7 +8,7 @@
 
             <!-- ブランド表示 -->
             <a class="navbar-brand" href="/">
-                <img src="{{ asset('img/logo_brand.png') }}" />
+                <img style="transform: translateY(-5px);" src="{{ asset('img/logo_brand.png') }}" />
             </a>
         </div>
 
@@ -17,8 +17,8 @@
 
             <!-- 左寄せメニュー -->
             <ul class="nav navbar-nav">
-                <li>{!! link_to_route('companies.index', 'Companies') !!}</li>
-                <li>{!! link_to_route('openings.index', 'Search Jobs') !!}</li>
+                <li class="company_nav">{!! link_to_route('companies.index', 'Companies') !!}</li>
+                <li class="openings_nav">{!! link_to_route('openings.index', 'Search Jobs') !!}</li>
             </ul>
 
             <!-- 右寄せメニュー -->

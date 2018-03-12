@@ -2,6 +2,13 @@
 
 @section('content')
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        // mark opening link active
+        $('.openings_nav').addClass('active');
+    });
+</script>
+
 <div class="container">
     <article>
         <h3>
@@ -99,7 +106,7 @@
 
                                         if(prevent_reoccur){
 
-                                            $('#advance_search' ).animate({ height : "0px" }, 400 );
+                                            $('#advance_search').animate({ height : "0px" }, 400 );
 
                                             $('[name=show_advance_search]').val('closed');
                                             prevent_reoccur = false;
@@ -132,6 +139,7 @@
             </div>
 
             <div class="col-md-7 col-sm-9 col-xs-12">
+                {{ count($openings) ? ' ' : 'Sorry, no result.'}}
                 @if (count($openings) > 0)
                     @foreach ($openings as $opening)
                         @include('inc.job-container')

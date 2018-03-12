@@ -246,10 +246,12 @@
 
     <script type="text/javascript">
         $(function(){
+            console.log("skill1","{{json_encode($resume->has_skill)}}");
             var skill = JSON.parse("{{json_encode($resume->has_skill)}}".replace(/&quot;/g,'"'));
+            console.log("skill","{{json_encode($resume->has_skill)}}".replace(/&quot;/g,'"'));
             console.log(skill);
             var skill_wrapper = $("#skill-wrapper").html();
-            console.log(skill_wrapper);
+            // console.log(skill_wrapper);
             var lang = [];
             var x = 0;
 

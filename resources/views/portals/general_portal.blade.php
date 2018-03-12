@@ -341,6 +341,14 @@
             height: 73px;
             text-align: right;
         }
+        .ribbon{
+          cursor: pointer;
+        }
+        #ribbon-company{
+          position: absolute;
+          right: 1px;
+          bottom: 177px;
+        }
     </style>
 
     <div class="general-hero" style="margin-top:-30px;">
@@ -605,22 +613,6 @@
         });
     </script>
 
-    <div id="confirm" class="btn btn-primary">
-        confirm
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#confirm").click(function(){
-                var ele_clone = $('#feature-post-carosel').find(".wing .post-item").eq(0);
-                console.log(ele_clone);
-
-                $('#feature-post-carosel').find(".wing").append(ele_clone);
-
-            });
-        });
-    </script>
-
 	<div class="general_portal container" style="margin-bottom:100px;">
 
         <h3 id="or-search">Programming Languages</h3>
@@ -848,12 +840,14 @@
                             </ul>
                               <hr style="margin-top: 7px; margin-bottom: 7px;">
                               <div id="company-bookmark">
-                                <div class="d-flex align-self-end ml-3" style="text-align: right;">
+                                <div class="d-flex align-self-end ml-3" style="text-align: right;color: #000;">
                                     <!--<a href="">
                                       <i class="fa fa-star-o " aria-hidden="true"></i>
                                       Follow
                                     </a> -->
-                                  @include('companies.follow_company.follow_button', ['company' => $company])
+                                      <div class="ribbon" id="ribbon-company">
+                                        @include('companies.follow_company.follow_button', ['company' => $company])
+                                      </div>
                                 </div>
                               </div>
                           </div> <!-- media body -->

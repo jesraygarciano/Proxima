@@ -1,4 +1,5 @@
 // uelmar wizard Jan. 22, 2018
+// resume validation
 
 unickwizard = function($this,options){
 
