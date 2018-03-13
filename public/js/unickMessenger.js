@@ -27,7 +27,7 @@
 		});
 
 		$this.find('.message-box').click(function(){
-			// 
+			//
 			seenUnseenMessages();
 			$this.removeClass('focus-search');
 		});
@@ -64,7 +64,7 @@
 		var loaded_last = false;
 
 		$.socket.on('r-p-m', function(data){
-			// 
+			//
 			var scrollHeight = $this.find(".message-list")[0].scrollHeight;
 			var height = $this.find(".message-list").height();
 
@@ -99,11 +99,11 @@
 		});
 
 		$.socket.on('connect',function(){
-			// 
+			//
 		});
 
 		$.socket.on('disconnect', function () {
-			// 
+			//
 		});
 
 		$.socket.on('reconnect', function () {
@@ -113,7 +113,7 @@
 		});
 
 		$.socket.on('reconnect_error', function () {
-			// 
+			//
 		});
 
 		function sendMessage(){
@@ -125,6 +125,7 @@
 				$this.find('.message-box').find('.box').val('');
 
 				$.ajax({
+					//QUESTION_DETECT : ????????route????
 					url:settings.save_message_url,
 					type:'POST',
 					data:{reciever:$this.find('.send_message').data('r-id'), message: messsage},
@@ -145,7 +146,7 @@
 				type:"GET",
 				data:{keyword:keyword},
 				success:function(data){
-					// 
+					//
 					$this.find('.thread-list').html('');
 					for(var index in data.contacts){
 

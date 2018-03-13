@@ -40,6 +40,7 @@
                         <th>Name</th>
                         <th>Batch</th>
                         <th>Application Date</th>
+                        <th>Status</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -197,15 +198,43 @@
                     searchable: false,
                     "orderable": false,
                     "render": function ( data, type, row ) {
+                        return '<select class="form-control" name="status">'
+                        +'<option value="under_consideration">Under Consideration</option>'
+                        +'<option value="approved">Approved</option>'
+                        +'<option value="declined">Declined</option>'
+                        +'</select>';
+                        ;
+                    },
+                },
+                {
+                    searchable: false,
+                    "orderable": false,
+                    "render": function ( data, type, row ) {
                         return '<button class="btn btn-primary view-button btn-xs">'
                         +'<i class="fa fa-eye"></i>'
-                        +'</button>';
+                        +'</button>'
+                        ;
                     },
                 }
             ],
             "createdRow": function ( row, data, index ) {
                 $(row).find('.view-button').click(function(){
                     view_applicant(data);
+                });
+
+                $(row).find('[name=status]').find('option[value='+data.status+']').prop('selected',true);
+
+                $(row).find('[name=status]').change(function(){
+                    $.ajax({
+                        url:"{{route('json_update_application_status')}}",
+                        type:"POST",
+                        data:{
+                            id:data.id,
+                            status:$(row).find('[name=status]').val()
+                        },
+                        headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                        success:function(data){}
+                    });
                 });
             },
             order: [[ 2, 'desc' ]]

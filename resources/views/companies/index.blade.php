@@ -93,7 +93,7 @@
                             <input type="checkbox" class="with_hiring" name="w_hiring_info" value="2"
                             <?php if(isset($_GET['w_hiring_info'])) echo "checked='checked'"; ?>
                             />
-                            <h5 class="with_hiring_text">With hiring information</h5>
+                            <h5 class="with_hiring_text" style="cursor: pointer;">With hiring information</h5>
 
                         </label>
                     </div>
