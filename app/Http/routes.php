@@ -66,7 +66,6 @@ Route::get('resumes/{id}/edit', ['as' => 'resumes.edit', 'uses' => 'ResumesContr
 Route::patch('resumes/{id}', ['as' => 'resumes.update', 'uses' => 'ResumesController@update']);
 
 
-// Route::resource('companies', 'CompaniesController');
 
 Route::get('scouts/company_scout', 'ScoutsController@company_scout');
 Route::get('scouts/company_scout/{id}', ['as' => 'scouts.company_scout_note', 'uses' => 'ScoutsController@company_scout_note']);
@@ -82,7 +81,6 @@ Route::get('openings/general_portal','OpeningsController@general_portal');
 
 Route::get('openings', ['as' => 'openings.index', 'uses' => 'OpeningsController@index']);
 
-// Route::get('openings_bookmark/{opening_id}', ['as' => 'openings.bookmark_openings_index', 'uses' => 'OpeningsController@bookmark_openings_index']);
 
 Route::get('bookmarked/list','OpeningsController@bookmark_lists');
 
@@ -101,8 +99,6 @@ Route::post('edit_company_follow', ['as' => 'edit_company_follow', 'uses' => 'Co
 Route::post('edit_save_applicant', ['as' => 'edit_save_applicant', 'uses' => 'HiringPortalController@edit_save_applicant']);
 
 
-// Route::post('openings_unbookmark/{opening_id}', ['as' => 'openings.unbookmark_openings_index', 'uses' => 'OpeningsController@unbookmark_openings_index']);
-// Route::post('openings_unbookmark/{opening_id}', ['as' => 'openings.unbookmark_openings_index', 'uses' => 'OpeningsController@unbookmark_openings_index']);
 Route::get('openings/create/{company_id?}','OpeningsController@create');
 Route::get('openings/edit/{company_id?}','OpeningsController@edit');
 Route::post('openings/{id}', ['as' => 'openings.update', 'uses' => 'OpeningsController@update']);
@@ -114,7 +110,6 @@ Route::post('openings', ['as' => 'openings.store', 'uses' => 'OpeningsController
 Route::get('portals/search_international/{code}', ['as' => 'portal_international_search', 'uses' => 'PortalController@portal_international_search']);
 
 
-// Route::post('openings', 'OpeningsController@store')->name('openings.store');
 
 // FOLLOW COMPANIES
 Route::get('followed/list','CompaniesController@follow_company_lists');
@@ -232,6 +227,7 @@ Route::group(['prefix'=>'itp', 'middleware'=>'auth'],function(){
 			Route::get('get/batches',['as'=>'json_get_batches_datatable', 'uses'=>'InternshipApplicationController@json_get_batches_datatable']);
 			Route::get('get/applications',['as'=>'json_get_applicants_datatable', 'uses'=>'InternshipApplicationController@json_get_applicants_datatable']);
 			Route::post('delete/batch',['as'=>'json_delete_batch', 'uses'=>'InternshipApplicationController@json_delete_batch']);
+			Route::post('application/status/update',['as'=>'json_update_application_status', 'uses'=>'InternshipApplicationController@json_update_application_status']);
 		});
 	});
 

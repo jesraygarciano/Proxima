@@ -29,7 +29,6 @@ class CompaniesController extends Controller
     public function index(Request $request)
     {
 
-
         $searchData = $request->company_name;
         $w_hiring_info = $request->w_hiring_info;
         $openings = Opening::query()->where('is_active', 1)->orderBy('created_at','desc');
@@ -42,6 +41,8 @@ class CompaniesController extends Controller
                         // paginate(10);
                 // User::find($request->applicant_saved_id)->scouters->count()
 
+                // User::find($request->applicant_saved_id)->scouters->count()
+
                 $companies = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
 
             }
@@ -52,7 +53,7 @@ class CompaniesController extends Controller
 
                 $companies = Company::where('company_name', 'LIKE', '%'. $searchData . '%')->paginate(10);
             // dd($companies);
-        }        
+        }
         else{
             $companies = Company::latest('created_at')->where('is_active', "1")->paginate(10);
         }
@@ -78,7 +79,7 @@ class CompaniesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(Request $request) {  //
+    public function store(Request $request) {
 
         // $request->user_id = Auth::user()->id;
 
