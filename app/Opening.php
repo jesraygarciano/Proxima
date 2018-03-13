@@ -28,7 +28,7 @@ class Opening extends Model
     public function users_that_bookmarked()
     {
         return $this->belongsToMany(User::class, 'save_openings', 'opening_id', 'user_id');
-    }    
+    }
 
     public function bookmark_count()
     {
@@ -90,7 +90,7 @@ class Opening extends Model
 
         foreach ($follower_ids as $id) {
             $notification = \App\OpeningNotification::create([
-                // 
+                //
                 'opening_id'=>$this->attributes['id'],
                 'user_id'=>$id,
                 'company_id'=>$this->attributes['company_id'],
@@ -105,6 +105,10 @@ class Opening extends Model
         }
     }
 
+    //QUESTION_DETECT : ???????????????boot?????
+    //QUESTION_DETECT : Listner???????Listener???????
+    //QUESTION_DETECT : boot()?????model??????????????
+    //QUESTION_DETECT : ??????????
     public static function boot()
     {
         parent::boot();
@@ -114,7 +118,7 @@ class Opening extends Model
             $follower_ids = \DB::table('follow_companies')->where('company_id',$model->company->id)->lists('user_id');
             foreach ($follower_ids as $id) {
                 $notification = \App\OpeningNotification::create([
-                    // 
+                    //
                     'opening_id'=>$model->attributes['id'],
                     'user_id'=>$id,
                     'company_id'=>$model->attributes['company_id'],
