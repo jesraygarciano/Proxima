@@ -16,7 +16,7 @@
 		}
 
 		$.socket.on('r-p-m', function(data){
-			// 
+			//
 			newMessage(data);
 			console.log(data);
 		});
@@ -45,19 +45,19 @@
 		});
 
 		$.socket.on('connect',function(){
-			// 
+			//
 		});
 
 		$.socket.on('disconnect', function () {
-			// 
+			//
 		});
 
 		$.socket.on('reconnect', function () {
-			// 
+			//
 		});
 
 		$.socket.on('reconnect_error', function () {
-			// 
+			//
 		});
 
 		function newMessage(data){
@@ -77,21 +77,22 @@
 
 		fetch_notification();
 
+		//?Opening Model?boot()?????event???????????
 		$.socket.on('notification-channel:App\\Events\\NotificationEvent',function(data){
-			// 
+			//
 			console.log(data);
 			if(data.data.event == 'created')
 			{
 				switch(data.data.type){
-					case 'new opening': 
+					case 'new opening':
 					new_openings++;
 					$this.find('.new_openings').html(new_openings).show();
 					break;
-					case 'application': 
+					case 'application':
 					applications++;
 					$this.find('.applications').html(applications).show();
 					break;
-					case 'scout': 
+					case 'scout':
 					scouts++;
 					$this.find('.scouts').html(scouts).show();
 					break;
@@ -101,15 +102,15 @@
 			else
 			{
 				switch(data.data.type){
-					case 'new opening': 
+					case 'new opening':
 					new_openings--;
 					$this.find('.new_openings').html(new_openings).css({display:( new_openings < 1 ?'none':'')});
 					break;
-					case 'application': 
+					case 'application':
 					applications--;
 					$this.find('.applications').html(applications).css({display:( applications < 1 ?'none':'')});
 					break;
-					case 'scout': 
+					case 'scout':
 					scouts--;
 					$this.find('.scouts').html(scouts).css({display:( scouts < 1 ?'none':'')});
 					break;

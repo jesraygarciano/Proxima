@@ -19,21 +19,7 @@
             {{-- CSRF対策--}}
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-{{--             <div class="form-group">
-                {!! Form::label('f_name', 'First Name', ['class' => 'col-md-4 control-label']) !!}
-                <div class = "col-md-6">
-                  {!! Form::text('f_name', old('f_name'), ['class' => 'form-control']) !!}
-                </div>
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('l_name', 'Last Name', ['class' => 'col-md-4 control-label']) !!}
-                <div class = "col-md-6">
-                  {!! Form::text('l_name', old('l_name'), ['class' => 'form-control']) !!}
-                </div>
-            </div>
-
-            <div class="form-group">
+            {{-- <div class="form-group">
                 {!! Form::label('m_name', 'Middle Name', ['class' => 'col-md-4 control-label']) !!}
                 <div class = "col-md-6">
                   {!! Form::text('m_name', old('m_name'), ['class' => 'form-control']) !!}
@@ -59,6 +45,20 @@
                 </div>
               </a>
               <hr>
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('f_name', 'First Name', ['class' => 'col-md-4 control-label']) !!}
+                <div class = "col-md-6">
+                  {!! Form::text('f_name', old('f_name'), ['class' => 'form-control']) !!}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('l_name', 'Last Name', ['class' => 'col-md-4 control-label']) !!}
+                <div class = "col-md-6">
+                  {!! Form::text('l_name', old('l_name'), ['class' => 'form-control']) !!}
+                </div>
             </div>
 
             <div class="form-group">

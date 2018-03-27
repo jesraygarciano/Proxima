@@ -4,11 +4,9 @@
 
 (function(){
 	$.fn.unickMessenging = function(options){
-		var settings = $.extend({
-			fetch_user_messages_url:false,
-			fetch_chatables_url:false,
-			auth_id:false
-		},options);
+		var settings = $.extend({},options);
+		//QUESTION_DETECT : ?extend???????
+		//QUESTION_DETECT : ?????3????
 
 		var loading = false;
 
@@ -120,22 +118,30 @@
 			var messsage = $this.find('.message-box').find('.box').val();
 
 			if(messsage.trim() != ""){
-				$.socket.emit('s-p-m',{reciever:$this.find('.send_message').data('r-id'),msg:messsage, s_id:settings.auth_id});
-				aMoMlS({message:messsage, formated_date: returnFormated(new Date()) });
 				$this.find('.message-box').find('.box').val('');
-
-				$.ajax({
-					//QUESTION_DETECT : ????????route????
-					url:settings.save_message_url,
-					type:'POST',
-					data:{reciever:$this.find('.send_message').data('r-id'), message: messsage},
-					headers: { 'X-CSRF-TOKEN': settings.csrf_token },
-					success:function(data){
-						// say something
+				$.socket.emit(
+					's-p-m',
+					{reciever:$this.find('.send_message').data('r-id'),msg:messsage, s_id:settings.auth_id},
+					function(res){
+						console.log(res);
+						aMoMlS({message:res.msg, formated_date: returnFormated(new Date()) });
+						scrollBottomIfScrollBottom();
 					}
-				});
+				);
 
-				scrollBottomIfScrollBottom();
+				// aMoMlS({message:messsage, formated_date: returnFormated(new Date()) });
+
+				// $.ajax({
+				// 	//QUESTION_DETECT : ????????route????
+				// 	url:settings.save_message_url,
+				// 	type:'POST',
+				// 	data:{reciever:$this.find('.send_message').data('r-id'), message: messsage},
+				// 	headers: { 'X-CSRF-TOKEN': settings.csrf_token },
+				// 	success:function(data){
+				// 		// say something
+				// 	}
+				// });
+
 			}
 		}
 
