@@ -1,6 +1,6 @@
 // Uelmar Ortega Auth
 // Feb. 14, 2018
-
+console.log(new Date().getHours());
 // vars
 var app = require('express')();
 var http = require('http').Server(app);
@@ -9,9 +9,36 @@ var Redis = require('ioredis');
 var redis = new Redis();
 var clients = [];
 
+var Message = require('./node_mysql/message');
+
+
+app.get('/', function(req, res){
+    var message = new Message();
+    // message.where('user_id','=',302);
+    // message.where('reciever','=',1);
+    // message.get(function(result){
+    //     console.log(result)
+    //     return res.send('sad');
+    // }, 3);
+
+    message.data = {user_id:302, reciever:1, message:'node server sample'};
+
+    message.save((result)=>{
+        res.send(result);
+    });
+
+    // message.setAsSeen(48, (result)=>{
+    //     res.send(result);
+    // });
+});
+
 redis.subscribe('notification-channel', function(err, count) {
 	console.log(err);
 	console.log(count);
+});
+
+redis.on('error', err => {
+  // console.log(err)
 });
 
 redis.on('message', function(channel, message) {
@@ -41,13 +68,20 @@ io.on('connection', function(socket){
 function handlePrivateMessage(socket){
     socket.on('s-p-m',function(data,cb){
         console.log(data);
-        for(var index in clients){
-            console.log(clients[index].user_id);
-            if(clients[index].user_id == data.reciever){
-                console.log('message sent');
-                clients[index].emit('r-p-m',data);
+        var message = new Message();
+        message.data = {user_id:data.s_id, reciever:data.reciever, message:data.msg};
+        message.save(
+            (result)=>{
+                for(var index in clients){
+                    console.log(clients[index].user_id);
+                    if(clients[index].user_id == data.reciever){
+                        console.log('message sent');
+                        clients[index].emit('r-p-m',data);
+                    }
+                }
+                cb(data);
             }
-        }
+        );
     });
 
     socket.on('p-m-snn',function(data,cb){
