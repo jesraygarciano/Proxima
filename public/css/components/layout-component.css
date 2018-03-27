@@ -34,10 +34,13 @@
 
 @media (max-width: 992px){
   .main-container{
-    margin-bottom: 700px;
+    margin-bottom: initial;
+    transform: initial;
+    margin-top: -50px;
   }
   .main-footer{
-    height: 700px;
+    position: initial;
+    height: initial;
   }
 }
 
