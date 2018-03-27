@@ -232,4 +232,13 @@ class InternshipApplicationController extends Controller
 
         return 'deleted';
     }
+
+    public function json_edit_btach_is_active(Request $requests){
+        $batch = TrainingBatch::findOrFail($requests->batch_id);
+
+        $batch->is_active = $requests->is_active == 'true' ? 1 : 0;
+        $batch->save();
+
+        return $batch;
+    }
 }

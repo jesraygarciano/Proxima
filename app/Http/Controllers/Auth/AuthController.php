@@ -54,8 +54,8 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            // 'f_name' => 'required|max:255',
-            // 'l_name' => 'required|max:255',
+            'f_name' => 'required|max:255',
+            'l_name' => 'required|max:255',
             // 'm_name' => 'max:255',
             // 'birth_date' => 'required',
             'role' => 'required',
@@ -84,8 +84,8 @@ class AuthController extends Controller
         $verify_token = md5(uniqid(rand(), true));
 
         $user = User::create([
-            // 'f_name' => $data['f_name'],
-            // 'l_name' => $data['l_name'],
+            'f_name' => $data['f_name'],
+            'l_name' => $data['l_name'],
             // 'm_name' => $data['m_name'],
             // 'birth_date' => $data['birth_date'],
             'role' => $data['role'],

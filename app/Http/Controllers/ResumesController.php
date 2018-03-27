@@ -109,7 +109,6 @@ class ResumesController extends Controller
 
         $input = $request->except('photo','skills', '_token');
         $resume = Resume::where('user_id',\Auth::user()->id)->first() ?? new Resume;
-        $resume->photo = $fileNameToStore;
         $resume->fill($input)->save();
 
         if($request->photo){
@@ -117,6 +116,8 @@ class ResumesController extends Controller
             // $fileNameToStore = time().'.png';
             $fileNameToStore = Common::resume_photo_name($resume->id);
             file_put_contents(public_path('/storage/').$fileNameToStore, $data);
+            $resume->photo = $fileNameToStore;
+            $resume->save();
         }
 
         if (\Input::has('ex_company')){
@@ -263,6 +264,7 @@ class ResumesController extends Controller
             $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->photo));
             $fileNameToStore = Common::resume_photo_name($resume->id);
             file_put_contents(public_path('/storage/').$fileNameToStore, $data);
+            $resume->photo = $fileNameToStore;
         }
 
         // $resume->photo = $fileNameToStore;

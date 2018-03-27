@@ -227,6 +227,7 @@ Route::group(['prefix'=>'itp', 'middleware'=>'auth'],function(){
 			Route::get('get/batches',['as'=>'json_get_batches_datatable', 'uses'=>'InternshipApplicationController@json_get_batches_datatable']);
 			Route::get('get/applications',['as'=>'json_get_applicants_datatable', 'uses'=>'InternshipApplicationController@json_get_applicants_datatable']);
 			Route::post('delete/batch',['as'=>'json_delete_batch', 'uses'=>'InternshipApplicationController@json_delete_batch']);
+			Route::post('batch/isactive/edit',['as'=>'json_edit_btach_is_active', 'uses'=>'InternshipApplicationController@json_edit_btach_is_active']);
 			Route::post('application/status/update',['as'=>'json_update_application_status', 'uses'=>'InternshipApplicationController@json_update_application_status']);
 		});
 	});

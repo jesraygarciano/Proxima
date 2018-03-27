@@ -112,7 +112,9 @@ class Opening extends Model
     public static function boot()
     {
         parent::boot();
+        //????????????????
 
+        //??????????????????????"created"????????????
         static::created(function($model)
         {
             $follower_ids = \DB::table('follow_companies')->where('company_id',$model->company->id)->lists('user_id');
@@ -131,6 +133,12 @@ class Opening extends Model
                         'user_id'=>$id
                     ]
                 ));
+                //?????notifier.js??????????catch???
+                //$.socket.on('notification-channel:App\\Events\\NotificationEvent',function(data){
+                //??function(data)?data???
+                // 'type'=>'new opening',
+                // 'event'=>'created',
+                // 'user_id'=>$id
             }
         });
     }
