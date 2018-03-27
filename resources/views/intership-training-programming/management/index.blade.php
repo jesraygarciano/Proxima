@@ -95,9 +95,9 @@
   </div>
   <div class="image content">
     <div class="ui medium image">
-        <img src="/images/avatar/large/chris.jpg" style="min-height: 200px;" class="avatar">
-        </div>
-        <div class="description" style="flex: auto;">
+        <img src="/images/avatar/large/chris.jpg" style="min-width: 200px;" class="avatar">
+    </div>
+    <div class="description" style="flex: auto; word-break: break-word;">
           <div class="ui header name">We've auto-chosen a profile image for you.</div>
         <p>
             <b>Objective</b> : 
@@ -162,10 +162,29 @@
                         +'</a> '
                         +'<a type="button" onclick="prep_del_batch('+row['id']+')" title="delete" class="btn btn-danger btn-xs">'
                         +'<i class="fa fa-trash"></i>'
-                        +'</a>';
+                        +'</a>'
+                        +' <label class="switch" style="vertical-align:middle;">'
+                        +'  <input type="checkbox" name="is_active">'
+                        +'  <span class="slider"></span>'
+                        +'</label>'
                     },
                 }
             ],
+            "createdRow": function ( row, data, index ) {
+                $(row).find('[name=is_active]').prop('checked',data.is_active);
+                console.log($(row).find('[name=is_active]'));
+                $(row).find('[name=is_active]').change(function(){
+                    $.ajax({
+                        url:"{{route('json_edit_btach_is_active')}}",
+                        headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                        type:"POST",
+                        data:{is_active:$(this).prop('checked'),batch_id:data.id},
+                        success:function(data){
+                            console.log(data);
+                        }
+                    });
+                });
+            },
             order: [[ 1, 'desc' ]]
         });
 
