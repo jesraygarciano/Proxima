@@ -43,7 +43,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script type="text/javascript">
             (function(){
-                $.socket = io("{{url('/')}}:3000");
+                $.socket = io("localhost:3000");
                 // $.socket = io("http://284a30e7.ngrok.io");
                 $.socket.emit('client add',{{\Auth::user()->id}});
             })(jQuery)

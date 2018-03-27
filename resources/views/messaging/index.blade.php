@@ -27,6 +27,7 @@
 		get_previews_message:"{{route('json_fetch_previews_messages')}}",
 		csrf_token:'{{ csrf_token() }}',
 		auth_id:{{\Auth::user()->id}}
+        //QUESTION_DETECT : ???json?javascript object
 	});
 </script>
 @endsection
